@@ -1,4 +1,4 @@
-%%%% Martin Rotter - FJAA (zápisky z přednášek)
+%%%% Martin Rotter, Tomáš Kukučka - FJAA (zápisky z přednášek)
 %%%%
 %%%% kompilováno přes cslatex --> dvipdfmx
 
@@ -14,10 +14,10 @@
 \usepackage{amsthm}
 
 \title{KMI/FJAA  -- Formální jazyky a automaty}
-\author{M.~Rotter}
+\author{M.~Rotter, T.~Kukučka}
 \date{\today}
 
-\docinfo{M.~Rotter}{KMI/FJAA  -- Formální jazyky a automaty}
+\docinfo{M.~Rotter, T.~Kukučka}{KMI/FJAA  -- Formální jazyky a automaty}
 
 \newtheoremstyle{note}% name
 {15pt}
@@ -551,6 +551,93 @@ P &=& \lbrace S \rightarrow V|(S \Rightarrow S)|!S, V \Rightarrow pV|p \rbrace
 \end{eqnarray*}
 $L(G)$ je jazyk všech výrokových formulí.
 \end{priklad}
+
+\subsection{Gramatika nezkracující}
+Gramatika G se nazývá nezkracující, pokud má pouze nezkracující pravidla a může mít pravidlo ve tvaru $S \rightarrow \varepsilon$, ale $S$ se nenechází na žádné z pravých stran.
+
+\begin{priklad}
+\begin{eqnarray*}
+N &=& \lbrace S, A, B, C\rbrace \\
+\Sigma &=& \lbrace a, b, c\rbrace \\
+P &=& \lbrace S \rightarrow \varepsilon |abc|Ac, A \rightarrow aBcb, Bcb \rightarrow bBc, Bcc \rightarrow Ccc, bc \rightarrow Cb, aC \rightarrow aab|aA \rbrace
+\end{eqnarray*}
+\end{priklad}
+
+\begin{veta}
+Gramatiky typu 3 a 1 jsou nezkracující.
+\end{veta}
+
+\begin{veta}
+Ke každé gramatice G, existuje ekvivalentní gramatika $G^{'}$, ve které jsou všechna pravidla obsahující terminální symboly ve tvaru $A \rightarrow a$, kde $A \in N, a \in \Sigma$.
+\end{veta}
+
+\begin{dukaz}
+Pro každý termínál $a \in \Sigma$, zavedeme terminál $N_{a}$ a pravidlo $N_{a} \rightarrow a$.
+Všechny výskyty terminálů ve výchozých pravidlech nahradíme přislušnými pomocnými neterminály.
+$$
+Bcb \rightarrow bBc \text{ se změní na } BN_{c}N_{b} \rightarrow N_{b} BN_{c}, 
+N_{c} \rightarrow c, N_{b} \rightarrow b
+$$
+\end{dukaz}
+
+\begin{veta}
+Ke každé nekzracující gramatice existuje ekvivalentní gramatika, která je kontextově \mbox{závislá}.
+\end{veta}
+
+\begin{dukaz}
+Předpokládejme, že $G = \langle N, \Sigma, P, S \rangle$ je nezkracující gramatika. Dle věty 7 můžeme předpokládat, 
+že všechna pravidla jsou buď ve tvaru $A \rightarrow a$ (nevadí) nebo ve tvaru obecně. 
+$A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{n}$, kde $A_{1}, \ldots,A_{m}, B_{1}, \ldots,B_{n} \in N$ a navíc $m \leq n$. 
+Tj. taková pravidla lze psát ve tvaru $A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{my}$, kde $y = B_{m+1} \cdots B_{n}$ 
+Budeme uvažovat nové pomocné neterminály $X_{1},...,X_{m}$ \footnote{pro každé pravidlo se uvažují zvlášť}. 
+A zavedeme následující pravidla:
+\begin{gather*}
+A_{1} A_{2} \cdots A_{m} \rightarrow X_{1} A_{2} \cdots A_{m} \\
+X_{1} A_{2} \cdots A_{m} \rightarrow X_{1} X_{2} A_{3} \cdots A_{m} \\
+\vdots \\
+X_{1} X_{2} \cdots X_{m-1} A_{m} \rightarrow X_{1} \cdots X_{m-1} X_{my} \\
+X_{1} X_{2} \cdots X_{my} \rightarrow B_{1} X_{2} X_{3} \cdots X_{my} \\
+\vdots \\
+B_{1} B_{2} \cdots B_{m-1} X_{my} \rightarrow B_{1} B_{2} \cdots B_{m-1}B_{my}
+\end{gather*}
+Tento postup se aplikuje pro všechna pravidla. Hledaná gramatika $G^{'}$ se skládá z $\Sigma, N$ + všechny pomocné termínály + všechna odovozená pravidla.
+\end{dukaz}
+
+\subsection{Základní vlastnosti bezkontextových gramatik}
+\begin{itemize}
+\item
+levá strana pravidla = jediný neterminál
+\item
+odvozování \uv{nezávisí na kontextu}
+\end{itemize}
+
+\begin{veta}
+Mějme bezkontextovou gramatiku  $G = \langle N, \Sigma, P, S \rangle$ a nechť $X_{1} \cdots X_{k}, \ldots, z$ 
+je P-derivace délky $n$, kde $X_{1}, \ldots, X_{k} \in (N \cup \Sigma)$ a $z \in (N \cup \Sigma)^{*}$ 
+a potom pro každé $i = 1, \ldots, k$  existuje řetězec $z_{i} \in (N \cup \Sigma)^{*}$ 
+a P-derivace $X_{i}, \ldots, z_{i}$ délky $n_{i}$ tak, že $z = z_{1} ,z_{2}, \ldots, z_{k}$ a $n = n_{1} + n_{2} + \cdots + n_{k}$
+\end{veta}
+
+\begin{dukaz}
+Tvrzení prokázěmě induxí přes délku výchozí derivace $X_{1} \cdots X_{k}, \ldots, z$.
+Pro $n = 0$: Triviální $z = X_{1} \cdots X_{k}, z_{i} = X_{i}, n_{i} = 0$. Každé $X_{i}$ je derivace délky 0. 
+Nechť tvrzení platí pro libovolnou derivaci délky $n$ a dokážeme, že $X_{1} \cdots X_{k}$ je P-derivace délky $n + 1$.
+Jelikož má uvažovaná P-derivace délku n + 1, lze ji psát ve tvaru:
+$$
+X_{1} \cdots X_{k}, \ldots, y \footnote{$X_{1} \cdots X_{k}, \ldots$, y má délku n}, z 
+$$
+Máme $y \Rightarrow_{G}z$. Můžeme aplikovat indukční předpoklad:
+Existují řetězce $y_{1}, \ldots, y_{k}$ a P-derivace $X_{1}, \ldots, y_{1}$ až $X_{k}, \ldots, y_{k}$ 
+délek $n_{1} \cdots n_{k}$ tak, že $y = y_{1} y_{2} \cdots y_{k}$ a $n = n_{1} + n_{2} + \cdots + n{k}$. 
+Z faktu, že $y  \Rightarrow_{G}z$ a z toho, že gramatika je bezkontextová plyne, že $y$ je ve tvaru 
+$y = y^{''} y^{'} A w^{'} w^{''}$ pro $i = 1, \ldots, k$. Pak $z$ je ve tvaru $z = y^{''} y^{'} u w^{'} w^{''}$ a $A \rightarrow n \in P$,
+to jest $X_{i}, \ldots, y_{i}, y^{'} u w^{'}$ je P-derivce délky $n_{i+1}$. Hledáné derivace jsou:
+\begin{gather*}
+X_{1}, \ldots, y_{1} \\
+\vdots \\
+X_{i-1}, \ldots, y_{i-1}
+\end{gather*}
+\end{dukaz}
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
