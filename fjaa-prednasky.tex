@@ -12,6 +12,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
 
 \title{KMI/FJAA  -- Formální jazyky a automaty}
 \author{M.~Rotter, T.~Kukučka}
@@ -635,8 +637,88 @@ to jest $X_{i}, \ldots, y_{i}, y^{'} u w^{'}$ je P-derivce délky $n_{i+1}$. Hle
 \begin{gather*}
 X_{1}, \ldots, y_{1} \\
 \vdots \\
-X_{i-1}, \ldots, y_{i-1}
+X_{i-1}, \ldots, y_{i-1} \\
+X_{i}, \ldots, y_{i} y^{'} u w^{'} \\
+X_{1+1}, \ldots, y_{i+1} \\
+X_{k}, \ldots, j_{k} \\
+\text{zkontrolovat!!}
 \end{gather*}
+\end{dukaz}
+
+\begin{priklad}
+\begin{eqnarray*}
+N &=& \lbrace S \rbrace \\
+\Sigma &=& \lbrace a, b \rbrace \\
+P &=& \lbrace S \rightarrow SS|aS|bSa| \varepsilon \rbrace
+\end{eqnarray*}
+Posloupnost: $SbSaS, SbSa, SbaSba, aSbbaSba , abbaSba$ je P-derivace délky 4. \\*
+Hledáme P-derivace:
+\begin{enumerate}
+\item
+$S, aSb, ab$ (délka 2)
+\item
+$b$ (délka 0)
+\item
+$S, aSb$ (délka 1)
+\item
+$a$ (délka 0)
+\item
+$S, \varepsilon $ (délka 1)
+\end{enumerate}
+\end{priklad}
+
+\begin{priklad}
+Gramatika s jediným pravidlem $aBc \rightarrow abc$
+\end{priklad}
+
+\underline{Pozn.:} U regulárních a kontextových gramatik lze hned vidět, jestli $\varepsilon \in L(G)$.
+
+Pro bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ zavedeme následující podmnožiny
+\begin{gather*}
+E_{0} = \lbrace A \in N | A \rightarrow \varepsilon \in P \rbrace \\
+E_{i+1} = E_{i} \cup \lbrace A \in N | A \rightarrow x, \text{ kde } x \in E_{i}^* \rbrace
+\end{gather*}
+
+\begin{priklad}
+\begin{eqnarray*}
+A &\rightarrow& \varepsilon \\
+B &\rightarrow& \varepsilon \\
+E_{0} &=& \lbrace A, B \rbrace \\
+E_{1} &=& \lbrace A, B, F \rbrace \\
+E_{2} &=& \lbrace A, B, F, G \rbrace
+\end{eqnarray*}
+$$
+E_{i} \subseteq N, E_{N} = \bigcup_{i=0}^{\infty} E_{i}
+$$
+Jelikož je $N$ konečná, musí platit:
+\begin{gather*}
+E_{0} \subseteq E_{1} \subseteq E_{2} \subseteq \cdots \subseteq E_{i} = E_{i+1} = E_{i+2} \\
+E_{N} = E_{i}
+\end{gather*}
+\end{priklad}
+
+\begin{veta}
+Pro každou bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ a pro příslušné $E_{N}$ platí nasledující $A \Rightarrow_{G}^{*}\varepsilon$, pak $A \in E_{N}$. 
+Speciálně $\varepsilon \in L(G)$, pak $S \in E_{N}$.
+\end{veta}
+
+\begin{dukaz}
+Prokážeme obě implikace: \\
+Pokud $A \Rightarrow_{G}^{*}\varepsilon$, pak prokážeme indukci přes délku P-derivace, tj. triviální případ je $A \Rightarrow_{G}\varepsilon$, 
+tj. existuje pravidlo $A \rightarrow \varepsilon \in P$ tj. $A \in E_{0}$.
+Předpokládejme, že tvrzení platí pro všechny P-derivace délky $n$.
+Mějme $A, \ldots, \varepsilon$ P-derivace délky n + 1. Použitím předchozí věty $(A, X_{1} \cdots X_{k}, \ldots, \varepsilon)$ $A, X_{i} \cdots X_{n}, \ldots, \varepsilon$.
+Tzn. existují derivace $X_{i}, \ldots, \varepsilon$ délek nejvýše $n$. Z předpokladu $X_{i} \in E_{n}$, pro každé $i$ tj. i $A \in E_{N}$. 
+$\Leftarrow$ Dokáže, že pro každé $E_{i}$ platí, pokud $E \in E_{i}$ pak $A \Rightarrow_{G}^{*}\varepsilon$. Pro $E_{0}$ zřejmé.
+$A \rightarrow X_{0} \cdots X_{k}, A \in E_{j}$.
+\end{dukaz}
+
+\begin{veta}
+Pro každou bezkontextovou gramatiku $G$, existuje bezkontextová gramatika $G^{'}$ neobsahující $\varepsilon$ pravidla tak, že $L(G) \setminus \lbrace \varepsilon \rbrace = L(G^{'})$.
+\end{veta}
+
+\begin{dukaz}
+$\ldots$
 \end{dukaz}
 
 %\newpage
