@@ -13,6 +13,11 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows,shapes,backgrounds}
+
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
 
@@ -555,6 +560,10 @@ P &=& \lbrace S \rightarrow V|(S \Rightarrow S)|!S, V \Rightarrow pV|p \rbrace
 $L(G)$ je jazyk všech výrokových formulí.
 \end{priklad}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% Tomáš Kukučka
+
+
 \subsection{Gramatika nezkracující}
 Gramatika G se nazývá nezkracující, pokud má pouze nezkracující pravidla a může mít pravidlo ve tvaru $S \rightarrow \varepsilon$, ale $S$ se nenachází na žádné z pravých stran.
 
@@ -755,7 +764,7 @@ a pravidlo $S^{'} \rightarrow \varepsilon$ a $S^{'} \rightarrow S$.
 dopsat jednu stránku
 
 % 4. přednáška
-
+\section{Automaty}
 Gramatiky x automaty
 
 generativní formalismus
@@ -766,10 +775,10 @@ Konečné automaty: neformální
 výpočetní formalismus \uv{jednoduchý počítač}
 omezená paměť
 vstup: řetězec nad vstupní abecedou $\Sigma.$ Řídící jednotka. Skládá se z konečně mnoha stavů.
-$\underline{Počátek činnosti:}$ Vstup = celý vstupní řetězec. Řídící jednotka je v počátečním (iniciálním) stavu.
-$\underline{Činnost automatu:}$ Na základě prvního symbolu na vstupu a na základě aktuálního stavu se řídící jednotka 
+\textbf{Počátek činnosti:} Vstup = celý vstupní řetězec. Řídící jednotka je v počátečním (iniciálním) stavu.
+\textbf{Činnost automatu:} Na základě prvního symbolu na vstupu a na základě aktuálního stavu se řídící jednotka 
 přepne do jiného stavu a odebere vstupní symbol.\\
-$\underline{Konec činnosti:}$ Byl přečten celý vstupní řetězec. Podle toho v jaké končí automat stavu říkáme, 
+\textbf{Konec činnosti:} Byl přečten celý vstupní řetězec. Podle toho v jaké končí automat stavu říkáme, 
 že buď přijímá nebo zamítá vstupní řetězec. Některé stavy jsou označené jako přijímací.
 
 \begin{priklad}
@@ -789,6 +798,129 @@ $\delta(r,a) = q$ čteme: automat A při vstupním symbolu $A \in \Sigma$ a aktu
 \\ \\
 Pozn.: $Q$ je konečná
 $\delta \ldots$ zobrazení
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% Martin Rotter
+
+\begin{definice}
+Za \textbf{determinismus} považujme takovou konfiguraci, pro kterou platí, že je v každém jejím kroku jasné, co bude následovat.
+Naopak u \textbf{nedeterministických} konfigurací není v určitých případech možné další krok přesně vyjádřit na základě znalostí aktuálního kroku.
+\end{definice}
+
+\begin{priklad}
+ -- obrázek --
+ 
+ Vstupní řetězce: \textit{abba} (nepřijat), \textit{baba} (nepřijat), \textit{baab} (přijat), \textit{bbaa} (přijat).
+ 
+ V případě řetězce \textit{baab} máme dokonce 3 možnosti výpočtu:
+ \begin{enumerate}
+ \item
+ $ \langle q_{0}, baab \rangle, \langle q_{0}, aab \rangle, \langle q_{0}, ab \rangle, \langle q_{0}, b \rangle, \langle q_{0}, \varepsilon \rangle \text{ -- končí neúspěchem.}$
+ \item
+ $ \langle q_{0}, baab \rangle, \langle q_{0}, aab \rangle, \langle q_{1}, ab \rangle, \langle q_{2}, b \rangle \text{ -- končí neúspěchem.}$
+ \item
+ $ \langle q_{0}, baab \rangle, \langle q_{0}, aab \rangle, \langle q_{0}, ab \rangle, \langle q_{1}, b \rangle, \langle q_{2}, \varepsilon \rangle \text{ -- končí úspěchem.}$ 
+ \end{enumerate}
+ Předchozí zápisy můžeme pojmenovat také jako \uv{nedeterministický výpočet.}
+ 
+ Jiným zápisem téhož může být také ten následující.
+ $$
+ \langle \lbrace q_{0} \rbrace, baab \rangle, \langle \lbrace q_{0} \rbrace, aab \rangle, \langle \lbrace q_{0}, q_{1} \rbrace, ab \rangle,
+ \langle \lbrace q_{0}, q_{1}, q_{2} \rbrace, b \rangle, \langle \lbrace q_{0}, q_{2} \rbrace, \varepsilon+ \rangle
+ $$ 
+\end{priklad}
+
+\begin{definice}
+Strukturu $ A = \langle \Sigma, Q, \delta, I, F \rangle $ nazvěme \textbf{konečným nedeterministickým automatem} nad abecedou $\Sigma$. Pro tuto strukturu následně platí tato tvrzení:
+\begin{itemize}
+\item
+$ \Sigma, Q \text{ a } F$ jsou stejné jako u konečného deterministického automatu.
+\item
+\textit{I} označuje množinu počátečních stavů, která by měla být obecně neprázdná.
+\item
+$\delta$ označuje přechodovou funkci ve tvaru $ \delta : Q \times \Sigma \rightarrow 2^{Q}$, tedy $ \delta (q, a) = \lbrace r_{1}, \ldots, r_{k} \rbrace $. Totéž slovně: \uv{Automat může při stavu \textit{q} při symbolu \textit{a}
+přejít do kteréhokoliv stavu z $ \lbrace r_{1}, \ldots, r_{k} \rbrace $.}
+\end{itemize}
+\end{definice}
+
+\begin{priklad}\label{priklad-3}
+\begin{eqnarray*}
+\Sigma &=& \lbrace a, b \rbrace \\
+P &=& \lbrace q_{0}, q_{1}, q_{2}, q_{3} \rbrace \\
+I &=& \lbrace q_{0}, q_{3} \rbrace \\
+F &=& \lbrace q_{2} \rbrace 
+\end{eqnarray*}
+Následně přechodová funkce:
+\begin{eqnarray*}
+\delta =&
+\lbrace
+\langle q_{0}, a, \lbrace q_{0},q_{1} \rbrace \rangle,
+\langle q_{0}, b, \lbrace q_{0} \rbrace \rangle,
+\langle q_{1}, a, \lbrace q_{2} \rbrace \rangle,
+\langle q_{1}, b, \lbrace q_{2} \rbrace \rangle, \\
+& \langle q_{2}, a, \emptyset \rangle,
+\langle q_{2}, b, \emptyset \rangle,
+\langle q_{3}, a, \emptyset \rangle,
+\langle q_{3}, b, \emptyset \rangle 
+\rbrace
+\end{eqnarray*}
+\end{priklad}
+
+\subsection{Reprezentace KNA}
+Předchozí příklad číslo \ref{priklad-3} lze reprezentovat několika způsoby:
+\begin{enumerate}
+\item
+Přechodová tabulka, která ve svém těle obsahuje množiny stavů.
+
+\begin{center}
+\begin{tabular}{ r || c | c }                   
+   & a & b \\
+   \hline
+   $ \rightarrow q_{0} $ & $ \lbrace q_{0},q_{1} \rbrace $ & $ \lbrace q_{0} \rbrace $ \\
+   $ q_{1} $ & $ \lbrace q_{2} \rbrace $ & $ \lbrace q_{2} \rbrace $ \\
+   $ q_{2} * $ & $ \emptyset $ & $ \emptyset $ \\
+   $ \rightarrow q_{3} $ & $ \emptyset $ & $ \lbrace q_{1} \rbrace $ \\ 
+\end{tabular}
+\end{center}
+
+\item
+Diagram, který automat demonstruje v grafičtější podobě.
+
+-- obrazek --
+
+\end{enumerate}
+
+\nextoutline{Nedeterministicky vypocet}
+\subsection{Nedeterministický výpočet}
+Nyní si popišme \textbf{nedeterministický výpočet}, který je definován následujícími věcmi:
+\begin{itemize}
+\item
+Konfigurace, což je dvojice ve tvaru $ \langle \textit{stav}, \textit{řetězec} \rangle $.
+\item
+Počáteční konfigurace ve tvaru $ \langle q, w \rangle \text{ kde } q \in I$.
+\item
+Koncová konfigurace ve tvaru $ \langle q, \varepsilon \rangle $.
+\item
+Koncová přijímací konfigurace $ \langle q, \varepsilon \rangle \text{ kde } q \in F$.
+\end{itemize}
+
+\begin{definice}
+Mějme $ A = \langle \Sigma, Q, \delta, I, F \rangle  \text{ a } w \in \Sigma^{*}$. Pak posloupnost konfigurací $ \langle r_{i}, w_{i} \rangle \text{ pro } i = \lbrace 0, \ldots, n \rbrace $ splňující podmínky
+\begin{gather}
+R_{0} \in I \\
+w_{0} = w \\
+w_{n} = \varepsilon \\
+w_{i} = a_{i}w_{i+1} \text{ a } r_{i+1} \in \delta (r_{i}, a_{i}) \text{ pro } i = \lbrace 0, \ldots,  n-1 \rbrace
+\end{gather}
+nazveme \textbf{nedeterministický výpočet}.
+\end{definice}
+
+\nextoutline{Rozsirena prechodova funkce}
+\subsection{Rozšířená přechodová funkce}
+\begin{definice}
+Rozšířená přechodová funkce \ldots
+\end{definice}
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
