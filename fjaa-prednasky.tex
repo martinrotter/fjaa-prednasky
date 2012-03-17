@@ -555,7 +555,7 @@ $L(G)$ je jazyk všech výrokových formulí.
 \end{priklad}
 
 \subsection{Gramatika nezkracující}
-Gramatika G se nazývá nezkracující, pokud má pouze nezkracující pravidla a může mít pravidlo ve tvaru $S \rightarrow \varepsilon$, ale $S$ se nenechází na žádné z pravých stran.
+Gramatika G se nazývá nezkracující, pokud má pouze nezkracující pravidla a může mít pravidlo ve tvaru $S \rightarrow \varepsilon$, ale $S$ se nenachází na žádné z pravých stran.
 
 \begin{priklad}
 \begin{eqnarray*}
@@ -574,8 +574,8 @@ Ke každé gramatice G, existuje ekvivalentní gramatika $G^{'}$, ve které jsou
 \end{veta}
 
 \begin{dukaz}
-Pro každý termínál $a \in \Sigma$, zavedeme terminál $N_{a}$ a pravidlo $N_{a} \rightarrow a$.
-Všechny výskyty terminálů ve výchozých pravidlech nahradíme přislušnými pomocnými neterminály.
+Pro každý terminál $a \in \Sigma$, zavedeme terminál $N_{a}$ a pravidlo $N_{a} \rightarrow a$.
+Všechny výskyty terminálů ve výchozích pravidlech nahradíme příslušnými pomocnými neterminály.
 $$
 Bcb \rightarrow bBc \text{ se změní na } BN_{c}N_{b} \rightarrow N_{b} BN_{c}, 
 N_{c} \rightarrow c, N_{b} \rightarrow b
@@ -583,7 +583,7 @@ $$
 \end{dukaz}
 
 \begin{veta}
-Ke každé nekzracující gramatice existuje ekvivalentní gramatika, která je kontextově \mbox{závislá}.
+Ke každé nezkracující gramatice existuje ekvivalentní gramatika, která je kontextově \mbox{závislá}.
 \end{veta}
 
 \begin{dukaz}
@@ -602,7 +602,7 @@ X_{1} X_{2} \cdots X_{my} \rightarrow B_{1} X_{2} X_{3} \cdots X_{my} \\
 \vdots \\
 B_{1} B_{2} \cdots B_{m-1} X_{my} \rightarrow B_{1} B_{2} \cdots B_{m-1}B_{my}
 \end{gather*}
-Tento postup se aplikuje pro všechna pravidla. Hledaná gramatika $G^{'}$ se skládá z $\Sigma, N$ + všechny pomocné termínály + všechna odovozená pravidla.
+Tento postup se aplikuje pro všechna pravidla. Hledaná gramatika $G^{'}$ se skládá z $\Sigma, N$ + všechny pomocné terminály + všechna odvozená pravidla.
 \end{dukaz}
 
 \subsection{Základní vlastnosti bezkontextových gramatik}
@@ -633,7 +633,7 @@ Existují řetězce $y_{1}, \ldots, y_{k}$ a P-derivace $X_{1}, \ldots, y_{1}$ a
 délek $n_{1} \cdots n_{k}$ tak, že $y = y_{1} y_{2} \cdots y_{k}$ a $n = n_{1} + n_{2} + \cdots + n{k}$. 
 Z faktu, že $y  \Rightarrow_{G}z$ a z toho, že gramatika je bezkontextová plyne, že $y$ je ve tvaru 
 $y = y^{''} y^{'} A w^{'} w^{''}$ pro $i = 1, \ldots, k$. Pak $z$ je ve tvaru $z = y^{''} y^{'} u w^{'} w^{''}$ a $A \rightarrow n \in P$,
-to jest $X_{i}, \ldots, y_{i}, y^{'} u w^{'}$ je P-derivce délky $n_{i+1}$. Hledáné derivace jsou:
+to jest $X_{i}, \ldots, y_{i}, y^{'} u w^{'}$ je P-derivace délky $n_{i+1}$. Hledané derivace jsou:
 \begin{gather*}
 X_{1}, \ldots, y_{1} \\
 \vdots \\
@@ -718,8 +718,76 @@ Pro každou bezkontextovou gramatiku $G$, existuje bezkontextová gramatika $G^{
 \end{veta}
 
 \begin{dukaz}
-$\ldots$
+$G = \langle N, \Sigma, P,S \rangle$ - výchozí gramatika.\\
+Stanovíme množinu $E_{n}$ dle předchozího postupu $G^{'} = \langle N, \Sigma, P^{'},S \rangle$.
+$P^{'} = \lbrace A \rightarrow y|A \rightarrow x \in P$ a $y \in D_{(x)} \rbrace$, kde $D_{(x)}$ značí množinu řetězeců, které jsou neprázné 
+a vznikly z řetězce $x$ vynecháním libovolného množství neterminálů z $E_{N}$.
 \end{dukaz}
+
+\begin{priklad}
+\begin{eqnarray*}
+E_{n} &=& \lbrace A, B \rbrace \\
+X &\rightarrow& aAbAB \\
+&\ldots& \\
+X &\rightarrow& aAbAB \\
+X &\rightarrow& abAB \\
+X &\rightarrow& aAbB \\
+X &\rightarrow& aAbB \\
+X &\rightarrow& aAbA \\
+X &\rightarrow& abB \\
+X &\rightarrow& abA \\
+X &\rightarrow& aAb \\
+X &\rightarrow& ab
+\end{eqnarray*}
+\end{priklad}
+
+\begin{veta}
+Pro každou bezkontextovou gramatiku existuje ekvivalentní bezkontextová gramatika, která je navíc kontextová (a tudíž nezkracující)
+\end{veta}
+
+\begin{dukaz}
+Vstupní gramatika $G$. Dle předchozí věty existuje $G^{'}$ tak, že $L(G) \setminus \lbrace \varepsilon \rbrace = L(G^{'})$. 
+$G^{'}$ je nezkracující a kontextová, protože nemá $\varepsilon$ pravidla. Pokud $\varepsilon$ nepatří do $L(G)$, pak jsme hotovi.
+Pokud $\varepsilon \in L(G)$. Pak $G^{'}$ rozšíříme tak, že přidáme startovní symbol $S^{'}$ 
+a pravidlo $S^{'} \rightarrow \varepsilon$ a $S^{'} \rightarrow S$.
+\end{dukaz}
+dopsat jednu stránku
+
+% 4. přednáška
+
+Gramatiky x automaty
+
+generativní formalismus
+
+Automaty - analytické formalismy
+
+Konečné automaty: neformální
+výpočetní formalismus \uv{jednoduchý počítač}
+omezená paměť
+vstup: řetězec nad vstupní abecedou $\Sigma.$ Řídící jednotka. Skládá se z konečně mnoha stavů.
+$\underline{Počátek činnosti:}$ Vstup = celý vstupní řetězec. Řídící jednotka je v počátečním (iniciálním) stavu.
+$\underline{Činnost automatu:}$ Na základě prvního symbolu na vstupu a na základě aktuálního stavu se řídící jednotka 
+přepne do jiného stavu a odebere vstupní symbol.\\
+$\underline{Konec činnosti:}$ Byl přečten celý vstupní řetězec. Podle toho v jaké končí automat stavu říkáme, 
+že buď přijímá nebo zamítá vstupní řetězec. Některé stavy jsou označené jako přijímací.
+
+\begin{priklad}
+sešit - automat (obr. 4.1)
+\end{priklad}
+
+Formalizace:
+Konečný deterministický automat (s úplnou přechodovou funkcí) (nad vstupní abecedou $\Sigma$) je struktura: \\
+$\langle \Sigma, Q, d, q_{0} \rangle$ \\
+$\Sigma \ldots$ vstupní abeceda \\
+$Q \ldots$ konečná množina stavu, která je neprázdná \\
+$q_{0} \in Q \ldots$ počáteční stav \\
+$F \subseteq Q \ldots$ množina koncových stavů (přijímacích) \\
+$\delta$ je zobrazení $\delta: Q x \sigma \rightarrow Q$ \\
+$\delta(r,a) = q$ čteme: automat A při vstupním symbolu $A \in \Sigma$ a aktuálním stavu $r \in Q$
+ přejde do stavu $q \in Q$
+\\ \\
+Pozn.: $Q$ je konečná
+$\delta \ldots$ zobrazení
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
