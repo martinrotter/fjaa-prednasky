@@ -1045,6 +1045,62 @@ nazveme \textbf{nedeterministický výpočet}.
 Rozšířená přechodová funkce \ldots
 \end{definice}
 
+%6. přednáška
+
+\section{Vztah regulárních jazyků a konečných automatů}
+
+\subsection{Regulární jazky jsou rozpoznatelné KDA}
+
+\begin{veta}
+Pro každou regulární gramatiku $G=\langle N,\Sigma,P,S \rangle$ existuje konečný deterministický automat $A$ tak, že jazyk generovaný gramatikou je totéž, jako jazyk rozpoznatelný automatem, tj. $ L(G)=L(A)$
+\end{veta} 
+
+\begin{dukaz}
+Nejprve uvažujeme situaci, že $ \varepsilon \notin L(G) $. Uvažujme konečný nedeterministický automat $A = \langle \Sigma,N \cup \lbrace \# \rbrace, \delta, \lbrace S \rbrace,\lbrace\#\rbrace \rangle $
+
+$$
+\delta(A,b)=\left\{
+\begin{array}{l@{\quad\mbox{}\quad}l}
+\lbrace B \in N | A \rightarrow bB \in P \rbrace & \text{pokud}\quad A \in N \wedge A \rightarrow b \notin P\\
+\lbrace B \in N | A \rightarrow bB \in P \rbrace \cup \lbrace \# \rbrace & \text{pokud}\quad A \in N \wedge A \rightarrow b \in P\\
+\emptyset & \text{jinak}\\
+\end{array}
+\right.
+$$
+
+Pro důkaz $L(G)=L(A)$ stačí prokázat, že pro každé $A \in N $  a $ x \in \Sigma^* $ platí, že $A \Rightarrow_G^* x$ právě když $ \# \in \delta^* (\lbrace A \rbrace,x)$
+
+Důkaz provedeme indukcí přes délku řetězce x. 
+
+Pro $|x|=1$ zřejmé. $ A \Rightarrow_G^* x $ právě když $ A \Rightarrow_G x $ , tj. existuje pravidlo $ A \rightarrow x \in P $ tj. z definice $\delta^*$ platí, že $ \#\in \delta^* (\lbrace A \rbrace, x) $
+
+Nechť $|x|=n$ a nechť tvrzení platí pro všechny řetězce kratší délky. Jelikož gramatika G je regulární, má P-derivace $A,\ldots,x$ právě n kroků. Pokud $|x|>1$ pak $ A \Rightarrow_G bB \Rightarrow_G^* by = x $ pro nějaké $ A \rightarrow bB \in P$.
+
+Pro $|y|<n$ z indukčního předpokladu platí, že $\#\in \delta^* (\lbrace B \rbrace,y)$.
+
+Tím spíš $\delta^* ( \lbrace A \rbrace, x ) = \delta^* ( \lbrace A \rbrace, by ) = \delta^* ( \delta( A , b ),y) = \delta^* ( \lbrace B,\ldots \rbrace, y ) \supseteq \delta^* ( \lbrace B \rbrace, y )$ tj. $ \# \in \delta^* (\lbrace A \rbrace,\#)$ protože $ A \rightarrow bB \in P \text{tj.} B\in\delta (A,b)$
+
+Tím jsme prokázali, že pokud $ A \Rightarrow^*_G x$ pak $ \# \in \delta^* ( \lbrace A \rbrace , x )$.
+
+Obráceně, pokud $ \#\in \delta^* ( \lbrace A \rbrace , x )$ pak pro $x=by, b\in \Sigma$ máme: $ \#\in \delta^* ( \lbrace A \rbrace , by ) = \delta^* ( \delta (A,b), y ) = \delta^* (\bigcup_{B\in\delta(A,b)}{\lbrace B \rbrace}, y) = \bigcup_{B\in\delta(A,b)}{\delta^* ( \lbrace B \rbrace , y)}$
+
+Tj. existuje $ B \in \delta (A,b) $ tak, že $ \#\in\delta^* ( \lbrace B \rbrace ,y)$. Ze zavedení $\delta$ plyne, že $A \rightarrow bB \in P$
+
+Aplikací indukčního předpokladu, existuje P-derivace $B,\ldots,y$. Hledaná P-derivace je ve tvaru: $A,bB,\ldots,by=x$,tj. $A \Rightarrow^*_Gx$.
+\end{dukaz}
+
+V případě, že $\varepsilon \in L(G)$, rozšíříme automat následovně, jednou ze tří možností:
+\begin{enumerate}
+\item
+Přidáme $S$ do množiny koncových stavů.
+\item
+Přidáme $\#$ mezi počáteční stavy
+\item
+Zavedeme nový stav, který bude počáteční a zároveň koncový a nevedou z něj žádné přechody jinam.
+\end{enumerate}
+
+Pozn.: Nyní zbývá automat pouze determinizovat.
+
 %\newpage
 \renewcommand{\indexcolumns}{3}
 \printindex
