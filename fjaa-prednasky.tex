@@ -15,6 +15,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
@@ -49,6 +50,93 @@
 
 \begin{document}
 \maketitle
+
+%---> 26 states
+%---> universel automaton of a ``pure-group'' language
+\begin{VCPicture}{(-7,-11)(7,10)}
+\PlainState
+%
+\StateIF[p]{(-1,7)}{P}   \StateIF[s]{(1,7)}{S}
+\State[q]{(-4.46,8)}{Q}  \StateIF[t]{(4.46,8)}{T}
+\State[r]{(-4.46,6)}{R}  \StateIF[u]{(4.46,6)}{U}
+%
+\StateIF[pq]{(-4,-2)}{PQ}  \StateIF[st]{(4,2)}{ST}
+\State[qr]{(-2,0)}{QR}     \StateIF[tu]{(2,0)}{TU}
+\StateIF[pr]{(-4,2)}{PR}   \StateIF[su]{(4,-2)}{SU}
+\StateIF[pt]{(2,4)}{PT}    \StateIF[pu]{(2,-4)}{PU}
+\State[qu]{(0,2)}{QU}      \State[qs]{(-2,-4)}{QS}
+\State[rs]{(-2,4)}{RS}     \State[rt]{(0,-2)}{RT}
+%
+\ChgStateLabelScale{1.3}
+\LargeState
+\StateIFX[pqr]{(-6,-6)}{PQR}  \StateIF[ptu]{(4,-8)}{PTU}
+\StateIF[pqu]{(-2,-7)}{PQU}   \State[qsu]{(2,-7)}{QSU}
+\State[qrs]{(-4,-8)}{QRS}     \State[rst]{(2,-9)}{RST}
+\StateIF[prt]{(-2,-9)}{PRT}   \StateIFX[stu]{(6,-6)}{STU}
+%
+\FixDimEdge{dotted}{.5}{gray}{gray}
+\DimEdge
+\EdgeL{P}{PQ}{} \EdgeL{P}{PR}{} \EdgeL{P}{PT}{} \EdgeL{P}{PU}{}
+\EdgeL{Q}{PQ}{} \EdgeL{Q}{QR}{} \EdgeL{Q}{QS}{} \EdgeL{Q}{QU}{}
+\EdgeL{R}{PR}{} \EdgeL{R}{QR}{} \EdgeL{R}{RS}{} \EdgeL{R}{RT}{}
+\EdgeL{S}{QS}{} \EdgeL{S}{RS}{} \EdgeL{S}{ST}{} \EdgeL{S}{SU}{}
+\EdgeL{T}{PT}{} \EdgeL{T}{RT}{} \EdgeL{T}{ST}{} \EdgeL{T}{TU}{}
+\EdgeL{U}{PU}{} \EdgeL{U}{QU}{} \EdgeL{U}{SU}{} \EdgeL{U}{TU}{}
+%
+\EdgeL{PQ}{PQR}{} \EdgeL{QR}{PQR}{} \EdgeL{PR}{PQR}{}
+\EdgeL{QR}{QRS}{} \EdgeL{QS}{QRS}{} \EdgeL{RS}{QRS}{}
+\EdgeL{PR}{PRT}{} \EdgeL{PT}{PRT}{} \EdgeL{RT}{PRT}{}
+\EdgeL{PQ}{PQU}{} \EdgeL{PU}{PQU}{} \EdgeL{QU}{PQU}{}
+\EdgeL{ST}{STU}{} \EdgeL{SU}{STU}{} \EdgeL{TU}{STU}{}
+\EdgeL{PT}{PTU}{} \EdgeL{PU}{PTU}{} \EdgeL{TU}{PTU}{}
+\EdgeL{QS}{QSU}{} \EdgeL{QU}{QSU}{} \EdgeL{SU}{QSU}{}
+\EdgeL{RS}{RST}{} \EdgeL{RT}{RST}{} \EdgeL{ST}{RST}{}
+\RstEdge
+%
+\Initial[s]{P} \Final[n]{T} \Final[s]{S} \Final[s]{U}
+%
+\Initial{PQ} \Initial{PR} \Initial[s]{PT} \Initial[n]{PU}
+\Final{ST} \Final[e]{TU} \Final{SU}
+%
+\Initial[sw]{PQR} \Initial[n]{PQU} \Initial[s]{PRT}
+\Initial[s]{PTU} \Final[se]{STU}
+%
+\EdgeR{P}{Q}{a}   \LoopW{Q}{b}
+\ArcR{Q}{R}{a}    \LoopW{R}{b}
+\EdgeR{R}{P}{a}   \LoopE{T}{b}
+\EdgeL{S}{T}{a}   \LoopE{U}{b}
+\ArcL{T}{U}{a}    \ArcL{P}{S}{b}
+\EdgeL{U}{S}{a}   \ArcL{S}{P}{b}
+%
+\EdgeR{PQ}{QR}{a}  \EdgeL{PT}{QU}{a}
+\EdgeR{QR}{PR}{a}  \EdgeL{QU}{RS}{a}
+\EdgeR{PR}{PQ}{a}  \EdgeL{RS}{PT}{a}
+%
+\EdgeL{PU}{QS}{a}  \EdgeR{SU}{ST}{a}
+\EdgeL{QS}{RT}{a}  \EdgeR{ST}{TU}{a}
+\EdgeL{RT}{PU}{a}  \EdgeR{TU}{SU}{a}
+%
+\LoopE[.8]{QR}{b}
+\LoopW[.2]{TU}{b}
+\LoopN[.8]{RT}{b}
+\LoopS[.2]{QU}{b}
+%
+\ArcL{PQ}{QS}{b}  \ArcL{ST}{PT}{b}
+\ArcL{QS}{PQ}{b}  \ArcL{PT}{ST}{b}
+\ArcL{PU}{SU}{b}  \ArcL{RS}{PR}{b}
+\ArcL{SU}{PU}{b}  \ArcL{PR}{RS}{b}
+%
+\EdgeR{PQU}{QRS}{a}  \EdgeR{QSU}{RST}{a}
+\EdgeR{QRS}{PRT}{a}  \EdgeR{RST}{PTU}{a}
+\EdgeR{PRT}{PQU}{a}  \EdgeR{PTU}{QSU}{a}
+%
+\LoopL{135}{PQR}{a}  \LoopL{45}{STU}{a}
+%
+\ArcL{QRS}{PQR}{b}  \ArcL{PQU}{QSU}{b}
+\ArcL{PQR}{QRS}{b}  \ArcL{QSU}{PQU}{b}
+\ArcL{PTU}{STU}{b}  \ArcL{PRT}{RST}{b}
+\ArcL{STU}{PTU}{b}  \ArcL{RST}{PRT}{b}
+\end{VCPicture}
 
 \section{Historie}
 Počátek úvah, jež byly později základem seriozního zkoumání formálních jazyků potažmo automatů se datuje do 30. let.
