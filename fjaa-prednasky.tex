@@ -1082,14 +1082,14 @@ Vemme KNA z příkladu \ref{priklad-3}.
 
 \section{Vztah regulárních jazyků a konečných automatů}
 
-\subsection{Regulární jazky jsou rozpoznatelné KDA}
+\subsection{Regulární jazky jsou rozpoznatelné KDA (implikace zleva)}
 
 \begin{veta}
-Pro každou regulární gramatiku $G=\langle N,\Sigma,P,S \rangle$ existuje konečný deterministický automat $A$ tak, že jazyk generovaný gramatikou je totéž, jako jazyk rozpoznatelný automatem, tj. $ L(G)=L(A)$
+Pro každou regulární gramatiku $G=\langle N,\Sigma,P,S \rangle$ existuje konečný deterministický automat $A$ tak, že jazyk generovaný gramatikou je totéž, jako jazyk rozpoznatelný automatem, tj. $L(G)=L(A)$
 \end{veta} 
 
 \begin{dukaz}
-Nejprve uvažujeme situaci, že $ \varepsilon \notin L(G) $. Uvažujme konečný nedeterministický automat $A = \langle \Sigma,N \cup \lbrace \# \rbrace, \delta, \lbrace S \rbrace,\lbrace\#\rbrace \rangle $
+Nejprve uvažujeme situaci, že $\varepsilon \notin L(G)$. Uvažujme konečný nedeterministický automat $A = \langle \Sigma, N \cup \lbrace \# \rbrace, \delta, \lbrace S \rbrace,\lbrace \# \rbrace \rangle$.
 
 $$
 \delta(A,b)=\left\{
@@ -1101,38 +1101,88 @@ $$
 \right.
 $$
 
-Pro důkaz $L(G)=L(A)$ stačí prokázat, že pro každé $A \in N $  a $ x \in \Sigma^* $ platí, že $A \Rightarrow_G^* x$ právě když $ \# \in \delta^* (\lbrace A \rbrace,x)$
+Pro důkaz $L(G)=L(A)$ stačí prokázat, že pro každé $A \in N $  a $ x \in \Sigma^* $ platí, že $A \Rightarrow_G^* x$ právě když $ \# \in \delta^* (\lbrace A \rbrace,x)$.
 
 Důkaz provedeme indukcí přes délku řetězce x. 
-
-Pro $|x|=1$ zřejmé. $ A \Rightarrow_G^* x $ právě když $ A \Rightarrow_G x $ , tj. existuje pravidlo $ A \rightarrow x \in P $ tj. z definice $\delta^*$ platí, že $ \#\in \delta^* (\lbrace A \rbrace, x) $
-
+\begin{enumerate}
+\item
+Pro $|x|=1$ zřejmé. $A \Rightarrow_G^* x $ právě když $A \Rightarrow_G x $ , tj. existuje pravidlo $A \rightarrow x \in P$ tj. z definice $\delta^*$ platí, že $ \#\in \delta^* (\lbrace A \rbrace, x) $.
 Nechť $|x|=n$ a nechť tvrzení platí pro všechny řetězce kratší délky. Jelikož gramatika G je regulární, má P-derivace $A,\ldots,x$ právě n kroků. Pokud $|x|>1$ pak $ A \Rightarrow_G bB \Rightarrow_G^* by = x $ pro nějaké $ A \rightarrow bB \in P$.
 
+\item
 Pro $|y|<n$ z indukčního předpokladu platí, že $\#\in \delta^* (\lbrace B \rbrace,y)$.
+Tím spíš $\delta^* ( \lbrace A \rbrace, x ) = \delta^* ( \lbrace A \rbrace, by ) = \delta^* ( \delta( A , b ),y) = \delta^* ( \lbrace B,\ldots \rbrace, y ) \supseteq \delta^* ( \lbrace B \rbrace, y )$ tj. $ \# \in \delta^* (\lbrace A \rbrace,\#)$ protože $A \rightarrow bB \in P \text{tj.} B\in\delta (A,b)$
 
-Tím spíš $\delta^* ( \lbrace A \rbrace, x ) = \delta^* ( \lbrace A \rbrace, by ) = \delta^* ( \delta( A , b ),y) = \delta^* ( \lbrace B,\ldots \rbrace, y ) \supseteq \delta^* ( \lbrace B \rbrace, y )$ tj. $ \# \in \delta^* (\lbrace A \rbrace,\#)$ protože $ A \rightarrow bB \in P \text{tj.} B\in\delta (A,b)$
+\item
+Tím jsme prokázali, že pokud $A \Rightarrow^*_G x$ pak $\# \in \delta^* ( \lbrace A \rbrace , x )$.
 
-Tím jsme prokázali, že pokud $ A \Rightarrow^*_G x$ pak $ \# \in \delta^* ( \lbrace A \rbrace , x )$.
-
-Obráceně, pokud $ \#\in \delta^* ( \lbrace A \rbrace , x )$ pak pro $x=by, b\in \Sigma$ máme: $ \#\in \delta^* ( \lbrace A \rbrace , by ) = \delta^* ( \delta (A,b), y ) = \delta^* (\bigcup_{B\in\delta(A,b)}{\lbrace B \rbrace}, y) = \bigcup_{B\in\delta(A,b)}{\delta^* ( \lbrace B \rbrace , y)}$
-
+\item
+Obráceně, pokud $\#\in \delta^* ( \lbrace A \rbrace , x )$ pak pro $x=by, b\in \Sigma$ máme: $ \#\in \delta^* ( \lbrace A \rbrace , by ) = \delta^* ( \delta (A,b), y ) = \delta^* (\bigcup_{B\in\delta(A,b)}{\lbrace B \rbrace}, y) = \bigcup_{B\in\delta(A,b)}{\delta^* ( \lbrace B \rbrace , y)}$
 Tj. existuje $ B \in \delta (A,b) $ tak, že $ \#\in\delta^* ( \lbrace B \rbrace ,y)$. Ze zavedení $\delta$ plyne, že $A \rightarrow bB \in P$
 
+\item
 Aplikací indukčního předpokladu, existuje P-derivace $B,\ldots,y$. Hledaná P-derivace je ve tvaru: $A,bB,\ldots,by=x$,tj. $A \Rightarrow^*_Gx$.
+\end{enumerate}
 \end{dukaz}
 
 V případě, že $\varepsilon \in L(G)$, rozšíříme automat následovně, jednou ze tří možností:
 \begin{enumerate}
 \item
 Přidáme $S$ do množiny koncových stavů.
+
 \item
 Přidáme $\#$ mezi počáteční stavy
+
 \item
 Zavedeme nový stav, který bude počáteční a zároveň koncový a nevedou z něj žádné přechody jinam.
 \end{enumerate}
 
-Pozn.: Nyní zbývá automat pouze determinizovat.
+\begin{poznamka}
+Nyní zbývá automat pouze determinizovat.
+\end{poznamka}
+
+\begin{priklad}
+Máme gramatiku $G$.
+\begin{eqnarray*}
+G &=& \langle N,\Sigma,P,S \rangle \\
+\Sigma &=& \lbrace e,d,. \rbrace \\
+P &=& \lbrace S \rightarrow .F | dT , T \rightarrow .E|.F|dT|. , D \rightarrow dD|d , E \rightarrow eD , F \rightarrow dE|dF|d \rbrace
+\end{eqnarray*}
+
+Automat rozpoznávající jazyk, generovaný gramatikou G, bude vypadat následovně:
+%%%%DOPLNIT OBRAZKY
+\end{priklad}
+
+\subsection{Jazyky rozpoznatelné KDA jsou regulární (implikace zprava)}
+
+\begin{veta} 
+Pro každý konečný deterministický automat $A = \langle \Sigma,Q,\delta,q_0,F \rangle$ existuje regulární gramatika $G$ tak, že $L(A)=L(G)$.
+\end{veta}
+
+\begin{dukaz}
+Za neterminální symboly $G$ vezmeme stavy automatu. Startovní neterminál bude $q_0$. Uvažujeme gramatiku:
+$G = \langle Q,\Sigma,P,q_0 \rangle$
+
+$P = \lbrace q \rightarrow ar |$ pokud $\delta (q,a)=r, \text{ pro } q,r \in Q$ a $a \in \Sigma \rbrace \\ \cup \lbrace q \rightarrow a |$ pokud $\delta (q,a) \in F \rbrace$ 
+
+Prokážeme že: $ q \Rightarrow_G^* x $ právě když $ \delta^* (q,x) \in F$
+
+Pro $|x|=1$ platí: $ q \Rightarrow_G^* x $ právě když existuje pravidlo $q \rightarrow x \in P$ , tj. z definice $P$ platí $\delta (q,x) \in F$
+
+Pro $x=by$, kde $b \in \Sigma^*$ předpokládejme, že tvrzení platí pro $y$. Platí, že $q \Rightarrow_G br \Rightarrow_G^* by = x$ právě když $\delta (q,b)=r$ a $\delta^* (r,y) \in F$
+
+To znamená $\delta^* (q,by) = \delta^* ( \delta (q,b),y) \in F$
+
+Předchozí dokazuje, že $x \in L(G)$ právě když $x \in L(A)$ pro každý neprázdný $x$.
+
+Pokud $A$ nepříjímá $\varepsilon$ , pak jsme hotovi.
+
+Uvažujeme nový neterminál $S$, který bude nový startovní symbol, tj. místo $G$ uvažujeme $G'= \langle Q \cup \lbrace S \rbrace,\Sigma,P',S \rangle$
+
+$P'= \lbrace S \rightarrow \varepsilon \rbrace \cup \lbrace S \rightarrow x | q_0 \rightarrow x \in P \rbrace \cup P$
+
+Pak $L(A)=L(G)$.
+\end{dukaz}
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
