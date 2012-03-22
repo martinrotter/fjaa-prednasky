@@ -928,11 +928,10 @@ Předchozí příklad číslo \ref{priklad-3} lze reprezentovat několika způso
 \begin{VCPicture}{(-5,-3)(5,3)}
 \State[q_{0}]{(-4,1)}{q0}
 \State[q_{1}]{(-2,0)}{q1}
-\State[q_{2}]{(2,0)}{q2}
+\FinalState[q_{2}]{(2,0)}{q2}
 \State[q_{3}]{(-4,-1)}{q3}
 \Initial{q0}
 \Initial{q3}
-\Final{q2}
 \LoopN[.5]{q0}{a, b}
 \ArcL{q0}{q1}{a}
 \ArcL{q1}{q2}{a}
@@ -972,8 +971,65 @@ nazveme \textbf{nedeterministický výpočet}.
 \nextoutline{Rozsirena prechodova funkce}
 \subsection{Rozšířená přechodová funkce}
 \begin{definice}
-Rozšířená přechodová funkce \ldots
+Rozšířená přechodová funkce má tvar
+$$
+A = \langle \Sigma, Q, \delta, I, F \rangle
+$$
+navíc zavádíme
+\begin{gather*}
+\delta^{*} : \Sigma^{Q} \times \Sigma^{*} \rightarrow \Sigma^{Q} \\
+\delta^{*}(R, w) = \left\lbrace
+\begin{array}{l l}
+R & \text{ pokud } w = \varepsilon \\
+\delta^{*}(\bigcup\limits_{q \in R} \delta(q, w), u) & \text{ pokud } w = au\text{, kde } a \in \Sigma, u \in \Sigma^{q} \\
+\end{array}
+\right\rbrace
+\end{gather*}
 \end{definice}
+
+\begin{veta}
+Platí $\delta^{*}(R,w) = \delta^{*}(\delta^{*}(R,u),v), \forall R \subseteq Q, uv \in \Sigma^{*}$.
+\end{veta}
+\begin{dukaz}
+Předchozí tvrzení dokazujeme indukcí přes délku řetězce.
+
+\begin{enumerate}
+\item
+Pro $u = \varepsilon$ je situace triviální.
+
+\item
+Pokud $u = ay, |y| < |u|,\text{ pak } \delta^{*}(R,w) = \delta^{*}(R,ayv) = \delta^{*}(R,a(yv))$.
+
+\item
+Nyní aplikujme definici.
+\begin{gather*}
+\delta^{*}(\bigcup\limits_{q \in R} \delta(q, a), yv) = \text{ indukční předpoklad} \\
+\delta^{*}(\delta^{*}(\bigcup\limits_{q \in R} \delta(q, a), y), v) = \text{ definicie } \delta^{*} \\
+\delta^{*}(\delta^{*}(R, ay), v) = \delta^{*}(\delta^{*}(R,u),v)
+\end{gather*}
+\end{enumerate}
+\end{dukaz}
+
+\begin{veta}
+Platí následující tvrzení:
+$$
+\delta^{*}(\bigcup\limits_{i=1}^{k} R_{i},w) = \bigcup\limits_{i=1}^{k} \delta^{*}(R_{i},w) \text{ pro každé} R_{i} \subseteq Q, w \in \Sigma^{*}
+$$
+\end{veta}
+\begin{dukaz}
+Předchozí tvrzení dokazujeme indukcí přes délku řetězce w.
+\begin{gather*}
+\delta^{*}(\bigcup\limits_{i=1}^{k}R_{i},w) = \delta^{*}(\bigcup\limits_{i=1}^{k}R_{i},au) = \delta^{*}(q \in \bigcup\limits_{\bigcup_{i=1}^{k}} \delta(q, a), u) \\
+\delta^{*}(\bigcup\limits_{i=1}^{k}\bigcup\limits_{q \in R_{i}} \delta(q,a),u) \text{ \ldots indukční předpoklad} \\
+\bigcup\limits_{i=1}^{k} \delta^{*}(\bigcup\limits_{q \in R_{i}} \delta(q,a),u) \\
+\bigcup\limits_{i=1}^{k} \delta^{*}(R,a_{n}) = \bigcup\limits_{q \in R_{i}} \delta(R,w)
+\end{gather*}
+\end{dukaz}
+
+\subsection{Řetězce přijímané KNA}
+KNA $A$ přijímá řetězec $w$, pokud $\delta^{*}(I,w) \cap F \neq \emptyset$.
+Navíc jazyk, přijímaný KNA $A$ si definujme jako $L(A) = \lbrace w \in \Sigma^{*} | \delta^{*}(I,w) \cap F \neq \emptyset \rbrace$.
+
 
 %6. přednáška
 
