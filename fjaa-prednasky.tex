@@ -1087,6 +1087,48 @@ Zavedeme nový stav, který bude počáteční a zároveň koncový a nevedou z 
 
 Pozn.: Nyní zbývá automat pouze determinizovat.
 
+\begin{priklad}
+Máme gramatiku $G = \langle N,\Sigma,P,S \rangle$
+
+$\Sigma = \lbrace e,d,. \rbrace$
+
+$P = \lbrace S \rightarrow .F | dT , T \rightarrow .E|.F|dT|. , D \rightarrow dD|d , E \rightarrow eD , F \rightarrow dE|dF|d \rbrace$
+
+Automat rozpoznávající jazyk, generovaný gramatikou G, bude vypadat následovně:
+%%%%DOPLNIT OBRAZKY
+\end{priklad}
+
+\subsection{Jazyky rozpoznatelné KDA jsou regulární}
+
+\begin{veta} 
+Pro každý konečný deterministický automat $A = \langle \Sigma,Q,\delta,q_0,F \rangle$ existuje regulární gramatika \textit{G} tak, že \textit{L(A)=L(G)}
+\end{veta}
+
+\begin{dukaz}
+Za neterminální symboly \textit{G} vezmeme stavy automatu. Startovní neterminál bude $q_0$. Uvažujeme gramatiku $G = \langle Q,\Sigma,P,q_0 \rangle$
+
+$P = \lbrace q \rightarrow ar |$ pokud $ \delta (q,a)=r, \text{ pro } q,r \in Q $ a $ a \in \Sigma \rbrace \\ \cup \lbrace q \rightarrow a |$ pokud $\delta (q,a) \in F \rbrace $ 
+
+Prokážeme že: $ q \Rightarrow_G^* x $ právě když $ \delta^* (q,x) \in F$
+
+Pro $|x|=1$ platí: $ q \Rightarrow_G^* x $ právě když existuje pravidlo $q \rightarrow x \in P$ , tj. z definice \textit{P} platí $\delta (q,x) \in F$
+
+Pro \textit{x=by}, kde $b \in \Sigma^*$ předpokládejme, že tvrzení platí pro \textit{y}. Platí, že $q \Rightarrow_G br \Rightarrow_G^* by = x$ právě když $\delta (q,b)=r$ a $\delta^* (r,y) \in F$
+
+To znamená $\delta^* (q,by) = \delta^* ( \delta (q,b),y) \in F$
+
+Předchozí dokazuje, že $x \in L(G)$ právě když $x \in L(A)$ pro každý neprázdný \textit{x}.
+
+Pokud \textit{A} nepříjímá $\varepsilon$ ,pak jsme hotovi.
+
+Uvažujeme nový neterminál \textit{S}, který bude nový startovní symbol, tj. místo \textit{G} uvažujeme $G'= \langle Q \cup \lbrace S \rbrace,\Sigma,P',S \rangle$
+
+$P'= \lbrace S \rightarrow \varepsilon \rbrace \cup \lbrace S \rightarrow x | q_0 \rightarrow x \in P \rbrace \cup P$
+
+Pak \textit{L(A)=L(G)}.
+
+\end{dukaz}
+
 %\newpage
 \renewcommand{\indexcolumns}{3}
 \printindex
