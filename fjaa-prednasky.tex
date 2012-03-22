@@ -1030,6 +1030,53 @@ Předchozí tvrzení dokazujeme indukcí přes délku řetězce w.
 KNA $A$ přijímá řetězec $w$, pokud $\delta^{*}(I,w) \cap F \neq \emptyset$.
 Navíc jazyk, přijímaný KNA $A$ si definujme jako $L(A) = \lbrace w \in \Sigma^{*} | \delta^{*}(I,w) \cap F \neq \emptyset \rbrace$.
 
+\begin{veta}
+Platí, že $w \in L(a)$ právě tehdy, když KNA $A$ má přijímací výpočet pro $w$.
+\end{veta}
+\begin{dukaz}
+Předchozí tvrzení lze dokázat indukcí přes délku řetězce w.
+
+\begin{gather*}
+q \in \delta^{*}(I,w) \text{ právě tehdy, když existuje výpočet pro w, končící ve stavu } q \\
+\text{dekompozice navíc } w = ua
+\end{gather*}
+\end{dukaz}
+
+\subsection{Determinizace KNA}
+\begin{veta}
+Pro každý KDA $A=\langle \Sigma, Q, \delta, q_{0}, F \rangle \exists \text{ KNA } A' \text{ tak, že } L(A)=L(A') $.
+\end{veta}
+\begin{dukaz}
+Pro výchozí $A$ uvažujme $A'=\langle \langle \Sigma, Q, \delta', q_{0}, F \rangle$, pak $\delta'(q,a) = \lbrace \delta(q,a) \rbrace$. Zbytek důkazu je zřejmý.
+\end{dukaz}
+
+\begin{veta}
+Pro každý KNA $A$ existuje KDA $A^{D}$ tak, že $L(A) = L(A^{D})$.
+\end{veta}
+\begin{dukaz}
+Předchozí větu lze dokázat následujícím způsobem:
+
+\begin{enumerate}
+\item
+Uvažujme $A^{D} = \langle \Sigma, 2^{Q}, \delta^{D}, I, F^{D} \rangle$, kde $F^{D} = \lbrace R  \subseteq Q | R \cap F \neq \emptyset \rbrace, \delta^{D}(R,a) = \delta^{*}(R,a)$.
+Nyní zbývá ukázat, že $\delta^{*}(I,w) \cap F \neq \emptyset$ právě tehdy, když $(\delta{D})^{*}(I,w) \in F^{D}$, což prokážeme indukcí přes délku řetězce $w$.
+
+\item
+Pro $w = \varepsilon$ je situace zřejmá. Jinak $(\delta{D})^{*} (R,w) = (\delta{D})^{*} (R, \varepsilon) = R = \delta^{*}(R, \varepsilon) = \delta^{*}(R,w)$.
+
+\item
+Předpokládejme, že tvrzení platí pro řetězce délky $n$ a nechť $w$ má délku $n+1$ a $w=au$ pro $a \in \Sigma, |u| < |v|$. Pak:
+\begin{gather*}
+(\delta^{D})^{*} (R,w) = (\delta^{D})^{*} (R, au) = (\delta^{D})^{*}(\delta^{D}(R,a),u) = \\
+= \delta^{*}(\delta^{D}(R,a)u) = \delta^{*}(\delta^{*}(R,a),u) = \delta^{*}(R, au) = \delta^{*}(R,w)
+\end{gather*}
+\end{enumerate}
+\end{dukaz}
+
+\begin{priklad}
+Vemme KNA z příkladu \ref{priklad-3}.
+ -- automat --
+\end{priklad}
 
 %6. přednáška
 
