@@ -17,6 +17,8 @@
 \usepackage{amsthm}
 \usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
 
+\usepackage{moreverb}
+\usepackage{alltt}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
@@ -51,6 +53,7 @@
 
 \begin{document}
 \maketitle
+
 
 \section{Historie}
 Počátek úvah, jež byly později základem seriozního zkoumání formálních jazyků potažmo automatů se datuje do 30. let.
@@ -1075,7 +1078,70 @@ Předpokládejme, že tvrzení platí pro řetězce délky $n$ a nechť $w$ má 
 
 \begin{priklad}
 Vemme KNA z příkladu \ref{priklad-3}.
- -- automat --
+ -- automatobrazek --
+\end{priklad}
+
+\subsection{Algoritmus pro převod KNA na KDA}
+Nyní si ukažme pseudokód algoritmu pro převod konečných nedeterministických automatů na konečné deterministické automaty, pro které platí, že
+akceptují řetězece stejného jazyka.
+
+-- pseudokod --
+
+\begin{definice}
+\emph{Trie} je prefixový strom, který umožňuje \uv{rychlé hledání ve slovníku.}
+\end{definice}
+
+\begin{definice}
+Jako \emph{slovník} označujeme konečný neprázdný jazyk který neobsahuje $\varepsilon$.
+\end{definice}
+
+\begin{definice}
+Trie slovníku $L$ je KDA $T_{L} = \langle \Sigma, Q, \delta, \varepsilon, F \rangle$, přičemž:
+\begin{eqnarray*}
+Q &-& \text{ množina prefixů všech řetězců} \\
+Q &-& \bigcup_{w \in L} Pfx(w) \\
+F &=& L^{w \in L} \\
+\delta(w,a) &=& wa, \text{ pokud } wa \in Q, \text{ jinak } \delta(w,a) \text{ není definováno}
+\end{eqnarray*}
+\end{definice}
+
+\begin{priklad}
+Uveďme si příklad konečného slovníkového automatu $D_{L}$, který je pochopitelně deterministický:
+
+
+
+\begin{VCPicture}{(-8,-3)(4,4)}
+\LargeState
+\ChgStateLabelScale{0.8}
+\State[\varepsilon]{(-5,3)}{epsilon}
+\State[a]{(-3,3)}{a}
+\FinalState[ac]{(-1,3)}{ac}
+\State[aca]{(1,3)}{aca}
+\FinalState[acab]{(3,3)}{acab}
+\State[b]{(-3,1)}{b}
+\FinalState[acc]{(-1,1)}{acc}
+\FinalState[bcbb]{(3,1)}{bcbb}
+\FinalState[ba]{(-5,-1)}{ba}
+\State[bc]{(-2,-1)}{bc}
+\State[bcb]{(1,-1)}{bcb}
+\FinalState[bcbc]{(3,-1)}{bcbc}
+
+\Initial{epsilon}
+\ArcL{epsilon}{a}{a}
+\ArcL{a}{ac}{c}
+\ArcL{ac}{aca}{a}
+\ArcL{aca}{acab}{b}
+
+\ArcR{epsilon}{b}{b}
+\ArcL{ac}{acc}{c}
+\ArcL{b}{ba}{a}
+\ArcL{b}{bc}{c}
+\ArcL{bc}{bcb}{b}
+\ArcL{bcb}{bcbb}{b}
+\ArcL{bcb}{bcbc}{c}
+
+\end{VCPicture}
+
 \end{priklad}
 
 %6. přednáška
