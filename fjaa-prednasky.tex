@@ -16,8 +16,6 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
-
-\usepackage{moreverb}
 \usepackage{alltt}
 
 \setlength{\parindent}{0pt}
@@ -527,6 +525,7 @@ za předpokladu, že $S$ se nevyskytuje na pravé straně žádného pravidla.
 $$
 A \rightarrow x, \text{ kde } A \in N, x \in (\Sigma \cup N)^{*}
 $$
+Na levých stranách pravidel tedy očekáváme pouze neterminální symbol.
 
 \begin{priklad}
 Mějme tuto gramatiku:
@@ -571,7 +570,6 @@ $x_{i} = \varepsilon \text{ a následně } S \rightarrow \varepsilon$
 \item
 $x_{i} = a_{1}\ldots a_{k} \text{ a následně } S \rightarrow a_{i1}A^{'}, A^{'} \rightarrow a_{i2}A^{''},\ldots\ldots, A^{k-1} \rightarrow a_{ik}A^{k}$
 \end{enumerate}
-\vspace{0px}
 \end{dukaz}
 
 \begin{figure}[ht]
@@ -579,12 +577,14 @@ $x_{i} = a_{1}\ldots a_{k} \text{ a následně } S \rightarrow a_{i1}A^{'}, A^{'
 \caption{Vychodilovo \uv{vajíčko.}}\label{obr-2}
 \end{figure}
 
+\vspace{30px}
+
 \begin{priklad}
 \begin{eqnarray*}
 N &=& \lbrace S \rbrace \\
 \Sigma &=& \lbrace a, b \rbrace \\
 P &=& \lbrace S \rightarrow aSb | \varepsilon \rbrace \\
-L(G) = \lbrace a^{n}b^{n} | n \leq 0 \rbrace
+L(G) &=& \lbrace a^{n}b^{n} | n \leq 0 \rbrace
 \end{eqnarray*}
 Máme tedy \emph{bezkontextový} jazyk.
 \end{priklad}
@@ -612,7 +612,7 @@ $L(G)$ je jazyk všech výrokových formulí.
 
 
 \subsection{Gramatika nezkracující}
-Gramatika G se nazývá nezkracující, pokud má pouze nezkracující pravidla a může mít pravidlo ve tvaru $S \rightarrow \varepsilon$, ale $S$ se nenachází na žádné z pravých stran.
+Gramatika G se nazývá nezkracující, pokud má pouze nezkracující pravidla a může mít pravidlo ve tvaru $S \rightarrow \varepsilon$, přičemž $S$ se nenachází na žádné z pravých stran.
 
 \begin{priklad}
 \begin{eqnarray*}
@@ -860,7 +860,7 @@ Naopak u \emph{nedeterministických} konfigurací není v určitých případech
 
 \begin{priklad}
 \vspace{20px}
-\begin{VCPicture}{(-8,-2)(4,2)}
+\begin{VCPicture}{(-8,-1)(4,2)}
 \ChgStateLabelScale{0.8}
 \State[q_{0}]{(-5,0)}{q0}
 \State[q_{1}]{(-3,0)}{q1}
@@ -983,7 +983,7 @@ Koncová přijímací konfigurace $\langle q, \varepsilon \rangle \text{ kde } q
 \end{itemize}
 
 \begin{definice}
-Mějme $A = \langle \Sigma, Q, \delta, I, F \rangle  \text{ a } w \in \Sigma^{*}$. Pak posloupnost konfigurací $\langle r_{i}, w_{i} \rangle \text{ pro } i = \lbrace 0, \ldots, n \rbrace $ splňující podmínky
+Mějme $A = \langle \Sigma, Q, \delta, I, F \rangle  \text{ a } w \in \Sigma^{*}$. Pak posloupnost konfigurací $\langle r_{i}, w_{i} \rangle \text{ pro } i = \lbrace 0, \ldots, n \rbrace $ splňující podmínky:
 \begin{gather}
 R_{0} \in I \\
 w_{0} = w \\
