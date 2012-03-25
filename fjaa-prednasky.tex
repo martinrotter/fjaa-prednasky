@@ -849,7 +849,19 @@ Naopak u \emph{nedeterministických} konfigurací není v určitých případech
 \end{definice}
 
 \begin{priklad}
--- obrázek -- %% doděláme později
+\vspace{20px}
+\begin{VCPicture}{(-8,-2)(4,2)}
+\ChgStateLabelScale{0.8}
+\State[q_{0}]{(-5,0)}{q0}
+\State[q_{1}]{(-3,0)}{q1}
+\FinalState[q_{2}]{(-1,0)}{q2}
+
+\Initial{q0}
+\LoopN[.5]{q0}{a, b}
+\ArcL{q0}{q1}{a}
+\ArcL{q1}{q2}{a, b}
+\end{VCPicture}
+
 
 Vstupní řetězce: \textit{abba} (nepřijat), \textit{baba} (nepřijat), \textit{baab} (přijat), \textit{bbaa} (přijat).
 
@@ -951,17 +963,17 @@ Předchozí příklad číslo \ref{priklad-3} lze reprezentovat několika způso
 Nyní si popišme \textbf{nedeterministický výpočet}, který je definován následujícími věcmi:
 \begin{itemize}
 \item
-Konfigurace, což je dvojice ve tvaru $ \langle \textit{stav}, \textit{řetězec} \rangle $.
+Konfigurace, což je dvojice ve tvaru $\langle \textit{stav}, \textit{řetězec} \rangle $.
 \item
-Počáteční konfigurace ve tvaru $ \langle q, w \rangle \text{ kde } q \in I$.
+Počáteční konfigurace ve tvaru $\langle q, w \rangle \text{ kde } q \in I$.
 \item
-Koncová konfigurace ve tvaru $ \langle q, \varepsilon \rangle $.
+Koncová konfigurace ve tvaru $\langle q, \varepsilon \rangle $.
 \item
-Koncová přijímací konfigurace $ \langle q, \varepsilon \rangle \text{ kde } q \in F$.
+Koncová přijímací konfigurace $\langle q, \varepsilon \rangle \text{ kde } q \in F$.
 \end{itemize}
 
 \begin{definice}
-Mějme $ A = \langle \Sigma, Q, \delta, I, F \rangle  \text{ a } w \in \Sigma^{*}$. Pak posloupnost konfigurací $ \langle r_{i}, w_{i} \rangle \text{ pro } i = \lbrace 0, \ldots, n \rbrace $ splňující podmínky
+Mějme $A = \langle \Sigma, Q, \delta, I, F \rangle  \text{ a } w \in \Sigma^{*}$. Pak posloupnost konfigurací $\langle r_{i}, w_{i} \rangle \text{ pro } i = \lbrace 0, \ldots, n \rbrace $ splňující podmínky
 \begin{gather}
 R_{0} \in I \\
 w_{0} = w \\
@@ -978,7 +990,7 @@ Rozšířená přechodová funkce má tvar
 $$
 A = \langle \Sigma, Q, \delta, I, F \rangle
 $$
-navíc zavádíme
+navíc zavádíme:
 \begin{gather*}
 \delta^{*} : \Sigma^{Q} \times \Sigma^{*} \rightarrow \Sigma^{Q} \\
 \delta^{*}(R, w) = \left\lbrace
@@ -1078,14 +1090,66 @@ Předpokládejme, že tvrzení platí pro řetězce délky $n$ a nechť $w$ má 
 
 \begin{priklad}
 Vemme KNA z příkladu \ref{priklad-3}.
- -- automatobrazek --
+
+\begin{VCPicture}{(-8,-3)(4,5)}
+\ChgStateLabelScale{0.8}
+\StateVar[\{q_{0}, q_{3}\}]{(-5,3)}{q0q3}
+\StateVar[\{q_{0}, q_{1}\}]{(0,3)}{q0q1}
+\FinalStateVar[\{q_{0}, q_{2}, q_{3}\}]{(5,3)}{q0q2q3}
+\StateVar[\{q_{0}\}]{(-6,1)}{q0}
+\StateVar[\{q_{0}, q_{2}\}]{(-3,1)}{q0q2}
+\StateVar[\{q_{0}, q_{1}, q_{2}\}]{(0,-1)}{q0q1q2}
+\FinalStateVar[\{q_{0}, q_{1}, q_{2}, q_{3}\}]{(5,-1)}{q0q1q2q3}
+
+\Initial{q0q3}
+\LoopS{q0}{b}
+\LoopS{q0q1q2}{a}
+
+\ArcL{q0q3}{q0q1}{\text{asi a}}
+\ArcL{q0q1}{q0q2q3}{\text{asi také a}}
+\ArcL{q0q1}{q0q2}{b}
+\ArcL{q0q2}{q0q1}{a}
+\ArcL{q0}{q0q1}{a}
+\ArcL{q0q2}{q0}{b}
+\ArcL{q0q1}{q0q1q2}{a}
+\ArcL{q0q1q2}{q0q2}{b}
+\ArcL{q0q2q3}{q0q1q2}{a, b}
+\ArcL{q0q1q2q3}{q0q1q2}{a, b}
+\end{VCPicture}
+
+Ještě jeden automat, nepřečtu to dobře ze sešitu. :)
+
 \end{priklad}
 
 \subsection{Algoritmus pro převod KNA na KDA}
 Nyní si ukažme pseudokód algoritmu pro převod konečných nedeterministických automatů na konečné deterministické automaty, pro které platí, že
 akceptují řetězece stejného jazyka.
 
--- pseudokod --
+\vspace{30px}
+\begin{figure}[h]
+\begin{alltt}
+\( \delta^{D} \leftarrow \emptyset; Q^{D} \leftarrow \emptyset; F^{D} \leftarrow \emptyset; w \leftarrow {1} \)
+while \( w \neq Q \) do
+     select \( R \in w \)
+     \( w \leftarrow w \smallsetminus {R}; Q^{D} \leftarrow Q^{D} \cup {R} \)
+     if \( R \cap F \neq \emptyset \) then
+         \( F^{D} \leftarrow F^{D} \cup {R} \)
+     endif
+     foreach \( a \in \Sigma \) do
+         \( v \leftarrow \delta^{*}(R, a) \)
+         if \( N \neq \emptyset \) then
+             if \( N \notin w \cup Q^{D} \) then
+                 \( w \leftarrow w \cup {N} \)
+             endif
+             \( \delta^{D} \leftarrow \delta{D} \cup {<R, u, N>} \)
+         endif
+     end
+end
+return \( <\Sigma, Q^{D}, \delta^{D}, I, F^{D}> \)
+\end{alltt}
+\caption{Pseudokód pro převod KNA na KDA.}
+\end{figure}
+
 
 \begin{definice}
 \emph{Trie} je prefixový strom, který umožňuje \uv{rychlé hledání ve slovníku.}
