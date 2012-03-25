@@ -1388,11 +1388,11 @@ Pro každý konečný deterministický automat \textit{A} existuje zleva regulá
 \begin{dukaz}
 Neterminály gramatiky jsou stavy automatu a budeme uvažovat dodatečný statovní neterminál S.
 
-\begin{gather*}
-P = \ \lbrace \delta (q,a) \rightarrow qa | q \in Q \wedge a \in \Sigma \rbrace \ \cup \\
-\quad \lbrace \delta (q_0,a) \rightarrow a | q_0\ \text{je počáteční stav} \rbrace \ \cup \\
-\quad \lbrace S \rightarrow w|w \ \text{je pravá strana každého pravidla}\ q \rightarrow w\text{, kde } q \in F \rbrace
-\end{gather*}
+\begin{eqnarray*}
+P = &\lbrace& \delta (q,a) \rightarrow qa | q \in Q \wedge a \in \Sigma \rbrace \ \cup \\
+&\lbrace& \delta (q_0,a) \rightarrow a | q_0\ \text{je počáteční stav} \rbrace \ \cup \\
+&\lbrace& S \rightarrow w|w \ \text{je pravá strana každého pravidla}\ q \rightarrow w\text{, kde } q \in F \rbrace
+\end{eqnarray*}
 
 \end{dukaz}
 
