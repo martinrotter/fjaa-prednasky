@@ -58,7 +58,7 @@
 \section{Historie}
 Počátek úvah, jež byly později základem seriozního zkoumání formálních jazyků potažmo automatů se datuje do 30. let.
 Průkopníkem této oblasti byl \link{Noam Chomsky}{http://cs.wikipedia.org/wiki/Noam_Chomsky}
-\footnote{Jméno této osoby čti [\emph{čomski}] a zapamatuj si ke státnícím, že Chomski byl \emph{nebezpečný levicový intelektuál}.}.
+\footnote{Jméno této osoby čti [\emph{čomski}] a zapamatuj si ke státnícím, že Chomsky byl \emph{nebezpečný levicový intelektuál}.}.
 
 Jako příklad selhání autora programovacího jazyka si uveďme jazyk \textbf{Fortran}, jehož konstrukce byla po syntaktické stránce špatná,
 což vedlo ke \textbf{gramatické nejednoznačnosti} tohoto jazyka.
@@ -66,7 +66,7 @@ což vedlo ke \textbf{gramatické nejednoznačnosti} tohoto jazyka.
 \section{Kódová analýza}
 \subsection{Lexikální analýza}
 Dělení kódu na tokeny\footnote{Překládej jako \emph{část, díl nebo také fráze}.}, jež se zapisují například ve stylu
-$\langle\text{ znak, identifikátor }\rangle$.me
+$\langle\text{ znak, identifikátor }\rangle$.
 Příkladem je tedy i token $\langle =, assignment \rangle$ a jiné.
 
 \subsection{Syntaktická analýza}
@@ -101,7 +101,7 @@ Formálně definujme řetězec jakožto \emph{zobrazení}
 $$
 x : \lbrace a, b, c, d, \ldots, i, j, \ldots \rbrace \rightarrow \Sigma
 $$
-, kde
+kde
 $$
 1 \rightarrow a, 2 \rightarrow b, 3 \rightarrow c
 $$ a tak podobně.
@@ -119,9 +119,18 @@ Prázdný řetězec \textbf{není} symbolem, tedy $\varepsilon \notin \Sigma$.
 Nad $k$-prvkovou abecedou je právě $k^{n}$ řetězců délky $n$.
 \end{veta}
 
-\noindent
-$\Sigma^{*}$ označuje množinu všech řetězců nad abecedou$\Sigma$. \\
+
+\begin{poznamka}
+Uveďme si rovněž značení pro dva důležíté pojmy:
+
+\begin{itemize}
+\item
+$\Sigma^{*}$ označuje množinu všech řetězců nad abecedou$\Sigma$.
+
+\item
 $\Sigma^{+}$ označuje množinu všech řetězců nad abecedou$\Sigma$ vyjma $\varepsilon$.
+\end{itemize}
+\end{poznamka}
 
 \section{Operace s řetězci}
 \begin{itemize}
@@ -134,7 +143,7 @@ Mějme dva řetězce $a$, $b$:
 $$
 a_{1}\ldots a_{n} \text{ a } b_{1}\ldots b_{m}
 $$
-Pak jejich zřetězení má tvar
+Pak jejich zřetězení má tvar:
 $$
 a_{1}\ldots a_{n}b_{1}\ldots b_{m}
 $$
@@ -250,18 +259,18 @@ uw = wu \\
 \end{itemize}
 
 \section{Formální jazyk}
-Zaveďme si pojem \emph{formální jazyk nad množinou (resp. abecedou)} $\Sigma^{*}$. Označme tento jazyk jako $L$. Pak platí tato tvrzení:
-\begin{gather*}
-L \subseteq \Sigma^{*} \text{ (každá podmnožina abecedy je jazykem)} \\
-L = \emptyset \text{ (prázdný jazyk)} \\
-L = \lbrace \varepsilon \rbrace \text{ (jazyk s prázdným řetězcem)} \\
-L = jazyk C++ \text{ (jazyk C++)} \\
-\vdots
-\end{gather*}
+Zaveďme si pojem \emph{formální jazyk nad množinou všech řetězců} $\Sigma^{*}$. Označme tento jazyk jako $L$. Pak platí tato tvrzení:
+\begin{eqnarray*}
+L &\subseteq& \Sigma^{*} \text{ (každá podmnožina abecedy je jazykem)} \\
+L &=& \emptyset \text{ (prázdný jazyk)} \\
+L &=& \lbrace \varepsilon \rbrace \text{ (jazyk s prázdným řetězcem)} \\
+L &=& jazyk C++ \text{ (jazyk C++)} \\
+&\vdots&
+\end{eqnarray*}
 \textbf{Pozor, obecně platí že prázdný jazyk $\neq$ jazyk s prázdným řetězcem.}
 	
 \section{Lexikografické uspořádání}
-Předpokládejme uspořádání na množině $\Sigma^{*}$\footnote{Zopakujme si, že $\Sigma^{*}$ je množina všech řetězců nad $\Sigma$.}.
+Předpokládejme uspořádání na množině $\Sigma^{*}$.
 Nazvěme toto uspořádání \emph{striktním totálním}. Pak toto uspořádání například pro $\Sigma = \lbrace a_{1}, \ldots, a_{n} \rbrace$
 je $a_{1} < a_{2} < a_{3} < \ldots < a_{n}$.
 
@@ -325,7 +334,7 @@ $$
 \item
 \textbf{Pozitivní} uzávěr neboli pozitivní iterace. Tento uzávěr vyjádříme takto:
 $$
-L^{*} = \bigcup_{i = 1}^{\infty} L^{i}
+L^{+} = \bigcup_{i = 1}^{\infty} L^{i}
 $$
 Všimněte si podobností mezi těmito dvěma uzávěry. Pozitivní uzávěr vynechává prázdný řetezec.
 
@@ -345,11 +354,11 @@ $$
 Pak neformálně tvrdíme, že $x$ \emph{se přepisuje} na $y$.
 Nutno dodat, že předchozí zápis lze zapsat i například takto.
 $$
-x \rightarrow y\text{, kde o symbol } \rightarrow  \notin \Sigma \text{ můžeme prohlásit za tzv. metasymbol.}
+x \rightarrow y\text{, kde symbol } \rightarrow \notin \Sigma \text{ můžeme prohlásit za tzv. metasymbol.}
 $$
 \subsubsection{Vlastnosti pravidel}
 \begin{itemize}
-\item Nezkracující pravidlo je pravidlo, o kterém platí, že $|x| \leq |y| $. Tedy aplikaci tohoto pravidla na řetězec určitě nevznikne řetězec kratší, než-li jeho předloha.
+\item \emph{Nezkracující} pravidlo je pravidlo, o kterém platí, že $|x| \leq |y|$. Tedy aplikaci tohoto pravidla na vstupní řetězec určitě nevznikne řetězec kratší, než-li jeho předloha.
 
 \item $\varepsilon$ - pravidlo je pravidlo tvaru $x \rightarrow \varepsilon$.
 \end{itemize}
@@ -358,19 +367,19 @@ $$
 \subsubsection{Příklady pravidel}
 \begin{priklad}
 Mějme zadání abecedy $\Sigma = \lbrace a,b,c \rbrace$. Pravidla s využítím této abecedy by mohla být například tato.
-\begin{gather*}
-aa \rightarrow bc \\
-bb \rightarrow y \\
-c \rightarrow \varepsilon
-\end{gather*}
+\begin{eqnarray*}
+aa &\rightarrow& bc \\
+bb &\rightarrow& y \\
+c &\rightarrow& \varepsilon
+\end{eqnarray*}
 \end{priklad}
 
 \begin{priklad}
 Mějme další zadání abecedy $\Sigma = \lbrace expr, +, \times \rbrace$. Pravidla s využítím této abecedy by mohla být například tato.
-\begin{gather*}
-\textit{expr} \rightarrow \textit{expr} + \textit{expr} \\
-\textit{expr} \rightarrow \textit{expr} \times \textit{expr}
-\end{gather*}
+\begin{eqnarray*}
+\textit{expr} &\rightarrow& \textit{expr} + \textit{expr} \\
+\textit{expr} &\rightarrow& \textit{expr} \times \textit{expr}
+\end{eqnarray*}
 \end{priklad}
 
 \nextoutline{Prime odvozovani rezezcu pomoci pravidel}
@@ -404,7 +413,7 @@ bac \rightarrow bcabc
 \end{priklad}
 
 \begin{definice}
-Definujme pojem \textbf{derivace}. Jedná se o posloupnost řetězců v tomto tvaru.
+Definujme pojem \textbf{derivace}. Jedná se o posloupnost řetězců ve tvaru:
 $$
 x_{0}, \ldots, x_{k},\text{ kde } k \geq 0\text{ a kde } \lbrace x_{0}, \ldots, x_{k} \rbrace \in \Sigma^{*}
 $$
@@ -417,17 +426,17 @@ například $u \Rightarrow_{P}^{*} v$, tímto je pochopitelně myšleno odvozen�
 
 \begin{priklad}
 Mějme abecedu $\Sigma = \lbrace a, \ldots, z \rbrace$ a pravidla stejná jako v příkladu \ref{priklad-1}.
-Nyní odvozujeme například takto.
+Nyní odvozujeme například takto:
 $$
 b\underline{aa}a, \underline{bb}ca, c\underline{a}, c\underline{cab}
 $$
 \end{priklad}
 
 \subsection{Formální gramatiky}
-Mějme následující entity.
+Mějme následující entity:
 \begin{itemize}
-\item $\Sigma \ldots$ abeceda terminálních symbolů (tyto symboly tvoří řetězce daného jazyka).
-\item $N \ldots$ abeceda neterminálních symbolů (tyto symboly se užívají k řízení průběhu odvozování).
+\item $\Sigma$ - abeceda terminálních symbolů (tyto symboly tvoří řetězce daného jazyka).
+\item $N$ - abeceda neterminálních symbolů (tyto symboly se užívají k řízení průběhu odvozování).
 \end{itemize}
 
 Dodejme, že obě množiny by měly být neprázdné a konečné.
@@ -438,16 +447,16 @@ Odvozovací pravidlo $x \rightarrow y$ se nazývá \emph{generativní}, pokud \e
 
 \begin{definice}
 Mějme strukturu $G = \langle N, \Sigma, R, S \rangle$, kde \emph{N} je abecedou neterminálních symbolů, $\Sigma$ je abecedou terminálních symbolů,
-\emph{P} je množinou odvozovacích pravidel a $S \in N$\hyplabel{terminal} je tzv. počátečním resp. startovním terminálem. Pak tuto čtveřici nazveme \textbf{gramatikou}.
+\emph{P} je množinou odvozovacích pravidel a $S \in N$\hyplabel{terminal} je tzv. \emph{počátečním} resp. \emph{startovním} neterminálem. Pak tuto čtveřici nazveme \textbf{gramatikou}.
 \end{definice}
 
 \begin{poznamka}
-Pokud chceme vyjádřit, že z jednoho symbolu odvozuje několik možných alternativ, tak to zapíšeme místo klasického dlouhé zápisu
+Pokud chceme vyjádřit, že z jednoho symbolu odvozujeme několik možných alternativ, tak to zapíšeme místo klasického dlouhé zápisu
 $y \rightarrow x_{1}, y \rightarrow x_{2}, \ldots$ pomocí zkrácené notace např. $y \rightarrow x_{1}|x_{2}|\ldots$
 \end{poznamka}
 
 \begin{priklad}
-Gramatikou může být i ta následující.
+Gramatikou může vypadat třeba takto:
 \begin{eqnarray*}
 N &=& \lbrace \varepsilon, S, D, I \rbrace \\
 \Sigma &=& \lbrace 0, \ldots, 9, +, - \rbrace \\
@@ -477,6 +486,7 @@ Jazyk generovaný gramatikou definujme jako:
 $$
 L(G) = \lbrace x \in \Sigma^{*} | S \Rightarrow_{G}^{*} x \rbrace
 $$
+Vidíme tedy, že takový jazyk obsahuje \emph{věty}, které lze odvodit ze startovacího neterminálu pomocí pravidel této gramatiky.
 \end{definice}
 
 \begin{priklad}
