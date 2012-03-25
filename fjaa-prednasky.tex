@@ -1324,6 +1324,80 @@ $P'= \lbrace S \rightarrow \varepsilon \rbrace \cup \lbrace S \rightarrow x | q_
 Pak $L(A)=L(G)$.
 \end{dukaz}
 
+\subsection{Regulární gramatiky}
+
+Co jsou to regulární gramatiky a jaké podmínky jejich odvozovací pravidla splňují již víme, ale můžeme si je ještě rozdělit na dva druhy, právě podle tvaru odvozovacích pravidel.
+
+\begin{enumerate}
+
+\item
+\textbf{Zprava regulární gramatiky:}
+Obsahují pravidla ve tvaru $ A \rightarrow bB $ tj. neterminál na prvé straně je na pravo od terminálního symbolu.
+\item
+\textbf{Zleva regulární gramatiky:}
+Obsahují pravidla ve tvaru $ A \rightarrow Bb $. Analogicky se neterminál nachází vlevo od terminálního symbolu.
+\end{enumerate}
+
+\begin{veta}
+Pro každou zleva regulární gramatiku $ G = \langle N,\Sigma,P,S \rangle $ existuje konečný deterministický automat \textit{A} tak, že \textit{L(A)=L(G)}.
+\end{veta}
+
+\begin{dukaz}
+Budeme konstruovat automat, jehož stavy budou \textit{N}, nový pomocný počáteční stav $ \# $ a jediný koncový stav je \textit{S}.
+
+Hledaný KNA $ A = \langle \Sigma,N \cup \lbrace \# \rbrace,\delta,\lbrace \# \rbrace,\lbrace S \rbrace \rangle$ s následovně definovanou přechodovou funkcí $\delta$
+
+$$
+\delta(q,a)=\left\{
+\begin{array}{l@{\quad\mbox{}\quad}l}
+\lbrace A \in N | A \rightarrow a \in P \rbrace & \text{pokud}\quad q=\#\\
+\lbrace A \in N | A \rightarrow Ba \in P \rbrace & \text{pokud}\quad q=B\\
+\end{array}
+\right.
+$$ 
+
+Ekvivalence \textit{L(A)=L(G)} se dokazuje vzájemně jednoznačnou korespondencí P-derivace a nedeterministického výpočtu.
+
+Pro derivaci:
+
+$ x_0=S,x_1,x_2,\ldots,x_{n-1},x_n=x $
+
+jsme schopni sestavit posloupnost
+
+$ \langle \# , X_n \rangle,\langle A_{n-1} , y_{n-1} \rangle,\ldots,\langle A_1 , y_1 \rangle,\langle S , \varepsilon \rangle $ kde $x_i=A_{i}y_{i}$
+\end{dukaz}
+
+\begin{priklad}
+Máme gramatiku $G$ s následovně definovanými pravidly.
+\begin{eqnarray*}
+S &\rightarrow& Aa|Ba|Bb|a \\
+A &\rightarrow& Aa|Bb \\
+B &\rightarrow& Ab|Ba|b
+\end{eqnarray*}
+
+Automat rozpoznávající jazyk generovaný touto gramatikou bude vypadat následovně:
+
+%%%%OBRÁZEK%%%%
+
+\end{priklad}
+
+\begin{veta}
+Pro každý konečný deterministický automat \textit{A} existuje zleva regulární gramatika taková, že \textit{L(A)=L(G)}
+\end{veta}
+
+\begin{dukaz}
+Neterminály gramatiky jsou stavy automatu a budeme uvažovat dodatečný statovní neterminál S.
+
+$
+P = \ \lbrace \delta (q,a) \rightarrow qa | q \in Q \wedge a \in \Sigma \rbrace \ \cup \\
+\quad \lbrace \delta (q_0,a) \rightarrow a | q_0\ \text{je počáteční stav} \rbrace \ \cup \\
+\quad \lbrace S \rightarrow w|w \ \text{je pravá strana každého pravidla}\ q \rightarrow w\text{, kde } q \in F \rbrace
+$
+
+
+\end{dukaz}
+
+
 %\newpage
 \renewcommand{\indexcolumns}{3}
 \printindex
