@@ -1290,7 +1290,54 @@ P &=& \lbrace S \rightarrow .F | dT , T \rightarrow .E|.F|dT|. , D \rightarrow d
 \end{eqnarray*}
 
 Automat rozpoznávající jazyk, generovaný gramatikou G, bude vypadat následovně:
-%%%%DOPLNIT OBRAZKY
+
+
+\begin{center}
+\begin{VCPicture}{(-5,-3)(5,6)}
+\State[S]{(-4,0)}{S}
+\State[T]{(-2,4)}{T}
+\State[F]{(-2,-4)}{F}
+\State[E]{(-0.5,0)}{E}
+\State[D]{(1.5,0)}{D}
+\State[$\#$]{(4,0)}{hash}
+\Initial{S}
+\LoopN[.5]{T}{d}
+\LoopS[.5]{F}{d}
+\LoopS[.5]{D}{d}
+\ArcL{S}{T}{d}
+\ArcL{T}{F}{.}
+\ArcR{S}{F}{.}
+\ArcL{E}{D}{e}
+\ArcL{T}{E}{.}
+\ArcL{D}{hash}{d}
+\ArcL{T}{hash}{.}
+\ArcR{F}{hash}{d}
+\ArcR{F}{E}{d}
+\end{VCPicture}
+\end{center}
+
+Když tento automat zdeterminizujeme, dostaneme následující automat:
+
+\begin{center}
+\begin{VCPicture}{(-5,-3)(5,4)}
+\StateVar[\{S\}]{(-4,0)}{S}
+\StateVar[\{T\}]{(-2,2)}{T}
+\StateVar[\{F\}]{(-2,-2)}{F}
+\FinalStateVar[\{E,T,\#\}]{(0,0)}{eth}
+\StateVar[\{D\}]{(4,0)}{D}
+\FinalStateVar[\{\#\}]{(7,0)}{hash}
+\Initial{S}
+\LoopN[.5]{T}{d}
+\LoopS[.5]{hash}{d}
+\ArcL{S}{T}{d}
+\ArcR{S}{F}{.}
+\ArcL{T}{eth}{.}
+\ArcR{F}{eth}{d}
+\ArcR{eth}{D}{e}
+\ArcR{D}{hash}{d}
+\end{VCPicture}
+\end{center}
+
 \end{priklad}
 
 \subsection{Jazyky rozpoznatelné KDA jsou regulární (implikace zprava)}
