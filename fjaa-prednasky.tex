@@ -1319,7 +1319,7 @@ Automat rozpoznávající jazyk, generovaný gramatikou G, bude vypadat následo
 Když tento automat zdeterminizujeme, dostaneme následující automat:
 
 \begin{center}
-\begin{VCPicture}{(-5,-3)(5,4)}
+\begin{VCPicture}{(-4,-3)(7,4)}
 \StateVar[\{S\}]{(-4,0)}{S}
 \StateVar[\{T\}]{(-2,2)}{T}
 \StateVar[\{F\}]{(-2,-2)}{F}
@@ -1337,6 +1337,8 @@ Když tento automat zdeterminizujeme, dostaneme následující automat:
 \ArcR{D}{hash}{d}
 \end{VCPicture}
 \end{center}
+
+
 
 \end{priklad}
 
@@ -1370,6 +1372,38 @@ $P'= \lbrace S \rightarrow \varepsilon \rbrace \cup \lbrace S \rightarrow x | q_
 
 Pak $L(A)=L(G)$.
 \end{dukaz}
+
+\begin{priklad}\label{priklad-4}
+
+Mějme abecedu $\Sigma = \lbrace a,b \rbrace$ a automat zadaný diagramem:
+\begin{center}
+\begin{VCPicture}{(-4,-4)(4,4)}
+\State[q_0]{(-4,0)}{q0}
+\State[q_1]{(0,2)}{q1}
+\FinalState[q_3]{(0,-2)}{q3}
+\FinalState[q_2]{(4,0)}{q2}
+\Initial{q0}
+\LoopN[.5]{q0}{b}
+\LoopS[.5]{q2}{a}
+\ArcL{q0}{q1}{a}
+\ArcL{q1}{q2}{a}
+\ArcL{q2}{q3}{b}
+\ArcL{q3}{q0}{b}
+\ArcR{q3}{q1}{a}
+\ArcR{q1}{q3}{b}
+\end{VCPicture}
+\end{center}
+
+Odvozovací pravidla gramatiky, generujíci tento jazyk budou:
+
+\begin{eqnarray*}
+q_0 &\rightarrow& aq_1\ |\ bq_0 \\
+q_1 &\rightarrow& aq_2\ |\ a\ |\ bq_3\ |\  b \\
+q_2 &\rightarrow& aq_2\ |\ a\ |\ bq_3\ |\  b \\
+q_3 &\rightarrow& aq_1\ |\ bq_0
+\end{eqnarray*}
+
+\end{priklad}
 
 \subsection{Regulární gramatiky}
 
@@ -1424,7 +1458,24 @@ B &\rightarrow& Ab|Ba|b
 
 Automat rozpoznávající jazyk generovaný touto gramatikou bude vypadat následovně:
 
-%%%%OBRÁZEK%%%%
+\begin{center}
+\begin{VCPicture}{(-4,-6)(4,4)}
+\State[B]{(-4,0)}{B}
+\State[\#]{(0,3)}{hash}
+\State[A]{(-2,-3)}{A}
+\FinalState[S]{(4,0)}{S}
+\Initial{hash}
+\LoopW[.5]{B}{a}
+\LoopS[.5]{A}{a}
+\ArcL{hash}{S}{a}
+\ArcR{hash}{B}{b}
+\ArcR{B}{S}{a}
+\ArcL{B}{S}{b}
+\ArcR{B}{A}{b}
+\ArcR{A}{S}{a}
+\ArcR{A}{B}{b}
+\end{VCPicture}
+\end{center}
 
 \end{priklad}
 
@@ -1442,6 +1493,28 @@ P = &\lbrace& \delta (q,a) \rightarrow qa | q \in Q \wedge a \in \Sigma \rbrace 
 \end{eqnarray*}
 
 \end{dukaz}
+
+\begin{priklad}
+Vezmeme KDA z příkladu \ref{priklad-4}.
+Odvozovací pravidla budou vypadat takto:
+
+\begin{eqnarray*}
+q_0 &\rightarrow& q_{0}b\ |\ b\ |\ q_{3}b \\
+q_1 &\rightarrow& q_{0}a\ |\ a\ |\ q_{3}a \\
+q_2 &\rightarrow& q_{1}a\ |\ q_{2}a \\
+q_3 &\rightarrow& q_{1}b\ |\ q_{2}b \\
+S &\rightarrow& q_{1}a\ |\ q_{1}b\ |\ q_{2}a\ |\ q_{2}b \\
+\end{eqnarray*}
+
+\end{priklad}
+
+\begin{definice}
+Regulární jazyky jsou jazyky, generované zprava (zleva) regulárními gramatikami, tj. jsou rozpoznatelné konečnými ne/deterministickými automaty.
+\end{definice}
+
+\begin{poznamka}
+Pravidla zprava a zleva nelze míchat.
+\end{poznamka}
 
 
 %\newpage
