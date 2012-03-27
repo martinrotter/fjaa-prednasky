@@ -151,7 +151,7 @@ Formálně takto:
 \begin{gather*}
 x : \lbrace 1,\ldots, n \rbrace \rightarrow \Sigma \\
 y : \lbrace 1,\ldots, m \rbrace \rightarrow \Sigma \\
-x \circ y : \lbrace 1,\ldots, nm \rbrace \rightarrow \Sigma
+x \circ y : \lbrace 1,\ldots, n+m \rbrace \rightarrow \Sigma
 \end{gather*}
 \end{priklad}
 
@@ -223,12 +223,12 @@ Mějme na paměti, že operace mocnění má vyšší prioritu než-li operace k
 
 \begin{veta}
 Mějme $u \text{ a } v \in \Sigma^{*}$, pak platí $uv = vu$ (komutativita), právě
-tehdy, když $\exists z| z \in \Sigma^{*} \text{ a nezáporná celá čísla } p, q \text{ tak, že } u = z^{p} \text{ a } v=z^{a}$.
+tehdy, když $\exists z| z \in \Sigma^{*} \text{ a nezáporná celá čísla } p, q \text{ tak, že } u = z^{p} \text{ a } v=z^{q}$.
 \end{veta}
 
 Předpokládejme, že po $p, z, q$ máme $u = z^{p}, v = z^{q}$. Pak obecně platí následující zápis:
 $$
-uv = z^{p}z^{q} = z^{p+q} = z^{p} z^{q} = vu
+uv = z^{p}z^{q} = z^{p+q} = z^{q} z^{p} = vu
 $$
 
 Předpokládejme, že $uv = vu$. Indukcí přes $|uv|$ předpokládáme, že tvrzení platí pro libovolné dva řetězce, jejichž délka zřetězení je menší
@@ -244,7 +244,7 @@ $|u| < |v|$
 Berme v potaz také následující zápis doplněný obrázkem: \ref{obr-1}
 
 \begin{gather*}
-uv = v \\
+uw = v \\
 wu = v \\
 uw = wu \\
 |uw| < |uv|, \text{ tedy } \exists z, p, q  \text{ tak, že } u = z^{p}, w = z^{q}, v = z^{p+q}
@@ -280,7 +280,7 @@ Položme $x <_{l} y$ pro $x,y \in \Sigma^{*}$. To ale platí pokud platí alespo
 $|x| < |y|$
 
 \item
-$|x| < |y| \text{ a } \exists i \text{ tak, že } x(i) < y(i) \text{ a zároveň } x(j) < y(j) \text{ pro } \forall j |j < i$
+$|x| = |y| \text{ a } \exists i \text{ tak, že } x(i) < y(i) \text{ a zároveň } x(j) = y(j) \text{ pro } \forall j |j < i$
 \end{enumerate}
 
 \begin{priklad}
@@ -315,12 +315,12 @@ Uveďme si rovněž monoid $\langle 2^{\Sigma^{*}}, \circ, \lbrace \varepsilon \
 \item
 \textbf{Mocnina} jazyka. Mocninu vyjádříme takto:
 $$
-L^{n} = \left\lbrace
+L^{n} = \left \lbrace
 \begin{array}{l l}
 \lbrace \varepsilon \rbrace & \text{ pro } n = 0 \\
-LL^{n-1} & \text{ pro } n > 1 \\
+LL^{n-1} & \text{ pro } n \geq 1 \\
 \end{array}
-\right\rbrace
+\right.
 $$
 
 \item
@@ -367,7 +367,7 @@ $$
 Mějme zadání abecedy $\Sigma = \lbrace a,b,c \rbrace$. Pravidla s využítím této abecedy by mohla být například tato.
 \begin{eqnarray*}
 aa &\rightarrow& bc \\
-bb &\rightarrow& y \\
+bb &\rightarrow& abba \\
 c &\rightarrow& \varepsilon
 \end{eqnarray*}
 \end{priklad}
@@ -419,7 +419,7 @@ se nazývá \textbf{P-derivace délky k}, pokud $x_{i-1} \Rightarrow_{p} x_{i}, 
 Symbolicky totéž $x_{0} \Rightarrow_{p} x_{1} \Rightarrow_{p} \ldots \Rightarrow_{p} x_{k}$. Počet odvození tedy značí \emph{délku} derivace.
 \end{definice}
 
-Pokud pro $u, v \in \Sigma^{*} \exists \text{ P-derivace } u = x_{0} \ldots x_{k} = v$, pak říkáme, že $v$ je odvozeno z $u$ pomocí pravidel z $P$, což značíme
+Pokud pro $u, v \in \Sigma^{*} \quad \exists \text{ P-derivace } u = x_{0} \ldots x_{k} = v$, pak říkáme, že $v$ je odvozeno z $u$ pomocí pravidel z $P$, což značíme
 například $u \Rightarrow_{P}^{*} v$, tímto je pochopitelně myšleno odvození ve více krocích. Platí, že $P \subseteq \Rightarrow_{P} \subseteq \Rightarrow_{P}^{+}$.
 
 \begin{priklad}
@@ -444,8 +444,8 @@ Odvozovací pravidlo $x \rightarrow y$ se nazývá \emph{generativní}, pokud \e
 \end{definice}
 
 \begin{definice}
-Mějme strukturu $G = \langle N, \Sigma, R, S \rangle$, kde \emph{N} je abecedou neterminálních symbolů, $\Sigma$ je abecedou terminálních symbolů,
-\emph{P} je množinou odvozovacích pravidel a $S \in N$\hyplabel{terminal} je tzv. \emph{počátečním} resp. \emph{startovním} neterminálem. Pak tuto čtveřici nazveme \textbf{gramatikou}.
+Mějme strukturu $G = \langle N, \Sigma, P, S \rangle$, kde $N$ je abecedou neterminálních symbolů, $\Sigma$ je abecedou terminálních symbolů,
+$P$ je množinou odvozovacích pravidel a $S \in N$\hyplabel{terminal} je tzv. \emph{počátečním} resp. \emph{startovním} neterminálem. Pak tuto čtveřici nazveme \textbf{gramatikou}.
 \end{definice}
 
 \begin{poznamka}
@@ -454,7 +454,7 @@ $y \rightarrow x_{1}, y \rightarrow x_{2}, \ldots$ pomocí zkrácené notace nap
 \end{poznamka}
 
 \begin{priklad}
-Gramatikou může vypadat třeba takto:
+Gramatika může vypadat třeba takto:
 \begin{eqnarray*}
 N &=& \lbrace \varepsilon, S, D, I \rbrace \\
 \Sigma &=& \lbrace 0, \ldots, 9, +, - \rbrace \\
@@ -463,13 +463,13 @@ G &=& \langle N, \Sigma, P, S \rangle
 \end{eqnarray*}
 \end{priklad}
 
-\begin{priklad}
-Nebo tato.
-\begin{eqnarray*}\label{priklad-2}
+\begin{priklad}\label{priklad-2}
+Nebo takto:
+\begin{eqnarray*}
 N &=& \lbrace S, X, Y \rbrace \\
 \Sigma &=& \lbrace a, b, c \rbrace \\
 P &=& \lbrace S \rightarrow XcYcX, X \rightarrow aX, X \rightarrow bX, X \rightarrow cX, X \rightarrow \varepsilon,
-y \rightarrow abY, Y \rightarrow ab \rbrace \\
+Y \rightarrow abY, Y \rightarrow ab \rbrace \\
 G &=& \langle N, \Sigma, P, S \rangle
 \end{eqnarray*}
 \end{priklad}
@@ -584,7 +584,7 @@ $x_{i} = a_{1}\ldots a_{k} \text{ a následně } S \rightarrow a_{i1}A^{'}, A^{'
 N &=& \lbrace S \rbrace \\
 \Sigma &=& \lbrace a, b \rbrace \\
 P &=& \lbrace S \rightarrow aSb | \varepsilon \rbrace \\
-L(G) &=& \lbrace a^{n}b^{n} | n \leq 0 \rbrace
+L(G) &=& \lbrace a^{n}b^{n} | \quad n \geq 0 \rbrace
 \end{eqnarray*}
 Máme tedy \emph{bezkontextový} jazyk.
 \end{priklad}
@@ -707,7 +707,7 @@ X_{k}, \ldots, j_{k} \\ %% zkontrolovat!!!
 \begin{eqnarray*}
 N &=& \lbrace S \rbrace \\
 \Sigma &=& \lbrace a, b \rbrace \\
-P &=& \lbrace S \rightarrow SS|aS|bSa| \varepsilon \rbrace
+P &=& \lbrace S \rightarrow SS|aSb|bSa| \varepsilon \rbrace
 \end{eqnarray*}
 Posloupnost: $SbSaS, SbSa, SbaSba, aSbbaSba , abbaSba$ je P-derivace délky 4. \\*
 Hledáme P-derivace:
@@ -996,11 +996,7 @@ nazveme \textbf{nedeterministický výpočet}.
 \nextoutline{Rozsirena prechodova funkce}
 \subsection{Rozšířená přechodová funkce}
 \begin{definice}
-Rozšířená přechodová funkce má tvar
-$$
-A = \langle \Sigma, Q, \delta, I, F \rangle
-$$
-navíc zavádíme:
+Rozšířená přechodová funkce má tvar:
 \begin{gather*}
 \delta^{*} : \Sigma^{Q} \times \Sigma^{*} \rightarrow \Sigma^{Q} \\
 \delta^{*}(R, w) = \left\lbrace
@@ -1115,8 +1111,8 @@ Vemme KNA z příkladu \ref{priklad-3}.
 \LoopS{q0}{b}
 \LoopS{q0q1q2}{a}
 
-\ArcL{q0q3}{q0q1}{\text{a,b}}
-\ArcL{q0q1}{q0q2q3}{\text{asi také a}}
+\ArcL{q0q3}{q0q1}{a,b}
+\ArcL{q0q1}{q0q2q3}{a, b}
 \ArcL{q0q1}{q0q2}{b}
 \ArcL{q0q2}{q0q1}{a}
 \ArcL{q0}{q0q1}{a}
