@@ -43,6 +43,7 @@
 \newtheorem{priklad}{\textbf{Příklad}}
 \newtheorem{poznamka}{\textbf{Poznámka}}
 \newtheorem{dusledek}{\textbf{Důsledek}}
+\newcommand{\ekna}{$\varepsilon$KNA} %byl jsem línej to pořád psát
 
 \abstract{Tento dokument je pouze přepisem zápisků a poznámek z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.}
 
@@ -1513,7 +1514,7 @@ Pravidla zprava a zleva nelze míchat.
 \end{poznamka}
 
 \section{Nedeterministický konečný automat s $\varepsilon$-přechody}
-
+Značíme \ekna.
 \begin{priklad}\label{priklad-5}
 Zde je jeden motivační příklad na úvod.
 
@@ -1547,7 +1548,7 @@ Fakt $\delta (q,a) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{automat \texti
 
 Fakt $\delta (q,\varepsilon) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{automat \textit{A} přejde samovolně ze stavu \textit{q} do některého ze stavů $r_1,\ldots,r_k$}
 
-\subsection{Reprezentace $\varepsilon$KNA}
+\subsection{Reprezentace \ekna}
 
 \begin{enumerate}
 
@@ -1599,7 +1600,97 @@ $w_i=w_{i+1} , r_{i+i} \in \delta(r_i,\varepsilon)$
 
 \end{definice}
 
+\subsection{$\varepsilon$-uzávěry množin stavů}
 
+Je dána množina stavů $R \subseteq Q$
+
+$R$ se nazývá $\varepsilon$-uzavřená, pokud $ \delta (q,\varepsilon) \subseteq R$ pro každý stav $ q \in Q$.
+
+\begin{priklad}
+Lze ukázat na našem příkladě \ref{priklad-5}.
+
+$\lbrace q_0 \rbrace $ není $\varepsilon$-uzavřená protože $\delta(q_0,\varepsilon) = \lbrace q_1 \rbrace \nsubseteq \lbrace q_0 \rbrace$
+
+$\lbrace q_0,q_1 \rbrace$ je $\varepsilon$-uzavřená
+\end{priklad}
+
+\textbf{$\varepsilon$-uzávěr $R$}
+
+vstup: $R \subseteq Q$
+
+\quad$E_0=R$
+
+a pro $i \geq 1$
+
+\quad$E_i=E_{i-1} \cup \lbrace \delta (q,\varepsilon) | q \in E_{i-1}$
+
+\quad$E_A(R)=\bigcup_{i=0}^\infty E_i$
+
+\quad$E_0 \subseteq E_1 \subseteq E_2 \subseteq \ldots \subseteq E_A(R)$
+
+\begin{poznamka}
+Vzhledem ke konečnosti množiny $E_A(R)$ musí existovat indek $k$, pro který platí $E_k = E_{k+1} = \ldots = E_A(R)$
+\end{poznamka}
+
+Můžeme pozorovat, že $E_A(R)$ není jen $\varepsilon$-uzavřená, ale je také \textbf{nejmenší} $\varepsilon$-uzavřená. Z toho můžeme vyvodit, že 
+
+$$E_A:2^Q \rightarrow 2^Q$$
+
+je \textbf{uzávěrový} operátor.
+
+\subsection{Rozšířená přechodová funkce}
+
+Pro automat $A = \langle \Sigma,Q,\delta,I,F \rangle$ je rozšířená přechodová funkce definovaná jako
+
+$\delta^*:2^Q \times \Sigma^* \rightarrow 2^Q$
+
+$$
+\delta^*(R,w)=\left\{
+\begin{array}{l@{\quad\mbox{}\quad}l}
+E_A(R) & \text{pokud}\quad w=\varepsilon\\
+\delta^*(E_A(\bigcup_{q \in E_A(R)}\delta(q,a),u))& \text{pokud}\quad w=au,a\in\Sigma,u\in\Sigma^*\\
+\end{array}
+\right.
+$$
+
+\begin{veta}
+Pro libovolné množiny $R_i \subseteq Q \quad (i=1,\ldots,k)$ platí:
+
+$\bigcup_{i=1}^k E_A(R_i)=E_A(\bigcup_{i=1}^kR_i)$
+\end{veta}
+
+\begin{dukaz}
+Z monotonie $E_A$ dostáváme
+
+\quad$E_A(R_i) \subseteq E_A(\bigcup_{i=1}^k R_i)$ pro všechna $i$
+
+\quad$\bigcup_{i=1}^kE_A(R_i) \subseteq E_A(\bigcup_{i=1}^k R_i)$
+
+Opačná inkluze
+
+\quad$\bigcup_{i=1}^kE_A(R_i)$ je $\varepsilon$-uzavřená a obsahuje $\bigcup_{i=1}^k R_i$
+
+z extenzivity $E_A$ plyne, že $\bigcup_{i=1}^k R_i \subseteq \bigcup_{i=1}^k E_A(R_i)$
+
+Stačí tedy ukázat, že $\bigcup_{i=1}^k E_A(R_i)$ je $\varepsilon$-uzavřená.
+
+\quad$q \in \bigcup_{i=1}^k E_A(R_i) \Rightarrow \exists k \ q \in E_A(R_i)$
+
+Protože $E_A(R_i)$ je $\varepsilon$-uzavřená, $\delta(q,\varepsilon) \in E_A(R_i) \Rightarrow \delta(q,\varepsilon) \in \bigcup_{i=1}^k E_A(R_i) \Rightarrow \bigcup_{i=1}^k(E_A(R_i))$ je $\varepsilon$-uzavřená množina.
+\end{dukaz}
+
+Nechť $A=\langle\Sigma,Q,\delta,I,F\rangle$ je \ekna. Řetězec $w \in \Sigma^*$ nazýváme řetězec \textbf{přijímaný} $A$, pokud
+
+$\delta^*(I,w) \cap F \neq \emptyset$
+
+jinak $w$ nazýváme řetězec \textbf{zamítaný} $A$.
+
+\subsection{Ekvivalence s KDA}
+
+\begin{veta}
+Ke každému \ekna \ $A=\langle\Sigma,Q,\delta,I,F\rangle$ existuje KNA $A^S=\langle\Sigma,Q,\delta^S,I^S,F\rangle$ takový, že $L(A)=L(A^S)$.
+\end{veta}
+ 
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
