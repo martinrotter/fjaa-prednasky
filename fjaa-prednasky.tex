@@ -1691,6 +1691,28 @@ jinak $w$ nazýváme řetězec \textbf{zamítaný} $A$.
 Ke každému \ekna \ $A=\langle\Sigma,Q,\delta,I,F\rangle$ existuje KNA $A^S=\langle\Sigma,Q,\delta^S,I^S,F\rangle$ takový, že $L(A)=L(A^S)$.
 \end{veta}
  
+ \begin{dukaz}
+ $I^S=E_A(I)$
+ 
+ $\delta^S(q,a)=\delta^*(\lbrace q \rbrace , a)= E_A(\bigcup_{u \in E_A(\lbrace q \rbrace )} \delta(u,a))$ 
+ 
+ Indukcí přes délku řetězce $w \in \Sigma^*$ prokážeme, že $ \delta^{S^*} (E_A(R),w)=\delta^*(R,w)$
+ 
+ \begin{enumerate}
+ \item
+ $w=\varepsilon$ platí triviálně
+ \item
+ Předpokládejme, že tvrzení platí pro $w$ délky $n$ a dokážeme pro slova $w$ délky $n+1$.
+ 
+ $w=av, \quad a \in \Sigma, \quad v \in \Sigma^*, \quad |v|=n, \quad R \subseteq Q$
+ 
+ $ \delta^{S^*} (E_A(R),w) = \delta^{S^*} (E_A(R),av) = \delta^{S^*} (\bigcup_{q \in E_A(R)} \delta^S(q,a), u) = \delta^{S^*} (\bigcup_{q \in E_A(R)} E_A(\bigcup_{u \in E_A(\lbrace q \rbrace)} \delta (u,a)),u) = $
+ 
+ %%%% DOPLNIT, ZBYTEK DUKAZU mi CHYBI %%%
+ 
+ \end{enumerate}
+ 
+ \end{dukaz}
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
