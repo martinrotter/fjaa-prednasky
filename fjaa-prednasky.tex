@@ -1570,8 +1570,6 @@ Takto bude vypadat předchozí příklad \ref{priklad-5}, reprezentovaný pomoc�
    $ q_{3} $ & $ \emptyset $ & $ \emptyset $ & $\lbrace q_{3} \rbrace$ & $\lbrace q_{5} \rbrace$ \\
    $ q_{4} $ & $ \emptyset $ & $\lbrace q_{3} \rbrace$ & $\emptyset$ & $ \emptyset $ \\
    $ q_{5} $ & $ \emptyset $ &  $ \emptyset $ & $\emptyset$ & $ \emptyset $ 
-   
-   
 \end{tabular}
 \end{center}
 
@@ -1705,16 +1703,125 @@ Ke každému \ekna \ $A=\langle\Sigma,Q,\delta,I,F\rangle$ existuje KNA $A^S=\la
  $w=\varepsilon$ platí triviálně
  \item
  Předpokládejme, že tvrzení platí pro $w$ délky $n$ a dokážeme pro slova $w$ délky $n+1$.
+$$
+w = av, \quad a \in \Sigma, \quad v \in \Sigma^*, \quad |v|=n, \quad R \subseteq Q
+$$ 
  
- $w=av, \quad a \in \Sigma, \quad v \in \Sigma^*, \quad |v|=n, \quad R \subseteq Q$
- 
- $ \delta^{S^*} (E_A(R),w) = \delta^{S^*} (E_A(R),av) = \delta^{S^*} (\bigcup_{q \in E_A(R)} \delta^S(q,a), u) = \delta^{S^*} (\bigcup_{q \in E_A(R)} E_A(\bigcup_{u \in E_A(\lbrace q \rbrace)} \delta (u,a)),u) = $
- 
- %%%% DOPLNIT, ZBYTEK DUKAZU mi CHYBI %%%
- 
- \end{enumerate}
- 
+ \begin{eqnarray*}
+	\delta^{S^*} (E_A(R),w) &=& \delta^{S^*} (E_A(R),av) \\
+	&=& \delta^{S^*} (\bigcup_{q \in E_A(R)} \delta^S(q,a), u) \\
+	&=& \delta^{S^*} (\bigcup_{q \in E_A(R)} E_A(\bigcup_{u \in E_A(\lbrace q \rbrace)} \delta (u,a)),u) \\
+	&=& \delta^{S^*} (E_{A} \bigcup_{q \in E_A(R)} \bigcup_{u \in E_A(\lbrace q \rbrace)} \delta (u,a)),u) \\
+	&=& \delta^{S^*} (E_{A} \bigcup_{q \in E_A(R)} \delta (q,a)),u) \\
+	&=& \delta^{S^*} (E_{A} (E_{A} \bigcup_{q \in E_A(R)} \delta (q,a))),u) \\
+	&=& \delta^{*} (E_{A} \bigcup_{q \in E_A(R)} \delta (q,a)),u) \\
+	&=& \delta^{*} (R, w)
+ \end{eqnarray*}
+ \end{enumerate} 
  \end{dukaz}
+
+\section{Algoritmus na převod $\varepsilon$KNA na KDA}
+
+Máme $A = \langle \Sigma, Q, \delta, I, F \rangle$ a víme, že \emph{W} je neprázdná množina dosud nezpracovaných stavů.
+
+\begin{figure}[h]
+\begin{alltt}
+\( \delta^{s} \leftarrow \emptyset; Q^{s} \leftarrow \emptyset; F^{s} \leftarrow \emptyset; W \leftarrow E_{A}(I) \)
+while \( W \neq Q \) do
+     select \( R \in W \)
+     \( W \leftarrow W \smallsetminus {R}; Q^{s} \leftarrow Q^{s} \cup {R} \)
+     if \( R \cap F \neq \emptyset \) then
+         \( F^{s} \leftarrow F^{s} \cup {R} \)
+     endif
+     foreach \( a \in \Sigma \) do
+         \( N \leftarrow \delta^{*}(R, a) \)
+         if \( N \neq \emptyset \) then
+             if \( N \notin W \cup Q^{s} \) then
+                 \( W \leftarrow W \cup {N} \)
+             endif
+             %%% je to R, W, N ???
+             \( \delta^{s} \leftarrow \delta{s} \cup {<R, W, N>} \)
+         endif
+     end
+end
+return \( <\Sigma, Q^{s}, \delta^{s}, I, F^{s}> \)
+\end{alltt}
+\caption{Pseudokód pro převod $\varepsilon$KNA na KDA.}
+\end{figure}
+
+\begin{center}
+\begin{VCPicture}{(-6,-4)(6,4)}
+\StateVar[{q_0, q_1}]{(-6,0)}{q01}
+\StateVar[{q_1}]{(-2,0)}{q1}
+\StateVar[{q_1, q_4}]{(-1,2)}{q14}
+\FinalStateVar[{q_2, q_3, q_5}]{(3,2)}{q235}
+\FinalStateVar[{q_3, q_5}]{(3,0)}{q35}
+\StateVar[{q_2}]{(-1,-2)}{q2}
+
+\Initial{q01}
+
+\LoopN[.5]{q14}{$0,\ldots,9$}
+\LoopE[.5]{q35}{$0,\ldots,9$}
+
+\ArcL{q01}{q1}{+,-}
+\ArcR{q01}{q2}{.}
+\ArcL{q01}{q14}{$0,\ldots,9$}
+\ArcR{q1}{q14}{$0,\ldots,9$}
+\ArcL{q14}{q235}{.}
+\ArcR{q235}{q35}{$0,\ldots,9$}
+\ArcL{q1}{q2}{.}
+\ArcR{q2}{q35}{$0,\ldots,9$}
+\end{VCPicture}
+\end{center}
+
+\section{Regulární výrazy}
+
+\begin{definice}
+Nechť je dána $\Sigma = \lbrace a_{1}, \ldots, a_{k} \rbrace$. Pak regulární výraz na $\Sigma$ je:
+\begin{enumerate}
+\item
+$\emptyset$
+
+\item
+$\varepsilon$
+
+\item
+symboly $a_{1}, \ldots, a_{k}$
+
+\item
+pokud $R_{1}, R_{2}$ jsou RV, pak $(R_{1}|R_{2})$ je RV
+
+\item
+pokud $R_{1}, R_{2}$ jsou RV, pak $(R_{1}R_{2})$ je RV
+
+\item
+pokud $R$ je RV, pak $(R^{*}$ je RV
+\end{enumerate}
+\end{definice}
+
+\begin{priklad}
+Podívejme se na následující výrazy a rozhodněme, zda-li jsou regulární:
+
+\begin{itemize}
+\item
+$((ab)c)^{*}$, $((a|b)c)^{*}$ -- jsou RV
+
+\item
+$a^{*}b)$, $a||b$ -- nejsou RV
+\end{itemize}
+\end{priklad}
+
+\section{Jazyky generované regulárními výrazy}
+
+\begin{definice}
+Nechť \emph{R} je RV nad $\Sigma$. Pak $L(R) \subseteq \Sigma^{*}$.
+
+\begin{enumerate}
+\item
+Platí, že $L(R) = \emptyset$, pokud $R = \emptyset$.
+%% pokračovat
+\end{enumerate}
+\end{definice}
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
