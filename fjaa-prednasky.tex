@@ -43,6 +43,7 @@
 \newtheorem{priklad}{\textbf{Příklad}}
 \newtheorem{poznamka}{\textbf{Poznámka}}
 \newtheorem{dusledek}{\textbf{Důsledek}}
+\newcommand{\ekna}{$\varepsilon$KNA} %byl jsem línej to pořád psát
 
 \abstract{Tento dokument je pouze přepisem zápisků a poznámek z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.}
 
@@ -1514,6 +1515,206 @@ Regulární jazyky jsou jazyky, generované zprava (zleva) regulárními gramati
 Pravidla zprava a zleva nelze míchat.
 \end{poznamka}
 
+\section{Nedeterministický konečný automat s $\varepsilon$-přechody}
+Značíme \ekna.
+\begin{priklad}\label{priklad-5}
+Zde je jeden motivační příklad na úvod.
+
+\begin{center}
+\begin{VCPicture}{(-6,-4)(6,4)}
+\State[q_0]{(-6,0)}{q0}
+\State[q_1]{(-3,0)}{q1}
+\State[q_2]{(0,2)}{q2}
+\State[q_4]{(0,-2)}{q4}
+\State[q_3]{(3,0)}{q3}
+\FinalState[q_5]{(6,0)}{q5}
+\Initial{q0}
+\LoopN[.5]{q1}{$0,\ldots,9$}
+\LoopS[.5]{q3}{$0,\ldots,9$}
+\ArcL{q0}{q1}{+,-,\varepsilon}
+\ArcL{q1}{q2}{.}
+\ArcL{q2}{q3}{$0,\ldots,9$}
+\ArcR{q1}{q4}{$0,\ldots,9$}
+\ArcR{q4}{q3}{.}
+\ArcR{q3}{q5}{\varepsilon}
+\end{VCPicture}
+\end{center}
+
+\end{priklad}
+
+\begin{definice}
+Nedeterministický konečný automat s $\varepsilon$-přechody je struktura $ \langle \Sigma,Q,\delta,I,F \rangle $, kde $\Sigma,Q,\delta,I,F$ mají stejná význam jako u KNA. $\delta$ je přechodová funcke $\delta : Q \times (\Sigma \cup \lbrace \varepsilon \rbrace ) \rightarrow 2^Q$.
+\end{definice}
+
+Fakt $\delta (q,a) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{automat \textit{A} při čtení symbolu \textit{a} přejde ze stavu \textit{q} do některého ze stavů $r_1,\ldots,r_k$}
+
+Fakt $\delta (q,\varepsilon) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{automat \textit{A} přejde samovolně ze stavu \textit{q} do některého ze stavů $r_1,\ldots,r_k$}
+
+\subsection{Reprezentace \ekna}
+
+\begin{enumerate}
+
+\item
+\textbf{Přechodová tabulka}, vypadá stejně jako u KNA s tím, že přidáme jeden sloupec, ve kterém budeme zaznamenávat $\varepsilon$-přechody.
+
+Takto bude vypadat předchozí příklad \ref{priklad-5}, reprezentovaný pomocí tabulky.
+
+
+\begin{center}
+\begin{tabular}{ r || c | c | c | c }                   
+   & +,- & . & $0,\ldots,9$ & $\varepsilon$ \\
+   \hline
+   $ \rightarrow q_{0} $ & $ \lbrace q_{1} \rbrace $ & $ \emptyset $ & $ \emptyset $ & $ \lbrace q_{1} \rbrace $\\
+   $ q_{1} $ & $ \lbrace q_{2} \rbrace $ & $ \emptyset $ & $ \lbrace q_{1},q_{2} \rbrace $ & $\emptyset$ \\
+   $ q_{2} $ & $ \emptyset $ & $ \emptyset $ & $\lbrace q_{3} \rbrace$ & $ \emptyset $ \\
+   $ q_{3} $ & $ \emptyset $ & $ \emptyset $ & $\lbrace q_{3} \rbrace$ & $\lbrace q_{5} \rbrace$ \\
+   $ q_{4} $ & $ \emptyset $ & $\lbrace q_{3} \rbrace$ & $\emptyset$ & $ \emptyset $ \\
+   $ q_{5} $ & $ \emptyset $ &  $ \emptyset $ & $\emptyset$ & $ \emptyset $ 
+   
+   
+\end{tabular}
+\end{center}
+
+\item
+\textbf{Přechodový diagram}, u kterého mohou být některé hrany ohodnoceny $\varepsilon$. Viz příklad \ref{priklad-5}.
+
+\end{enumerate}
+
+\subsection{Nedeterministický výpočet}
+Pojem \textbf{konfigurace} pro nás zůstavává stejný, jedná se stále o dvojici $\langle \textit{stav,řetězec} \rangle$.
+
+\begin{definice}
+Mějme automat $A = \langle \Sigma,Q,\delta,I,F \rangle$ a řetězec $w \in \Sigma^*$. Posloupnost konfigurací $\langle r_i,w_i \rangle$ pro $i=0,\ldots,n$ splňující podmínky:
+\begin{enumerate}
+\item
+$r_{0} \in I, w_0=w$
+\item
+$w_{n} = \varepsilon$
+\item
+pro každé $i=0,\ldots,n$
+\begin{enumerate}
+\item
+$w_i = aw_{i+1}, r_{i+1} \in \delta(r_i,a)$
+\item
+$w_i=w_{i+1} , r_{i+i} \in \delta(r_i,\varepsilon)$
+\end{enumerate}
+\end{enumerate}
+
+\end{definice}
+
+\subsection{$\varepsilon$-uzávěry množin stavů}
+
+Je dána množina stavů $R \subseteq Q$
+
+$R$ se nazývá $\varepsilon$-uzavřená, pokud $ \delta (q,\varepsilon) \subseteq R$ pro každý stav $ q \in Q$.
+
+\begin{priklad}
+Lze ukázat na našem příkladě \ref{priklad-5}.
+
+$\lbrace q_0 \rbrace $ není $\varepsilon$-uzavřená protože $\delta(q_0,\varepsilon) = \lbrace q_1 \rbrace \nsubseteq \lbrace q_0 \rbrace$
+
+$\lbrace q_0,q_1 \rbrace$ je $\varepsilon$-uzavřená
+\end{priklad}
+
+\textbf{$\varepsilon$-uzávěr $R$}
+
+vstup: $R \subseteq Q$
+
+\quad$E_0=R$
+
+a pro $i \geq 1$
+
+\quad$E_i=E_{i-1} \cup \lbrace \delta (q,\varepsilon) | q \in E_{i-1}$
+
+\quad$E_A(R)=\bigcup_{i=0}^\infty E_i$
+
+\quad$E_0 \subseteq E_1 \subseteq E_2 \subseteq \ldots \subseteq E_A(R)$
+
+\begin{poznamka}
+Vzhledem ke konečnosti množiny $E_A(R)$ musí existovat indek $k$, pro který platí $E_k = E_{k+1} = \ldots = E_A(R)$
+\end{poznamka}
+
+Můžeme pozorovat, že $E_A(R)$ není jen $\varepsilon$-uzavřená, ale je také \textbf{nejmenší} $\varepsilon$-uzavřená. Z toho můžeme vyvodit, že 
+
+$$E_A:2^Q \rightarrow 2^Q$$
+
+je \textbf{uzávěrový} operátor.
+
+\subsection{Rozšířená přechodová funkce}
+
+Pro automat $A = \langle \Sigma,Q,\delta,I,F \rangle$ je rozšířená přechodová funkce definovaná jako
+
+$\delta^*:2^Q \times \Sigma^* \rightarrow 2^Q$
+
+$$
+\delta^*(R,w)=\left\{
+\begin{array}{l@{\quad\mbox{}\quad}l}
+E_A(R) & \text{pokud}\quad w=\varepsilon\\
+\delta^*(E_A(\bigcup_{q \in E_A(R)}\delta(q,a),u))& \text{pokud}\quad w=au,a\in\Sigma,u\in\Sigma^*\\
+\end{array}
+\right.
+$$
+
+\begin{veta}
+Pro libovolné množiny $R_i \subseteq Q \quad (i=1,\ldots,k)$ platí:
+
+$\bigcup_{i=1}^k E_A(R_i)=E_A(\bigcup_{i=1}^kR_i)$
+\end{veta}
+
+\begin{dukaz}
+Z monotonie $E_A$ dostáváme
+
+\quad$E_A(R_i) \subseteq E_A(\bigcup_{i=1}^k R_i)$ pro všechna $i$
+
+\quad$\bigcup_{i=1}^kE_A(R_i) \subseteq E_A(\bigcup_{i=1}^k R_i)$
+
+Opačná inkluze
+
+\quad$\bigcup_{i=1}^kE_A(R_i)$ je $\varepsilon$-uzavřená a obsahuje $\bigcup_{i=1}^k R_i$
+
+z extenzivity $E_A$ plyne, že $\bigcup_{i=1}^k R_i \subseteq \bigcup_{i=1}^k E_A(R_i)$
+
+Stačí tedy ukázat, že $\bigcup_{i=1}^k E_A(R_i)$ je $\varepsilon$-uzavřená.
+
+\quad$q \in \bigcup_{i=1}^k E_A(R_i) \Rightarrow \exists k \ q \in E_A(R_i)$
+
+Protože $E_A(R_i)$ je $\varepsilon$-uzavřená, $\delta(q,\varepsilon) \in E_A(R_i) \Rightarrow \delta(q,\varepsilon) \in \bigcup_{i=1}^k E_A(R_i) \Rightarrow \bigcup_{i=1}^k(E_A(R_i))$ je $\varepsilon$-uzavřená množina.
+\end{dukaz}
+
+Nechť $A=\langle\Sigma,Q,\delta,I,F\rangle$ je \ekna. Řetězec $w \in \Sigma^*$ nazýváme řetězec \textbf{přijímaný} $A$, pokud
+
+$\delta^*(I,w) \cap F \neq \emptyset$
+
+jinak $w$ nazýváme řetězec \textbf{zamítaný} $A$.
+
+\subsection{Ekvivalence s KDA}
+
+\begin{veta}
+Ke každému \ekna \ $A=\langle\Sigma,Q,\delta,I,F\rangle$ existuje KNA $A^S=\langle\Sigma,Q,\delta^S,I^S,F\rangle$ takový, že $L(A)=L(A^S)$.
+\end{veta}
+ 
+ \begin{dukaz}
+ $I^S=E_A(I)$
+ 
+ $\delta^S(q,a)=\delta^*(\lbrace q \rbrace , a)= E_A(\bigcup_{u \in E_A(\lbrace q \rbrace )} \delta(u,a))$ 
+ 
+ Indukcí přes délku řetězce $w \in \Sigma^*$ prokážeme, že $ \delta^{S^*} (E_A(R),w)=\delta^*(R,w)$
+ 
+ \begin{enumerate}
+ \item
+ $w=\varepsilon$ platí triviálně
+ \item
+ Předpokládejme, že tvrzení platí pro $w$ délky $n$ a dokážeme pro slova $w$ délky $n+1$.
+ 
+ $w=av, \quad a \in \Sigma, \quad v \in \Sigma^*, \quad |v|=n, \quad R \subseteq Q$
+ 
+ $ \delta^{S^*} (E_A(R),w) = \delta^{S^*} (E_A(R),av) = \delta^{S^*} (\bigcup_{q \in E_A(R)} \delta^S(q,a), u) = \delta^{S^*} (\bigcup_{q \in E_A(R)} E_A(\bigcup_{u \in E_A(\lbrace q \rbrace)} \delta (u,a)),u) = $
+ 
+ %%%% DOPLNIT, ZBYTEK DUKAZU mi CHYBI %%%
+ 
+ \end{enumerate}
+ 
+ \end{dukaz}
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
