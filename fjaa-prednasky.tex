@@ -520,12 +520,14 @@ Nebo je (pravidlo) ve tvaru $S \rightarrow \varepsilon$, kde $S$ je \emphref{sta
 za předpokladu, že $S$ se nevyskytuje na pravé straně žádného pravidla.
 \end{enumerate}
 
+Zároveň platí pro každé pravidlo (s výjimkou pravidla $S \rightarrow \varepsilon$), že délka odvozeného řetězce je minimálně stejně velká jako délka vstupního řetězce. Gramatika tedy zároveň obsahuje pouze tzv. \emph{nezkracující} pravidla.
+
 \item
 \textbf{Gramatiky typu 2} -- jedná se o tzv. \emph{bezkontextové} gramatiky, jenž obsahují pravidla ve tvaru:
 $$
 A \rightarrow x, \text{ kde } A \in N, x \in (\Sigma \cup N)^{*}
 $$
-Na levých stranách pravidel tedy očekáváme pouze neterminální symbol.
+Na levých stranách pravidel tedy očekáváme pouze neterminální symbol a na pravé straně očekáváme minimálně jeden symbol (s výjimkou pravidla $S \rightarrow \varepsilon$). $S$ se navíc nesmí vyskytovat na pravých stranách pravidel.
 
 \begin{priklad}
 Mějme tuto gramatiku:
