@@ -1815,14 +1815,67 @@ $a^{*}b)$, $a||b$ -- nejsou RV
 \section{Jazyky generované regulárními výrazy}
 
 \begin{definice}
-Nechť \emph{R} je RV nad $\Sigma$. Pak $L(R) \subseteq \Sigma^{*}$.
+Nechť \emph{R} je RV nad $\Sigma$. Pak $L(R) \subseteq \Sigma^{*}$. Pak také platí:
 
 \begin{enumerate}
+\item\label{jazyky-1}
+$L(R) = \emptyset$, pokud $R = \emptyset$.
+
 \item
-Platí, že $L(R) = \emptyset$, pokud $R = \emptyset$.
-%% pokračovat
+$L(R) = \lbrace \varepsilon \rbrace$, pokud $R = \varepsilon$.
+
+\item\label{jazyky-3}
+$L(R) = \lbrace a_{i} | \quad pokud R=a_{i} \rbrace$.
+
+\item\label{jazyky-4}
+$L(R) - L(R_{1}) \cup L(R_{2})$, pokud $R=\lbrace R_{1} | R_{2} \rbrace$. 
+
+\item\label{jazyky-5}
+$L(R) - L(R_{1}) \circ L(R_{2})$, pokud $R=\lbrace R_{1}\circ R_{2} \rbrace$.
+
+\item\label{jazyky-6}
+$L(R) = L(R_{1})* $, pokud $R = R_{1}*$.
 \end{enumerate}
 \end{definice}
+
+\begin{veta}
+Každý regulární výraz lze převést na konečný automat.
+\end{veta}
+
+\begin{veta}
+Každý jazyk generovaný regulárním výrazem je regulární.
+\end{veta}
+
+\begin{dukaz}
+Předchozí body dokážeme indukcí dle složitosti regulárního výrazu.
+
+\begin{itemize}
+\item
+Pro body \ref{jazyky-1} až \ref{jazyky-3} je vše zřejmé.
+
+\item
+Pro bod \ref{jazyky-4} -- $R=R_{1}|R_{2}$, kde $R_{1}, R_{2}$ jsou regulární výrazy. Předpokládáme, že existuje KDA, rozpoznávající
+jazyky $L(R_{1}) \text{ a } L(R_{2}), L(R_{1}) = L(A_{1}), L(R_{2}) = L(A_{2})$.
+
+Pak vytvoříme KNA, který má tvar $\langle \Sigma, Q_{1} \cup Q_{2}, \delta{1} \cup \delta_{2}, \lbrace q_{0}, q_{0}^{,} \rbrace, F_{1} \cup F_{2} \rangle$.
+%% obrazek
+
+\item
+Pro bod \ref{jazyky-5}  -- $R=R_{1}R_{2}$. Z koncových stavů $A_{1}$ vytvoříme $\varepsilon$-přechody do počátečního stavu automatu $A_{2}$ a počátečním stavem
+bude stav $q_{0}$ z automatu $A_{1}$.
+%% obrazek
+
+\item
+Pro bod \ref{jazyky-6} -- $R=R_{1}^{*}, L(A_{1})=L(R_{1})$. Následně sestavujeme $\varepsilon$KNA tak, že před počátečním stavem vytvoříme
+nový koncový stav, který bude navíc novým počátečním stave a do kterého vedeme $\varepsilon$ přechody z již existujících koncových stavů a z našeho nového koncového stavu navíc vedeme
+$\varepsilon$ přechod do původního počátečního stavu.
+%% obrázek
+\end{itemize}
+\end{dukaz}
+
+\begin{veta}
+Každý regulární jazyk lze generovat regulárním výrazem.
+\end{veta}
 
 \section{Uzávěrové vlastnosti regulárních jazyků}
 
