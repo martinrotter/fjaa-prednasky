@@ -2068,6 +2068,54 @@ $Ifx(L) = Pfx(Sfx(L))$\\\\
 Důkaz je taktéž zřejmý.
 \end{itemize}
 
+\subsection{Pumping lemma}
+
+\begin{poznamka}
+Jen drobné upozornění na začátek: jedná se o tvrzení ve tvaru když $\rightarrow$ pak, tj. "Pokud je $L$ regulární, pak $\ldots$"
+\end{poznamka}
+
+\begin{veta}
+Nechť $L$ je regulární jazyk nad $\Sigma$. Pak existuje $n \in \mathbb{N}$ tak, že pro každý řetězec $w \in L$ délky alespoň $n$ platí, že existují $x,y,z \in \Sigma^*$ tak, že jsou splněny podmínky:
+\begin{enumerate}
+\item
+$w = xyz$
+\item
+$|xy| \le n$
+\item
+$y \neq \varepsilon$
+\item
+pro každé $i \ge 0$ platí, že $xy^iz \in L$
+\end{enumerate}
+\end{veta}
+
+\begin{dukaz}
+Rozlišíme dva případy.
+\begin{itemize}
+\item
+\textbf{$L$ je konečný}
+ 
+pak je tvrzení triviální. Hledané $n$ je ve tvaru $l+1$, kde $l$ je délka nejdelšího řetězce z $L$. Pak není v $L$ žádný řetězec delší než $n$ a tvrzení $1. - 4.$ platí triviálně.
+ 
+ \item
+\textbf{$L$ je nekonečný} 
+
+pak pro něj existuje KDA s množinou stavů $Q$ tak, že $L(A) = L$. Položíme $n=|Q|$.
+
+Pro každý řetězec $w=a_1a_2\cdots a_m$ kde $m \ge n$ existuje přijímací výpočet
+délky $m$:
+$$
+\langle q_0,w \rangle = \langle r_0, a_1\cdots a_m \rangle,\langle r_1, a_2\cdots a_m \rangle \ldots \langle r_{m-1}, a_m \rangle, \langle r_m, \varepsilon \rangle
+$$
+Jelikož je $m+1 > n$ musí existovat alespoň 1 stav, který je v tomto přijímacím výpočtu zopakován.
+
+%%DOPLNIT ZBYTEK%%
+
+
+
+\end{itemize}
+\end{dukaz}
+
+
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
