@@ -1291,7 +1291,6 @@ P &=& \lbrace S \rightarrow .F | dT , T \rightarrow .E|.F|dT|. , D \rightarrow d
 
 Automat rozpoznávající jazyk, generovaný gramatikou G, bude vypadat následovně:
 
-
 \begin{center}
 \begin{VCPicture}{(-5,-3)(5,6)}
 \State[S]{(-4,0)}{S}
@@ -1337,8 +1336,6 @@ Když tento automat zdeterminizujeme, dostaneme následující automat:
 \ArcR{D}{hash}{d}
 \end{VCPicture}
 \end{center}
-
-
 
 \end{priklad}
 
@@ -1559,7 +1556,6 @@ Fakt $\delta (q,\varepsilon) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{auto
 \textbf{Přechodová tabulka}, vypadá stejně jako u KNA s tím, že přidáme jeden sloupec, ve kterém budeme zaznamenávat $\varepsilon$-přechody.
 
 Takto bude vypadat předchozí příklad \ref{priklad-5}, reprezentovaný pomocí tabulky.
-
 
 \begin{center}
 \begin{tabular}{ r || c | c | c | c }                   
@@ -1965,7 +1961,45 @@ $$L_1 \cap L_2 = L(A_1 \times A_2)$$
 $L_1 \cdot L_2$
 
 Předpokládáme existenci automatů \aut{1} a \aut{2} takových, že $L_1 = L(A_1)$ a $L_2 = L(A_2) $.
-%%DOPLNIT SCHEMA%%
+
+\begin{center}
+\begin{VCPicture}{(-5,-2)(5,2)}
+\FixStateDiameter{3cm} \ChgStateLabelScale{2}
+\State[{A_{1}}]{(-3,0)}{A}
+\State[{A_{2}}]{(3,0)}{B}
+\FixStateDiameter{0.3cm} \ChgStateLabelScale{0.7}
+\State[{}]{(-4.5,0)}{A0}
+\FinalState[{}]{(-3,1)}{A1}
+\FinalState[{}]{(-3,-1)}{A2}
+
+\State[{}]{(1.5,0)}{B0}
+\FinalState[{}]{(3,1)}{B1}
+\FinalState[{}]{(3,-1)}{B2}
+\Initial{A0}
+\Initial{B0}
+\end{VCPicture}
+\end{center}
+
+\begin{center}
+\begin{VCPicture}{(-5,-2)(5,2)}
+\FixStateDiameter{3cm} \ChgStateLabelScale{2}
+\State[{A_{1}}]{(-3,0)}{A}
+\State[{A_{2}}]{(3,0)}{B}
+\FixStateDiameter{0.3cm} \ChgStateLabelScale{0.7}
+\State[{}]{(-4.5,0)}{A0}
+\FinalState[{}]{(-3,1)}{A1}
+\FinalState[{}]{(-3,-1)}{A2}
+
+\State[{}]{(1.5,0)}{B0}
+\FinalState[{}]{(3,1)}{B1}
+\FinalState[{}]{(3,-1)}{B2}
+\Initial{A0}
+\Initial{B0}
+\ChgEdgeLineStyle{dashed}
+\EdgeR{A1}{B0}{}
+\EdgeR{A2}{B0}{}
+\end{VCPicture}
+\end{center}
 
 Sestavíme \ekna
 $$A= \langle \Sigma,Q_1  \cup Q_2,\delta,\lbrace q_{01} \rbrace,F_2 \rangle$$
@@ -2010,6 +2044,24 @@ $$
 \end{array}
 $$
 \end{itemize}
+
+\begin{center}
+\begin{VCPicture}{(-5,-2)(5,2)}
+\FixStateDiameter{3cm} \ChgStateLabelScale{2}
+\State[{A}]{(0,0)}{A}
+\FixStateDiameter{0.3cm} \ChgStateLabelScale{0.7}
+\State[{}]{(-2,0)}{A0}
+\FinalState[{\varepsilon}]{(-3,0)}{INIT}
+\FinalState[{}]{(0,1)}{A1}
+\FinalState[{}]{(0,-1)}{A2}
+
+\Initial{INIT}
+
+\ArcR{A1}{INIT}{\varepsilon}
+\ArcL{A2}{INIT}{\varepsilon}
+\EdgeR{INIT}{A0}{\varepsilon}
+\end{VCPicture}
+\end{center}
 
 \subsection{Další uzávěrové vlastnosti}
 
@@ -2096,7 +2148,7 @@ Rozlišíme dva případy.
  
 pak je tvrzení triviální. Hledané $n$ je ve tvaru $l+1$, kde $l$ je délka nejdelšího řetězce z $L$. Pak není v $L$ žádný řetězec delší než $n$ a tvrzení $1. - 4.$ platí triviálně.
  
- \item
+\item
 \textbf{$L$ je nekonečný} 
 
 pak pro něj existuje KDA s množinou stavů $Q$ tak, že $L(A) = L$. Položíme $n=|Q|$.
@@ -2108,11 +2160,82 @@ $$
 $$
 Jelikož je $m+1 > n$ musí existovat alespoň 1 stav, který je v tomto přijímacím výpočtu zopakován.
 
-%%DOPLNIT ZBYTEK%%
+\begin{center}
+\begin{VCPicture}{(-6,-4)(6,4)}
+\StateVar[{q_0, q_1}]{(-6,0)}{r0}
+\StateVar[{q_1}]{(0,0)}{rirj}
+\FinalStateVar[{q_1, q_4}]{(6,0)}{rm}
 
+\Initial{r0}
 
-
+\LoopS[.5]{rirj}{a_{i+1}\ldots a_{j}}
+\ChgEdgeLineStyle{dashed}
+\EdgeL{r0}{rirj}{a_{1}a_{2}\ldots a_{i}}
+\EdgeL{rirj}{rm}{a_{j+1}\ldots a_{m}}
+\end{VCPicture}
+\end{center}
+Položme
+\begin{eqnarray*}
+x &=& a_{1}a_{2}\ldots a_{i} \\
+y &=& a_{i+1}a_{i+2}\ldots a_{j} \\
+z &=& a_{j+1}a_{j+2}\ldots a_{m}
+\end{eqnarray*}
 \end{itemize}
+\end{dukaz}
+
+\begin{priklad}\label{priklad-reg}
+ Jazyk $L = \lbrace a^{n}b^{n} | \quad \text{ kde } n \in N \rbrace$ není regulární.
+\end{priklad}
+
+\begin{dukaz}
+ Předchozí příklad \ref{priklad-reg} není regulární, což dokážeme sporem. Nechť je tedy $L$ regulární a dle předchozí
+věty existuje číslo $n$ tak, že vezmem řetězec $a^{n}b^{n} = xyz$ tak, že $x = a^{k}, y = a^{l}, z = a^{n-k-l}b^{n}$.
+\end{dukaz}
+
+%% 9. přednáška
+
+\section{Minimalizace KDA}
+
+\begin{poznamka}
+Pro regulární jazyk $L$ více, než jeden automat $A$ tak, že $L = L(A)$ a navíc můžeme mít $A_{1}, A_{2}$ tak, že
+$L(A_{1}) = L(A_{2})$, ale $|Q_{1}| < |Q_{2}|$.
+\end{poznamka}
+
+\subsection{Zprava invariantní ekvivalence}
+
+\begin{definice}
+Předpokládejme, že máme $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a relaci ekvivalence $\Theta \subseteq Q \times Q$ nazveme
+\textbf{zprava invariantní ekvilancí} vzhledem k $\delta$, pokud platí, že $\langle q_{r}  \rangle \in \Theta \text{ a } a \in \Sigma$,
+pak $\langle  \delta(q, a) \delta(r, a) \rangle \in \Theta$.
+\end{definice}
+
+Pravá invariance reprezentuje přirozenou vlastnost, kterou musí mít relace nerozlišitelnosti stavů.
+
+Mezními případy invariantních relací zprava jsou:
+\begin{enumerate}
+\item 
+identita $\Theta = \lbrace <p,q> | \quad q \in Q \rbrace$
+\item
+$\Theta = Q \times Q$
+\end{enumerate}
+
+\subsection{Faktorizace automatu}
+
+\begin{definice}
+Mějmse KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a zprava invariantní ekvivalenci $\Theta$ vzhledem k
+$\delta$, pak zavedeme $A/\theta = \langle \Sigma, Q/\Theta, \delta^{A/\Theta}, [q_{0}]_{\Theta}, F^{A/\Theta} \rangle$, kde
+$$\delta^{A/\Theta} = ([q]_{\Theta}, a) = [\delta(q, a)]_{\Theta}$$
+a
+$$F^{A/\Theta} = \lbrace [q]_{\Theta} | \quad q \in F \rbrace$$.
+\end{definice}
+
+\begin{veta}\label{veta-aut}
+Automat $A$ je dobře definovaný KDA.
+\end{veta}
+
+\begin{dukaz}
+Větu \ref{veta-aut} si ověříme tak, že definice $\delta^{A/\Theta}$ nezávisí na výběru prvků z třídy rozkladu
+dle $\Theta$.
 \end{dukaz}
 
 
