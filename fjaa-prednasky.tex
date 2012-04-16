@@ -2236,6 +2236,40 @@ Automat $A$ je dobře definovaný KDA.
 \begin{dukaz}
 Větu \ref{veta-aut} si ověříme tak, že definice $\delta^{A/\Theta}$ nezávisí na výběru prvků z třídy rozkladu
 dle $\Theta$.
+
+Mějme $[q]_\Theta = [r]_\Theta$,  to jest $\langle q,r \rangle \in \Theta$. Potom pro $a \in \Sigma$ platí $\langle \delta(q,a), \delta(r,a) \rangle \in \Theta$, to jest $[ \delta(q,a)]_\Theta = [ \delta(r,a)]_\Theta$.
+\end{dukaz}
+
+Obecně $L(A/\Theta) \neq L(A)$. Snažíme se najít co největší $\Theta$, tak aby tato rovnost platila.
+
+\begin{priklad}
+$\Theta = Q \times Q$
+\begin{center}
+\begin{VCPicture}{(-1,-2)(1,2)}
+\State[q_0]{(-1,0)}{q0}
+\FinalState[q_1]{(1,0)}{q1}
+\Initial{q0}
+\ArcL{q0}{q1}{1}
+\ArcL{q1}{q0}{0}
+\LoopN[0.5]{q0}{0}
+\LoopN[0.5]{q1}{1}
+\end{VCPicture}
+\end{center}
+
+\end{priklad}
+
+\begin{veta}
+Platí, že $(\delta^{A/\Theta})^*([q]_\Theta,x)=[\delta^*(q,x)]_\Theta$ pro každý $x \in \Sigma^*$.
+\end{veta}
+
+\begin{dukaz}
+Dokážeme indukcí přes délku řetězce.
+\begin{itemize}
+\item$x = \varepsilon$
+
+$\delta^*([q]_\Theta,\varepsilon)=[q]_\Theta=[\delta(q,\varepsilon)]_\Theta$
+
+\end{itemize}
 \end{dukaz}
 
 
