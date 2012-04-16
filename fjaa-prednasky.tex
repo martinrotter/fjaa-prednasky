@@ -54,11 +54,10 @@
 \begin{document}
 \maketitle
 
-
 \section{Historie}
 Počátek úvah, jež byly později základem seriozního zkoumání formálních jazyků potažmo automatů se datuje do 30. let.
 Průkopníkem této oblasti byl \link{Noam Chomsky}{http://cs.wikipedia.org/wiki/Noam_Chomsky}
-\footnote{Jméno této osoby čti [\emph{čomski}] a zapamatuj si ke státnícím, že Chomsky byl \emph{nebezpečný levicový intelektuál}.}.
+\footnote{Jméno této osoby čti [\emph{čomski}] a zapamatuj si ke státnicím, že Chomsky byl \emph{nebezpečný levicový intelektuál}.}.
 
 Jako příklad selhání autora programovacího jazyka si uveďme jazyk \textbf{Fortran}, jehož konstrukce byla po syntaktické stránce špatná,
 což vedlo ke \textbf{gramatické nejednoznačnosti} tohoto jazyka.
@@ -70,12 +69,12 @@ $\langle\text{ znak, identifikátor }\rangle$.
 Příkladem je tedy i token $\langle =, assignment \rangle$ a jiné.
 
 \subsection{Syntaktická analýza}
-Syntaktická analýza vytváři stromovou závislost jednotlivých tokenů, jejíž reprezentace se nazývá \emph{syntaktický-derivační strom}.
+Syntaktická analýza vytváří stromovou závislost jednotlivých tokenů, jejíž reprezentace se nazývá \emph{syntaktický-derivační strom}.
 V rámci této analýzy rozlišme:
 \begin{enumerate}
 \item
-Teorii jazyků, jenž se zabýva stavbou jazyka (respektive jeho syntaxí) a poskytuje tzv. \textbf{generativní aparát}.
-Dodejme, že gramatika řiká, v jakém tvaru může být zapsán validní program.
+Teorii jazyků, jenž se zabývá stavbou jazyka (respektive jeho syntaxí) a poskytuje tzv. \textbf{generativní aparát}.
+Dodejme, že gramatika říká, v jakém tvaru může být zapsán validní program.
 
 \item
 Teorii automatů, jež poskytuje tzv. \textbf{analytický aparát}.
@@ -2258,19 +2257,100 @@ $\Theta = Q \times Q$
 
 \end{priklad}
 
-\begin{veta}
+\begin{veta}\label{veta-x2}
 Platí, že $(\delta^{A/\Theta})^*([q]_\Theta,x)=[\delta^*(q,x)]_\Theta$ pro každý $x \in \Sigma^*$.
 \end{veta}
 
 \begin{dukaz}
 Dokážeme indukcí přes délku řetězce.
 \begin{itemize}
-\item$x = \varepsilon$
+\item
+Tedy $x = \varepsilon$, pak
+$$(\delta^{A/ \Theta})^{*}([q]_\Theta,\varepsilon)=[q]_\Theta=[\delta^{*}(q,\varepsilon)]_\Theta$$
 
-$\delta^*([q]_\Theta,\varepsilon)=[q]_\Theta=[\delta(q,\varepsilon)]_\Theta$
-
+\item
+pak nechť toto tvrzení platí pro $u \in \Sigma^{*}$ a řetězec $x = au$, kde $a \in \Sigma$.
+\begin{gather*}
+(\delta^{A/ \Theta})^{*}([q]_{\Theta}, au) = (\delta^{A/ \Theta})^{*}(\delta^{A/ \Theta} ([q]_{\Theta}, a), u ) = \\
+= (\delta^{A/ \Theta})^{*} ([\delta(q, a)]_{\Theta}, u) = [\delta^{*} (\delta(q, a), u]_{\Theta} = [\delta^{*} (q, au)]_{\Theta}
+\end{gather*}
 \end{itemize}
 \end{dukaz}
+
+\begin{definice}
+Mějme KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ s úplnou přechodovou funkcí.
+Pro stavy $q, r \in Q$ položme $q \equiv_{A} r$, pokud pro každ\'y řetězec $x \in \Sigma{*}$ plat\'i, že $\delta^{*}(q,x) \in F$,
+pokud $\delta^{*}(r,x) \in F$.
+\end{definice}
+
+\begin{veta}\label{veta-zprava}
+$\equiv_{A}$ je zprava invariantní operace.
+\end{veta}
+
+\begin{dukaz}
+Dokazujeme větu \ref{veta-zprava}. Důkaz reflexivity je zřejm\'y, stejně tak symetrie i tranzitivita.
+
+Nechť $q \equiv_{A} r \text{ a m\'ame } a \in \Sigma$. M\'ame dok\'azat, že $\delta(q,a) \equiv_{A} \delta(r,a)$. Pro každ\'eD
+$x \in \Sigma^{*}$ plat\'i:
+
+\begin{eqnarray*}
+\delta^{*}(\delta(q,a), x) &=& \delta^{*}(q, ax) \\
+\delta^{*}(\delta(r,a), x) &=& \delta^{*}(r, ax)
+\end{eqnarray*}
+Užit\'im faktu, že $\delta^{*(q, ax} \in F$ dostaneme $\delta^{*}(r,ax) \in F$, tedy
+$\delta^{*}(\delta(q,a),x) \in F$ pr\'avě tehdy, když $\delta^{*}(\delta(r,a),x) \in F$, to jest
+$\delta(q,a) \equiv_{A} \delta{r, a}$ a tedy $A |\hspace{-3px} \equiv_{A}$.
+\end{dukaz}
+
+\begin{veta}
+Pro $A |\hspace{-3px} \equiv_{A}$ a stav $q \in Q$ plat\'i, že $q \in F$ pr\'avě, když $[q]_{\equiv_{A}} \in F^{A/ \equiv_{A}}$.
+\end{veta}
+
+\begin{dukaz}
+Předchoz\'i větu dok\'ažeme tak, že dok\'ažme implikace z obou stran.
+\begin{itemize}
+\item
+Implikace zleva doprava (\uv{$\Rightarrow$}) plyne z definice.
+
+\item
+Implikace zprava doleva (\uv{$\Leftarrow$}): pokud $[q]_{\equiv_{A}} \in F^{A/ \equiv_{A}}$, pak z definice
+$\exists r \in F$ tak, že $r \in [q]_{\equiv_{A}}$. To znamen\'a, že $r \equiv_{A} q$ pro každ\'y $x \in \Sigma^{*}$ plat\'i, že
+$\delta^{*}(r,x) \in F$ pr\'avě tehdy, když $\delta^{*}(q,x) \in F$, speci\'alně pro $x = \varepsilon$, nav\'ic
+$\delta^{*}(r, \varepsilon) = r \in F$, to jest $\delta^{*}(q,\varepsilon) = q \in F$.
+\end{itemize}
+\end{dukaz}
+
+\begin{dusledek}
+KDA $A$ nazveme redukovan\'y, pokud je $\equiv_{A}$ identita.
+\end{dusledek}
+
+\begin{veta}
+KDA $A$ je identita.
+\end{veta}
+
+\begin{dukaz}
+Automat $A \equiv_{A}$ označme jako $B$, n\'asledně prok\'ažeme, že $\equiv_{B}$ je identita,
+tozn., že pokud $[q]_{\equiv_{A}} \equiv_{B} [r]_{\equiv_{A}}$,
+tak pak jsou si rovny.
+
+Předpokl\'adejme, že plat\'i $[q]_{\equiv_{A}} \equiv [r]_{\equiv_{A}}$.
+\begin{itemize}
+\item
+Pak podle definice $\equiv_{B}$ tozn, že pro $x \in \Sigma^{*}$
+plat\'i $\delta^{A/ \equiv_{A}} ([q]_{\equiv_{A}},x) \in F$ pr\'avě když,
+$(\delta^{A/ \equiv_{A}})^{*}([r]_{\equiv_{A}},x) \in F^{A/ \equiv_{A}}$.
+
+\item
+S využit\'im věty \ref{veta-x2} pro každ\'y $x \in \Sigma^{*}$: % pokračovat
+\end{itemize}
+
+\end{dukaz}
+
+
+
+
+
+
 
 
 
