@@ -839,7 +839,8 @@ sešit - automat (obr. 4.1)
 \end{priklad}
 
 Formalizace:
-Konečný deterministický automat (s úplnou přechodovou funkcí) (nad vstupní abecedou $\Sigma$) je struktura: \\
+Konečný deterministický automat (s úplnou přechodovou funkcí) (nad vstupní abecedou $\Sigma$) je struktura:
+
 $\langle \Sigma, Q, d, q_{0} \rangle$ \\
 $\Sigma \ldots$ vstupní abeceda \\
 $Q \ldots$ konečná množina stavu, která je neprázdná \\
@@ -1893,8 +1894,9 @@ Tj. $\Sigma^* \backslash L = L(A')$
 Jsou-li $L_1$ a $L_2$ regulární, pak je $L_1 \cup L_2$ regulární.
 
 \begin{dukaz}
-Pro $L_1$ existuje \aut{1}, tak že $L_1=L(A_1)$ \\
-Pro $L_2$ existuje \aut{2}, tak že $L_2=L(A_2)$ \\
+Pro $L_1$ existuje \aut{1}, tak že $L_1=L(A_1)$
+
+Pro $L_2$ existuje \aut{2}, tak že $L_2=L(A_2)$
 
 Předpokládame-li, že $A_1$ a $A_2$ mají disjunktní množiny stavů, tj. $Q_1 \cap Q_2 = \emptyset$, sestavíme následující KNA:\\
 $A=\langle,Q_1 \cup Q_2,\delta,\lbrace q_{01},q_{02} \rbrace,F_1 \cup F_2 \rangle$ s přechodovu funkcí $\delta$ definovanou jako
@@ -2107,15 +2109,17 @@ Všechny stavy jsou označeny za počáteční, aby měl automat možnost skoči
 
 \item
 \textbf{Jazyk prefixů}
-
-$Pfx(L) = \bigcup_{w \in L} Pfx(w)$\\\\
-$Pfx(L) = (Sfx(L^R))^R$\\\\
+\begin{eqnarray*}
+Pfx(L) &=& \bigcup_{w \in L} Pfx(w) \\
+Pfx(L) &=& (Sfx(L^R))^R
+\end{eqnarray*}
 Důkaz plyne z uzavření na Sfx a reverzní řetězec.
 
 \item
 \textbf{Jazyk infixů}
-
-$Ifx(L) = Pfx(Sfx(L))$\\\\
+$$
+Ifx(L) = Pfx(Sfx(L))
+$$
 Důkaz je taktéž zřejmý.
 \end{itemize}
 
@@ -2299,11 +2303,11 @@ $x \in \Sigma^{*}$ plat\'i:
 \end{eqnarray*}
 Užit\'im faktu, že $\delta^{*(q, ax} \in F$ dostaneme $\delta^{*}(r,ax) \in F$, tedy
 $\delta^{*}(\delta(q,a),x) \in F$ pr\'avě tehdy, když $\delta^{*}(\delta(r,a),x) \in F$, to jest
-$\delta(q,a) \equiv_{A} \delta{r, a}$ a tedy $A |\hspace{-3px} \equiv_{A}$.
+$\delta(q,a) \equiv_{A} \delta{r, a}$ a tedy $A/ \equiv_{A}$.
 \end{dukaz}
 
-\begin{veta}
-Pro $A |\hspace{-3px} \equiv_{A}$ a stav $q \in Q$ plat\'i, že $q \in F$ pr\'avě, když $[q]_{\equiv_{A}} \in F^{A/ \equiv_{A}}$.
+\begin{veta}\label{veta-4}
+Pro $A/ \equiv_{A}$ a stav $q \in Q$ plat\'i, že $q \in F$ pr\'avě, když $[q]_{\equiv_{A}} \in F^{A/ \equiv_{A}}$.
 \end{veta}
 
 \begin{dukaz}
@@ -2337,21 +2341,68 @@ Předpokl\'adejme, že plat\'i $[q]_{\equiv_{A}} \equiv [r]_{\equiv_{A}}$.
 \begin{itemize}
 \item
 Pak podle definice $\equiv_{B}$ tozn, že pro $x \in \Sigma^{*}$
-plat\'i $\delta^{A/ \equiv_{A}} ([q]_{\equiv_{A}},x) \in F$ pr\'avě když,
+plat\'i $\delta^{A/ \equiv_{A}} ([q]_{\equiv_{A}},x) \in F$ pr\'avě,  když
 $(\delta^{A/ \equiv_{A}})^{*}([r]_{\equiv_{A}},x) \in F^{A/ \equiv_{A}}$.
 
 \item
-S využit\'im věty \ref{veta-x2} pro každ\'y $x \in \Sigma^{*}$: % pokračovat
+S využit\'im věty \ref{veta-x2} pro každ\'e $x \in \Sigma^{*}$:
+$$
+[\delta^{*}(q,x)] \in F^{A/ \equiv_{A}} \text{ právě tehdy, když } [\delta^{*}(r, x)]_{\equiv{A}} \in F^{A/ \equiv_{A}}
+$$
+N\'asledně aplikujeme větu \ref{veta-4}:
+$$
+\delta^{*}(q, x) \in F \text{ pr\'avě tehdy, když } \delta^{*}(r, x) \in F \text{ , tozn., že } q \equiv_{A} r \text{ a tedy } [q]_{\equiv_{A}} = [r]_{\equiv_{A}}
+$$
 \end{itemize}
-
 \end{dukaz}
 
+\begin{veta}
+$L(A) = L(A/ \equiv_{A})$, což plyne užit\'im vět \ref{veta-4} a \ref{veta-x2}.
+\end{veta}
+
+\begin{dukaz}
+M\'ame dok\'azat, že $\delta^{*} \in F$, pr\'avě, když $(\delta^{A/ \equiv_{A}})([q_{0}]_{\equiv_{A}}, x) \in F^{A/ \equiv_{A}}$.
+
+Z věty \ref{veta-x2}: $\delta^{*}(q_{0},x)$ pr\'avě, když $[\delta^{*}(q_{0}, x)]_{\equiv_{A}} \in F^{A/ \equiv_{A}}$, to ale plat\'i z věty \ref{veta-4}.
+\end{dukaz}
+
+\begin{dusledek}
+Obecně plat\'i, že $L(A) \subseteq L(A/ \Theta)$.
+\end{dusledek}
+
+\begin{veta}
+Pokud je každ\'y stav automatu $A$ dosažiteln\'y, pak m\'a $A/ \equiv_{A}$ tak\'e každ\'y stav dosažiteln\'y.
+\end{veta}
+
+\subsection{Algoritmus pro hled\'an\'i redukovan\'eho automatu}
+
+\begin{enumerate}
+\item
+Označ\'ime $A/ \equiv_{A} jako A^{R}$, konstruujeme posloupnost rozkladů na $Q$ tak, že $\varphi_{1}, \varphi_{2}, \ldots, \varphi_{i} = \varphi_{i+1}$,
+kde $\varphi_{1} = \lbrace F, Q \setminus F \rbrace$
+
+\item
+Při odvozen\'i rozkladů $\varphi_{1}$ z $\varphi_{i-1}$ postupujeme n\'asledovně:
+\begin{enumerate}
+\item
+Vezmeme libovoln\'y stav $r \in R$.
+
+\item
+Polož\'ime $S = \lbrace s \in R | \text{ pro každ\'e } a \in \Sigma \text{ plat\'i tak\'e, že }\delta(S, a) \in [\delta(R, a)] \rbrace$.
+
+\item
+Pokud $S = R$, pak vlož\'ime $R$ do $\varphi_{i}$, pokud $S \subseteq R$, pak vlož\'ime $S$ a $R \setminus S$ do $\varphi_{i}$.
+\end{enumerate}
+\end{enumerate}
+
+\begin{veta}
+Korektnost algoritmu pro nalezen\'i $\equiv_{A}$: pokud $\varphi_{i} = \varphi_{i+1}$, pak $\varphi_{i} = Q/ \equiv_{A}$.
+\end{veta}
 
 
 
 
-
-
+%% pokračovat důkazem
 
 
 %\newpage
