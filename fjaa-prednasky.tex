@@ -2399,7 +2399,29 @@ Pokud $S = R$, pak vlož\'ime $R$ do $\varphi_{i}$, pokud $S \subseteq R$, pak v
 Korektnost algoritmu pro nalezen\'i $\equiv_{A}$: pokud $\varphi_{i} = \varphi_{i+1}$, pak $\varphi_{i} = Q/ \equiv_{A}$.
 \end{veta}
 
+\begin{dukaz}
+Ověříme, že $q \equiv_{A} r$ právě, když $q \in [r]_{\varphi_{i}}$.
 
+Pokud $q \in [r]_{\varphi_{i}}$, pak z toho, jak jsme zavedli
+posloupnost rozkladů, plyne, že nemůže platit $q \equiv_{A} r$.
+
+Pokud $q \equiv_{A} r$, pak $q \in [r]_{\equiv_{A}}$ a zbývá dokázat opačnou implikaci, což provedeme indukcí přes délku řetězce:
+\begin{itemize}
+\item
+Máme libovolná $q, r \in Q$.
+
+\item Pokud $q \in [r]_{\varphi_{i}}$, pak $\delta^{*}(q,x) \in F \text{ právě, když } \delta^{*}(r, x) \in F$.
+\end{itemize}
+\begin{enumerate}
+\item
+Pro $x = \varepsilon$ je situace triviální.
+Máme dokázat, že $q \in F$ právě, když $r \in F$, ale to obecně platí, protože $\varphi_{i} = \lbrace F, Q \setminus F \rbrace$
+\item
+Pro $x \in \Sigma^{*}, x = au \text{, kde } a \in \Sigma, u \in \Sigma{*}$.
+Z předpokladu, že $q \in [r]_{\varphi_{i}} \text{ a } \varphi_{i} =\varphi_{i+1}$ platí, že $[\delta(q, a)]_{\varphi_{i}} = [\delta(r, a)]_{\varphi_{i}}$,
+to jest $\delta(q, a) \in [\delta(q, a)]_{\varphi_{i}}$ - zde použijeme indukční předpoklad.
+\end{enumerate}
+\end{dukaz}
 
 
 %% pokračovat důkazem
