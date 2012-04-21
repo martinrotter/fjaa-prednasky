@@ -2426,6 +2426,113 @@ to jest $\delta(q, a) \in [\delta(q, a)]_{\varphi_{i}}$ - zde použijeme indukč
 
 %% pokračovat důkazem
 
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%ZACATEK 10.PREDNASKY%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Bezkontextové gramatiky}
+V této části se vrátíme k problematice bezkontextových gramatik. Před dalším čtením je potřeba ovládat základní pojmy, zejména
+\begin{itemize}
+%%DOPLNIT ODKAZY%%
+\item
+Bezkontextové gramatiky
+\item
+Bezkontextové jazyky
+\item
+P-derivace
+\item
+Odvozování řetězců
+\item
+Věty a větné formy
+
+\end{itemize}
+
+Navíc si zavedeme duální pojem k derivaci - \textbf{redukci}.
+\begin{definice}
+Řetězec $v$ lze redukovat na řetězec $u$, pokud $u \Rightarrow_G^* v$. Značíme
+$v \Leftarrow_G^* u$. 
+\end{definice}
+V následujícím příkladě si ukážeme problém nejednoznačnosti bezkontextových gramatik.
+\begin{priklad}
+Mějme gramatiku:
+
+$\begin{array}{l}
+G=\langle N,\Sigma,P,S \rangle \\
+\Sigma = \lbrace a,b,c,0,1,+,-,*,/,(,) \rbrace \\
+N = \lbrace S,E,C,V \rbrace \\
+\end{array}\\
+\begin{array}{l l}
+P= \lbrace &S \rightarrow E, \\
+& E \rightarrow E*E|E/E|E+E|E-E|-E|C|V|(E), \\
+& C \rightarrow 0C|1C|0|1, \\
+& V \rightarrow aV|bV|cV|a|b|c \quad \rbrace
+\end{array}
+$
+
+Uvažujme větu $w=ac*1-c$. K ní se lze dostat buď:
+
+$
+S \Rightarrow_G E \Rightarrow_G E*E \Rightarrow_G V*E \Rightarrow_G V*E-E \Rightarrow_G V*E-V \Rightarrow_G aV*E-V \Rightarrow_G ac*E-V \Rightarrow_G ac*C-V \Rightarrow_G ac*C-c \Rightarrow_G \textbf{ac*1-c}
+$
+
+nebo
+
+$
+S \Rightarrow_G E \Rightarrow_G E*E \Rightarrow_G V*E \Rightarrow_G aV*E \Rightarrow_G ac*E \Rightarrow_G ac*E-E \Rightarrow_G ac*C-E \Rightarrow_G ac*1-E \Rightarrow_G ac*1-V \Rightarrow_G \textbf{ac*1-c}
+$
+
+Ačkoliv odvozujeme stejnou větu, můžeme zde pozorovat jakousi nejednoznačnost, způsobenou tím, že neterminály derivujeme v libovolném pořadí.
+\end{priklad}
+Tento problém bychom mohli vyřešit použitím tzv. lineární bezkontextové gramatiky, tedy takové, jejíž odvozovací pravidla obsahují pouze jeden neterminální symbol na pravé straně.
+\begin{priklad}Lineární gramatika může vypadat např. takto: \\
+$\begin{array}{l}
+G=\langle N,\Sigma,P,S \rangle \\
+\end{array}\\
+\begin{array}{l l}
+P= \lbrace &S \rightarrow abB, \\
+& A \rightarrow aaBb|\varepsilon, \\
+& B \rightarrow bbAa \quad \rbrace
+\end{array}
+$
+
+$\ L(G) = \lbrace ab(bbaa)^nbba(ba)^n\ |\ n \ge0 \rbrace$
+\end{priklad}
+
+Ovšem k nejednoznačnosti může stejně dojít, pokud by se z různých neterminálních symbolů daly odvodit stejná slova.
+
+\begin{priklad}
+Příklad nejednoznačné lineární gramatiky: \\
+$\begin{array}{l}
+G=\langle N,\Sigma,P,S \rangle \\
+\end{array}\\
+\begin{array}{l l}
+P= \lbrace &S \rightarrow aA\ |\ aB, \\
+& A \rightarrow bA|a, \\
+& B \rightarrow bB|a \quad \rbrace
+\end{array}
+$
+
+Uvažujme slovo $w=abba$, ke kterému lze dojít buď:
+
+$S \Rightarrow_G aA \Rightarrow_G abA \Rightarrow_G abbA \Rightarrow_G abba$
+
+nebo:
+
+$S \Rightarrow_G aB \Rightarrow_G abB \Rightarrow_G abbB \Rightarrow_G abba$
+\end{priklad}
+
+Mějme bezkontextovou gramatiku $G = \langle N,\Sigma,P,S \rangle$.
+
+\begin{definice}
+P-derivace $x_0,\ldots,x_k$ se nazývá \textbf{nejlevější} P-derivace, pokud pro každé $i \in \lbrace 1,\ldots,k \rbrace$ platí, že $x_{i-1}$ je ve tvaru $uAv$, kde $u \in \Sigma^*,A\in N,v \in (\Sigma \cup N)^*$ a $x_i$ je ve tvaru $uyv$, kde $A \rightarrow y \in P$.
+\end{definice}
+
+\begin{poznamka}
+Řetězci $u$ se říká uzavřená forma a řetězci $Av$ otevřená forma (větné formy $uAv$).\\
+Odvození pomocí nejlevější derivace značíme $u \Rightarrow_{G,l} v$.
+\end{poznamka}
+
+
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
