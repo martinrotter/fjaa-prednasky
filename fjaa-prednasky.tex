@@ -2420,8 +2420,90 @@ Máme dokázat, že $q \in F$ právě, když $r \in F$, ale to obecně platí, p
 Pro $x \in \Sigma^{*}, x = au \text{, kde } a \in \Sigma, u \in \Sigma{*}$.
 Z předpokladu, že $q \in [r]_{\varphi_{i}} \text{ a } \varphi_{i} =\varphi_{i+1}$ platí, že $[\delta(q, a)]_{\varphi_{i}} = [\delta(r, a)]_{\varphi_{i}}$,
 to jest $\delta(q, a) \in [\delta(q, a)]_{\varphi_{i}}$ - zde použijeme indukční předpoklad.
+\begin{gather*}
+\delta^{*}(\delta(q,a)r) \in F \text{ pr\'avě tehdy, když } \delta^{*}(q,x) \in F \\
+\delta^{*}(\delta(r,a)r) \in F \text{ pr\'avě tehdy, když } \delta^{*}(r,x) \in F
+\end{gather*}
 \end{enumerate}
+
+Tvrzen\'i dok\'az\'ano pro každ\'e $x$,tedy $q \equiv_{A} r$.
 \end{dukaz}
+
+\begin{priklad}
+Mějme v\'yraz $b(ab)^{*}ba^{*}$. D\'ale
+\begin{eqnarray*}
+\varphi_{1} &=& \lbrace \lbrace q_{0},q_{1},q_{2},q_{3},q_{5} \rbrace, \lbrace q_{4}, q_{6} \rbrace \rbrace \\
+\varphi_{2} &=& \lbrace \lbrace q_{0},q_{1},q_{3} \rbrace, \lbrace q_{2}.q_{5} \rbrace, \lbrace q_{4}, q_{6} \rbrace \rbrace \\
+\varphi_{3} &=& \lbrace \lbrace q_{0},q_{3} \rbrace, \lbrace q_{1} \rbrace, \lbrace q_{2}.q_{5} \rbrace, \lbrace q_{4}, q_{6} \rbrace \rbrace \\
+\end{eqnarray*}
+\begin{center}
+\begin{VCPicture}{(-1,-4)(1,3)}
+\ChgStateLineColor{green}
+\State[q_3]{(-2,2)}{q3}
+\State[q_0]{(-2,-2)}{q0}
+\ChgStateLineColor{red}
+\State[q_5]{(0,2)}{q5}
+\State[q_2]{(-2,0)}{q2}
+\ChgStateLineColor{blue}
+\State[q_1]{(0,-2)}{q1}
+\ChgStateLineColor{magenta}
+\State[q_4]{(2,2)}{q4}
+\State[q_6]{(2,-2)}{q6}
+
+\Initial{q0}
+
+\LoopS[0.5]{q1}{a, b}
+\LoopE[0.5]{q6}{a}
+
+\ArcL{q0}{q1}{a}
+\ArcR{q1}{q6}{b}
+\ArcL{q0}{q2}{b}
+\ArcL{q2}{q3}{a}
+\ArcL{q3}{q5}{b}
+\ArcL{q5}{q3}{a}
+\ArcL{q5}{q4}{b}
+\EdgeR{q2}{q4}{b}
+\EdgeL{q3}{q1}{a}
+\EdgeL{q4}{q1}{b}
+\ArcL{q4}{q6}{a}
+\end{VCPicture}
+\end{center}
+
+N\'asledně rozklady:
+\begin{center}
+\begin{VCPicture}{(-1,-3)(1,1)}
+\ChgStateLineColor{green}
+\StateVar[\lbrace q_0, q_3 \rbrace]{(-3,0)}{q0q3}
+\ChgStateLineColor{red}
+\StateVar[\lbrace q_2, q_5 \rbrace]{(0,1)}{q2q5}
+\ChgStateLineColor{blue}
+\StateVar[\lbrace q_1 \rbrace]{(0,-1)}{q1}
+\ChgStateLineColor{magenta}
+\StateVar[\lbrace q_4,q_6 \rbrace]{(3,0)}{q4q6}
+
+\Initial{q0q3}
+
+\LoopE[0.5]{q4q6}{a}
+\LoopS[0.5]{q1}{a, b}
+
+\ArcL{q0q3}{q2q5}{b}
+\ArcL{q2q5}{q0q3}{a}
+\ArcL{q2q5}{q4q6}{b}
+\ArcL{q4q6}{q1}{b}
+\ArcR{q0q3}{q1}{a}
+\end{VCPicture}
+
+\vspace*{30px}
+\begin{tabular}{c||c|c|c|c|c|c|c|}
+& $q_0$ & $q_1$ & $q_2$ & $q_3$ & $q_4$ & $q_5$ & $q_6$ \\
+\hline
+% pokračovat v tabulce
+\end{tabular}
+\end{center}
+
+
+\end{priklad}
+
 
 
 %% pokračovat důkazem
