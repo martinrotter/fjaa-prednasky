@@ -2453,7 +2453,7 @@ Navíc si zavedeme duální pojem k derivaci - \textbf{redukci}.
 $v \Leftarrow_G^* u$. 
 \end{definice}
 V následujícím příkladě si ukážeme problém nejednoznačnosti bezkontextových gramatik.
-\begin{priklad}
+\begin{priklad}\label{priklad-6}
 Mějme gramatiku:
 
 $\begin{array}{l}
@@ -2531,6 +2531,174 @@ P-derivace $x_0,\ldots,x_k$ se nazývá \textbf{nejlevější} P-derivace, pokud
 Řetězci $u$ se říká uzavřená forma a řetězci $Av$ otevřená forma (větné formy $uAv$).\\
 Odvození pomocí nejlevější derivace značíme $u \Rightarrow_{G,l} v$.
 \end{poznamka}
+
+\begin{veta}
+Mějme $v \in \Sigma^*$ a $X \in N$. Pokud existuje P-derivace $X,\ldots,v$, pak existuje nejlevější P-derivace $X,\ldots,v$ používající stejnou množinu pravidel jako výchozí P-derivace.
+\end{veta}
+\begin{dukaz}
+Tvrzení dokážeme indukcí přes délku P-derivace
+\begin{itemize}
+\item
+Pro délku 0 platí triviálně.
+\item
+Předpokládejme, že tvrzení platí pro P-derivaci délky $\le n$.
+
+Uvažujme P-derivaci délky $n+1$, ve tvaru $x_0,x_1,\ldots,x_{n+1}$. Pokud $x_1$ vzniklo z $x_0$ použitím pravidla $X \rightarrow w_0X_{i_1}w_1X_{i_2} \cdots X_{i_k}w_k$ kde $w_0,\ldots,w_j \in \Sigma^*,\ X_{i_j} \in N,\ 1 \le j\le k$ pak $X_{n+1}$ je ve tvaru $w_0u_1w_1u_2w_2 \cdots w_k$ tak, že $x_{i_j} \Rightarrow_G^* u_j$.
+
+To znamená, že existují P-derivace délek $\le n$: $X_{i_j},\ldots,u_j$
+
+Z indukčního předpokladu: existují nejlevější P-derivace $X_{i_j},\ldots,u_j$ používající stejnou množinu pravidel.
+
+Dále platí: 
+
+$
+\begin{array}{l l}
+X & \Rightarrow_{G,l}\  w_0X_{i_1}w_1X_{i_2} \ldots X_{i_k}w_k \\
+& \Rightarrow_{G,l}\  w_0u_1w_1X_{i_2} \ldots X_{i_k}w_k \\
+& \Rightarrow_{G,l}\  w_0u_1w_1u_2 \ldots X_{i_k}w_k \\
+& \cdots \\
+& \Rightarrow_{G,l}\  w_0u_1w_1u_2w_2 \ldots u_kw_k
+\end{array}
+$
+
+To jest, existuje nejlevější P-derivace $X,\ldots,w_0 \cdots w_k$
+\end{itemize}
+\end{dukaz}
+
+\begin{priklad}
+Uvažujme gramatiku z příkladu \ref{priklad-6}
+
+$S \Rightarrow_G^* E+C$ tady problém není\\
+$S \Rightarrow_{G,l}^* E+C$ tento výraz už smysl nedává. Pomocí nejlevější derivace bychom zákonitě museli nejdříve derivovat $E$ na levé straně výrazu $E+E$
+\end{priklad}
+
+\begin{poznamka}
+Lze zavést duálně nejpravější derivaci.
+\end{poznamka}
+
+\begin{priklad}
+Zase se odkážeme na příklad \ref{priklad-6}.
+
+Výraz $10+(ca*110)$ má jedinou nejlevější derivaci
+
+Naopak $a+10*c$ jich má několik:
+
+$S \Rightarrow_{G,l} E \Rightarrow_{G,l} E+E \Rightarrow_{G,l} V+E \Rightarrow_{G,l} a+E \Rightarrow_{G,l} a+E*E \Rightarrow_{G,l} a+C*E \Rightarrow_{G,l} a+1C*E \Rightarrow_{G,l} a+10*E \Rightarrow_{G,l} a+10*V \Rightarrow_{G,l} a+10*c$
+
+nebo:
+
+$S \Rightarrow_{G,l} E \Rightarrow_{G,l} E*E \Rightarrow_{G,l} \ldots \Rightarrow_{G,l} a+10*c$ (už ve druhém odvození můžeme pozorovat rozdíl)
+
+Je to způsobeno jinou nejednoznačností než tou, ktrerou jsme eliminovali pomocí nejlevější derivace.
+\end{priklad}
+
+\subsection{Derivační stromy}
+
+Slouží ke grafickému znázornění nejlevějších derivací. Mějme gramatiku $G = \langle N,\Sigma,P,S \rangle$.
+
+\begin{definice}
+Derivačním stromem slova $x \in (\Sigma \cup N)^*$ z $X \in N$ podle pravidel z $G$ je každý strom splňující:
+\begin{enumerate}
+\item 
+každý vnitřní uzel je ohodnocen neterminálem
+\item
+kořen je ohodnocen $X$
+\item
+pokud je vnitřní uzel označený $A\in N $ a jeho potomci jsou zleva doprava označeni $X_1,\ldots,X_k \in N\cup \Sigma$ pak existuje pravidlo $A \rightarrow X_1 \cdots X_k \in P$
+\item
+zřetězením hodnot v listech při průchodu stromu do hloubky a zleva doprava získáme řetězec $x$
+\end{enumerate}
+\end{definice}
+
+\begin{priklad}
+Opět pracujeme s gramatikou z příkladu \ref{priklad-6}.
+
+$S \Rightarrow_{G,l}^* a+10*c$
+%%%%%%%%%%%%%%%%%%%%%
+%% DOPLNIT OBRAZEK %%
+%%%%%%%%%%%%%%%%%%%%%
+\end{priklad}
+
+\begin{veta}
+Pokud $X \Rightarrow_{G,l}^* x$ pak exstuje derivační strom $x$ z $X$ podle $G$.
+\end{veta}
+\begin{dukaz}
+Tvrzení dokážeme jak jinak, než indukcí přes délku P-derivace.
+
+Předpokládejme, že tvrzení platí pro derivace délky $n$ a méně.
+
+Mějme derivaci $X=x_0,\ldots,x_{n+1}$ délky $n+1$ pak existuje pravidlo $x \rightarrow x_1 \in P$
+
+$x_1=w_0X_1w_1X_2w_2 \ldots X_kw_k$ kde $w_i \in \Sigma^*,\ X_i\in N$
+
+$x_{n+1}$ je ve tvaru $w_0u_1w_1u_2\ldots u_kw_k$
+
+$X_i \Rightarrow_{G,l}^* u_i \ldots$ délky nejvýše $n$. Z indukčního předpokladu vyplývá, že existují derivační stromy $X_i \Rightarrow_{G,l}^* u_i$.
+\end{dukaz}
+
+\begin{veta}
+Pokud existuje derivační strom $x$ z $X$ podle $G$, pak $X \Rightarrow_{G,l}^* x$
+\end{veta}
+\begin{dukaz}
+Dokážeme indukcí přes výšku stromu.
+\begin{itemize}
+\item
+Pro 0 je to jasné
+\item
+Předpokládejme, že tvrzení platí pro stromy výšky $n$ a méně.
+
+Mějme strom výšky $n+1$, podle tohoto víme, jak vypadal první krok derivace $X \rightarrow w_0X_0w_1 \ldots$.
+%%%%%%%%%%%%%
+%%%OBRAZEK$$$
+%%%%%%%%%%%%%
+
+Z indukčního předpokladu existují derivace $X_i \Rightarrow_{G,l}^* u_i$ a proto
+
+$
+\begin{array}{l l}
+X & \Rightarrow_{G,l}\  w_0X_1w_1X_2 \ldots X_{i_k}w_k \\
+& \Rightarrow_{G,l}\  w_0u_1w_1X_2 \ldots X_{i_k}w_k \\
+& \cdots \\
+& \Rightarrow_{G,l}\  w_0u_1w_1u_2w_2 \ldots u_kw_k
+\end{array}
+$
+\end{itemize}
+\end{dukaz}
+
+\begin{veta}
+$S\Rightarrow_{G,l}^* u$ právě když existuje derivační strom $u$ z $S$ podle $G$.
+\end{veta}
+
+\subsection{Jednoznačené a nejednoznačné bezkontextové gramatiky}
+
+\begin{definice}
+Bezkontextová gramatika $G = \langle N,\Sigma,P,S \rangle$ se nazývá nejednoznačná, pokud existuje věta $x \in L(G)$, která má více než jeden derivační strom z $S$ podle $G$. V opačném případě se nazývá jednoznačná bezkontextová gramatika.
+\end{definice}
+
+\begin{definice}
+Bezkontextový jazyk $L$ se nazývá jednoznačný pokud existuje jednoznačná gramatika $G$ tak, že $L=L(G)$.
+\end{definice}
+
+\begin{definice}
+Bezkontextový jazyk $L$ se nazývá \textbf{inherentně} nejednoznačný, pokud neexistuje žádná jednoznačná gramatika $G$ taková, že $L=L(G)$.
+\end{definice}
+
+\begin{veta}
+Každý regulární jazyk je jednoznačný.
+\end{veta}
+
+\begin{dukaz}
+Pokud $L$ je regulární, pak existuje KDA $A$ s úplnou přechodovu funkcí $\delta$. Pak pro $A$ lze sestavit gramatiku $G$ tak, že bude platit $L(A) = L(G)$.
+
+Z toho jak byla gramatika $G$ konstruována plyne, že pro každý $A \in N$ a $a\in\Sigma$ existuje nejvýše jedno pravidlo $A \rightarrow aB$. To jest, pro $x \in L$ existuje právě jedna P-derivace.
+\end{dukaz}
+
+\begin{priklad}
+$L=\lbrace a^nb^nc^pd^p\ |\ n,p\ge 0\rbrace$ je inherentně nejednoznačný.
+\end{priklad}
+
+
+
 
 
 
