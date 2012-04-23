@@ -60,7 +60,7 @@ Průkopníkem této oblasti byl \link{Noam Chomsky}{http://cs.wikipedia.org/wiki
 \footnote{Jméno této osoby čti [\emph{čomski}] a zapamatuj si ke státnicím, že Chomsky byl \emph{nebezpečný levicový intelektuál}.}.
 
 Jako příklad selhání autora programovacího jazyka si uveďme jazyk \textbf{Fortran}, jehož konstrukce byla po syntaktické stránce špatná,
-což vedlo ke \textbf{gramatické nejednoznačnosti} tohoto jazyka.
+což vedlo ke \textbf{gramatické ne jednoznačnosti} tohoto jazyka.
 
 \section{Kódová analýza}
 \subsection{Lexikální analýza}
@@ -89,7 +89,7 @@ Mezi symboly počítejme například \textbf{0, +, Š, while}.
 
 \item
 \textbf{Abeceda}. Abecedou rozumíme množinu (například množinu $X$) všech přípustných \emph{symbolů} (znaků), přičemž taková množina je neprázdná (tedy $|x|>0$) a konečná.
-Konečnost množiny je omezení dané reprezentovatelností množiny v rámci počitačové techniky.
+Konečnost množiny je omezení dané reprezentovatelností množiny v rámci počítačové techniky.
 Abecedy značíme řeckými písmeny. Například $\Sigma, \Sigma^{'}, \Gamma, \ldots, \Omega$.
 Například $\Sigma = \lbrace a, b, c \rbrace$.
 
@@ -107,7 +107,7 @@ $$ a tak podobně.
 Délku řetězce označme $|x|$.
 
 \item
-\textbf{Prázdný řetězec}. Jedná se o řetězec, pro který platí, že $|x| = 0$ a značíme jej $\varepsilon$, přičemž platí následujicí zápis:
+\textbf{Prázdný řetězec}. Jedná se o řetězec, pro který platí, že $|x| = 0$ a značíme jej $\varepsilon$, přičemž platí následující zápis:
 $$
 \varepsilon \subseteq \emptyset \rightarrow \Sigma
 $$
@@ -120,7 +120,7 @@ Nad $k$-prvkovou abecedou je právě $k^{n}$ řetězců délky $n$.
 
 
 \begin{poznamka}
-Uveďme si rovněž značení pro dva důležíté pojmy:
+Uveďme si rovněž značení pro dva důležité pojmy:
 
 \begin{itemize}
 \item
@@ -335,7 +335,7 @@ $$
 $$
 L^{+} = \bigcup_{i = 1}^{\infty} L^{i}
 $$
-Všimněte si podobností mezi těmito dvěma uzávěry. Pozitivní uzávěr vynechává prázdný řetezec.
+Všimněte si podobností mezi těmito dvěma uzávěry. Pozitivní uzávěr vynechává prázdný řetězec.
 
 \end{itemize}
 
@@ -365,7 +365,7 @@ $$
 \nextoutline{Priklady pravidel}
 \subsubsection{Příklady pravidel}
 \begin{priklad}
-Mějme zadání abecedy $\Sigma = \lbrace a,b,c \rbrace$. Pravidla s využítím této abecedy by mohla být například tato.
+Mějme zadání abecedy $\Sigma = \lbrace a,b,c \rbrace$. Pravidla s využitím této abecedy by mohla být například tato.
 \begin{eqnarray*}
 aa &\rightarrow& bc \\
 bb &\rightarrow& abba \\
@@ -374,7 +374,7 @@ c &\rightarrow& \varepsilon
 \end{priklad}
 
 \begin{priklad}
-Mějme další zadání abecedy $\Sigma = \lbrace expr, +, \times \rbrace$. Pravidla s využítím této abecedy by mohla být například tato.
+Mějme další zadání abecedy $\Sigma = \lbrace expr, +, \times \rbrace$. Pravidla s využitím této abecedy by mohla být například tato.
 \begin{eqnarray*}
 \textit{expr} &\rightarrow& \textit{expr} + \textit{expr} \\
 \textit{expr} &\rightarrow& \textit{expr} \times \textit{expr}
@@ -668,7 +668,7 @@ Tento postup se aplikuje pro všechna pravidla. Hledaná gramatika $G^{'}$ se sk
 \subsection{Základní vlastnosti bezkontextových gramatik}
 \begin{itemize}		%% Je to dostatečně vyčerpávající?
 \item
-Levé strany pravidel obsahují jedeiný neterminál.
+Levé strany pravidel obsahují jediný neterminál.
 
 \item
 Odvozování nezávisí na kontextu.
@@ -761,7 +761,7 @@ E_{N} = E_{i}
 \end{priklad}
 
 \begin{veta}
-Pro každou bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ a pro příslušné $E_{N}$ platí nasledující $A \Rightarrow_{G}^{*}\varepsilon$, pak $A \in E_{N}$. 
+Pro každou bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ a pro příslušné $E_{N}$ platí následující $A \Rightarrow_{G}^{*}\varepsilon$, pak $A \in E_{N}$. 
 Speciálně $\varepsilon \in L(G)$, pak $S \in E_{N}$.
 \end{veta}
 
@@ -783,7 +783,7 @@ Pro každou bezkontextovou gramatiku $G$, existuje bezkontextová gramatika $G^{
 \begin{dukaz}
 $G = \langle N, \Sigma, P,S \rangle$ - výchozí gramatika.\\
 Stanovíme množinu $E_{n}$ dle předchozího postupu $G^{'} = \langle N, \Sigma, P^{'},S \rangle$.
-$P^{'} = \lbrace A \rightarrow y|A \rightarrow x \in P$ a $y \in D_{(x)} \rbrace$, kde $D_{(x)}$ značí množinu řetězeců, které jsou neprázné 
+$P^{'} = \lbrace A \rightarrow y|A \rightarrow x \in P$ a $y \in D_{(x)} \rbrace$, kde $D_{(x)}$ značí množinu řetězců, které jsou neprázdné 
 a vznikly z řetězce $x$ vynecháním libovolného množství neterminálů z $E_{N}$.
 \end{dukaz}
 
@@ -938,7 +938,7 @@ Předchozí příklad číslo \ref{priklad-3} lze reprezentovat několika způso
 \begin{enumerate}
 \item
 \textbf{Přechodová tabulka}, která ve svém těle obsahuje množiny stavů.
-
+\begin{table}[h]
 \begin{center}
 \begin{tabular}{ r || c | c }                   
    & a & b \\
@@ -949,6 +949,8 @@ Předchozí příklad číslo \ref{priklad-3} lze reprezentovat několika způso
    $ \rightarrow q_{3} $ & $ \emptyset $ & $ \lbrace q_{1} \rbrace $ \\ 
 \end{tabular}
 \end{center}
+\caption{Přechodová tabulka s množinami stavů}
+\end{table}
 
 \item
 \textbf{Diagram}, který automat demonstruje v grafičtější podobě.
@@ -1133,7 +1135,7 @@ Ještě jeden automat, nepřečtu to dobře ze sešitu. :)
 
 \subsection{Algoritmus pro převod KNA na KDA}
 Nyní si ukažme pseudokód algoritmu pro převod konečných nedeterministických automatů na konečné deterministické automaty, pro které platí, že
-akceptují řetězece stejného jazyka.
+akceptují řetězce stejného jazyka.
 
 \vspace{30px}
 \begin{figure}[h]
@@ -1222,7 +1224,7 @@ Uveďme si příklad konečného slovníkového automatu $D_{L}$, který je poch
 
 \section{Vztah regulárních jazyků a konečných automatů}
 
-\subsection{Regulární jazky jsou rozpoznatelné KDA (implikace zleva)}
+\subsection{Regulární jazyky jsou rozpoznatelné KDA (implikace zleva)}
 
 \begin{veta}
 Pro každou regulární gramatiku $G=\langle N,\Sigma,P,S \rangle$ existuje konečný deterministický automat $A$ tak, že jazyk generovaný gramatikou je totéž, jako jazyk rozpoznatelný automatem, tj. $L(G)=L(A)$
@@ -1361,7 +1363,7 @@ To znamená $\delta^* (q,by) = \delta^* ( \delta (q,b),y) \in F$
 
 Předchozí dokazuje, že $x \in L(G)$ právě když $x \in L(A)$ pro každý neprázdný $x$.
 
-Pokud $A$ nepříjímá $\varepsilon$ , pak jsme hotovi.
+Pokud $A$ nepřijímá $\varepsilon$ , pak jsme hotovi.
 
 Uvažujeme nový neterminál $S$, který bude nový startovní symbol, tj. místo $G$ uvažujeme $G'= \langle Q \cup \lbrace S \rbrace,\Sigma,P',S \rangle$
 
@@ -1391,7 +1393,7 @@ Mějme abecedu $\Sigma = \lbrace a,b \rbrace$ a automat zadaný diagramem:
 \end{VCPicture}
 \end{center}
 
-Odvozovací pravidla gramatiky, generujíci tento jazyk budou:
+Odvozovací pravidla gramatiky, generující tento jazyk budou:
 
 \begin{eqnarray*}
 q_0 &\rightarrow& aq_1\ |\ bq_0 \\
@@ -1410,7 +1412,7 @@ Co jsou to regulární gramatiky a jaké podmínky jejich odvozovací pravidla s
 
 \item
 \textbf{Zprava regulární gramatiky:}
-Obsahují pravidla ve tvaru $ A \rightarrow bB $ tj. neterminál na prvé straně je na pravo od terminálního symbolu.
+Obsahují pravidla ve tvaru $ A \rightarrow bB $ tj. neterminál na pravé straně je napravo od terminálního symbolu.
 \item
 \textbf{Zleva regulární gramatiky:}
 Obsahují pravidla ve tvaru $ A \rightarrow Bb $. Analogicky se neterminál nachází vlevo od terminálního symbolu.
@@ -1481,7 +1483,7 @@ Pro každý konečný deterministický automat \textit{A} existuje zleva regulá
 \end{veta}
 
 \begin{dukaz}
-Neterminály gramatiky jsou stavy automatu a budeme uvažovat dodatečný statovní neterminál S.
+Neterminály gramatiky jsou stavy automatu a budeme uvažovat dodatečný startovní neterminál S.
 
 \begin{eqnarray*}
 P = &\lbrace& \delta (q,a) \rightarrow qa | q \in Q \wedge a \in \Sigma \rbrace \ \cup \\
@@ -1555,8 +1557,9 @@ Fakt $\delta (q,\varepsilon) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{auto
 \item
 \textbf{Přechodová tabulka}, vypadá stejně jako u KNA s tím, že přidáme jeden sloupec, ve kterém budeme zaznamenávat $\varepsilon$-přechody.
 
-Takto bude vypadat předchozí příklad \ref{priklad-5}, reprezentovaný pomocí tabulky.
+Takto bude vypadat předchozí \ref{priklad-5} př\'iklad, reprezentovaný pomocí tabulky.
 
+\begin{table}[h]
 \begin{center}
 \begin{tabular}{ r || c | c | c | c }                   
    & +,- & . & $0,\ldots,9$ & $\varepsilon$ \\
@@ -1569,6 +1572,8 @@ Takto bude vypadat předchozí příklad \ref{priklad-5}, reprezentovaný pomoc�
    $ q_{5} $ & $ \emptyset $ &  $ \emptyset $ & $\emptyset$ & $ \emptyset $ 
 \end{tabular}
 \end{center}
+\caption{Přechodov\'a tabulka pro \ref{priklad-5}. přiklad}
+\end{table}
 
 \item
 \textbf{Přechodový diagram}, u kterého mohou být některé hrany ohodnoceny $\varepsilon$. Viz příklad \ref{priklad-5}.
@@ -1576,7 +1581,7 @@ Takto bude vypadat předchozí příklad \ref{priklad-5}, reprezentovaný pomoc�
 \end{enumerate}
 
 \subsection{Nedeterministický výpočet}
-Pojem \textbf{konfigurace} pro nás zůstavává stejný, jedná se stále o dvojici $\langle \textit{stav,řetězec} \rangle$.
+Pojem \textbf{konfigurace} pro nás zůstává stejný, jedná se stále o dvojici $\langle \textit{stav,řetězec} \rangle$.
 
 \begin{definice}
 Mějme automat $A = \langle \Sigma,Q,\delta,I,F \rangle$ a řetězec $w \in \Sigma^*$. Posloupnost konfigurací $\langle r_i,w_i \rangle$ pro $i=0,\ldots,n$ splňující podmínky:
@@ -1626,7 +1631,7 @@ a pro $i \geq 1$
 \quad$E_0 \subseteq E_1 \subseteq E_2 \subseteq \ldots \subseteq E_A(R)$
 
 \begin{poznamka}
-Vzhledem ke konečnosti množiny $E_A(R)$ musí existovat indek $k$, pro který platí $E_k = E_{k+1} = \ldots = E_A(R)$
+Vzhledem ke konečnosti množiny $E_A(R)$ musí existovat index $k$, pro který platí $E_k = E_{k+1} = \ldots = E_A(R)$
 \end{poznamka}
 
 Můžeme pozorovat, že $E_A(R)$ není jen $\varepsilon$-uzavřená, ale je také \textbf{nejmenší} $\varepsilon$-uzavřená. Z toho můžeme vyvodit, že 
@@ -1717,7 +1722,7 @@ $$
  \end{enumerate} 
  \end{dukaz}
 
-\section{Algoritmus na převod $\varepsilon$KNA na KDA}
+\section{Algoritmus na převod $\varepsilon$ KNA na KDA}
 
 Máme $A = \langle \Sigma, Q, \delta, I, F \rangle$ a víme, že \emph{W} je neprázdná množina dosud nezpracovaných stavů.
 
@@ -1743,7 +1748,7 @@ while \( W \neq Q \) do
 end
 return \( <\Sigma, Q^{s}, \delta^{s}, I, F^{s}> \)
 \end{alltt}
-\caption{Pseudokód pro převod $\varepsilon$KNA na KDA.}
+\caption{Pseudokód pro převod $\varepsilon$ KNA na KDA.}
 \end{figure}
 
 \begin{center}
@@ -1862,7 +1867,7 @@ bude stav $q_{0}$ z automatu $A_{1}$.
 %% obrazek
 
 \item
-Pro bod \ref{jazyky-6} -- $R=R_{1}^{*}, L(A_{1})=L(R_{1})$. Následně sestavujeme $\varepsilon$KNA tak, že před počátečním stavem vytvoříme
+Pro bod \ref{jazyky-6} -- $R=R_{1}^{*}, L(A_{1})=L(R_{1})$. Následně sestavujeme $\varepsilon$ KNA tak, že před počátečním stavem vytvoříme
 nový koncový stav, který bude navíc novým počátečním stave a do kterého vedeme $\varepsilon$ přechody z již existujících koncových stavů a z našeho nového koncového stavu navíc vedeme
 $\varepsilon$ přechod do původního počátečního stavu.
 %% obrázek
@@ -1898,8 +1903,8 @@ Pro $L_1$ existuje \aut{1}, tak že $L_1=L(A_1)$
 
 Pro $L_2$ existuje \aut{2}, tak že $L_2=L(A_2)$
 
-Předpokládame-li, že $A_1$ a $A_2$ mají disjunktní množiny stavů, tj. $Q_1 \cap Q_2 = \emptyset$, sestavíme následující KNA:\\
-$A=\langle,Q_1 \cup Q_2,\delta,\lbrace q_{01},q_{02} \rbrace,F_1 \cup F_2 \rangle$ s přechodovu funkcí $\delta$ definovanou jako
+Předpokládáme-li, že $A_1$ a $A_2$ mají disjunktní množiny stavů, tj. $Q_1 \cap Q_2 = \emptyset$, sestavíme následující KNA:\\
+$A=\langle,Q_1 \cup Q_2,\delta,\lbrace q_{01},q_{02} \rbrace,F_1 \cup F_2 \rangle$ s přechodovou funkcí $\delta$ definovanou jako
 
 $$
 \delta(q,a)=\left\{
@@ -1940,7 +1945,7 @@ První automat přijímá řetězec $ab$, druhý automat přijímá řetězec $b
 \item
 \textbf{Průnik} 
 
-S použitím De Morganových zákonů, dostaváme:
+S použitím De Morganových zákonů, dostáváme:
 $$L_1 \cap L_2 = \Sigma^* \backslash (\Sigma^* \backslash L_1 \cup \Sigma^* \backslash L_2 )$$
 tj. $L_1 \cap L_2$ je regulární.
 
@@ -1948,7 +1953,7 @@ tj. $L_1 \cap L_2$ je regulární.
 Uvažujeme konečné deterministické automaty s úplnou přechodovou funkcí\\
 \aut{1} a \aut{2}
 
-Zkonstuujeme automat $A_1 \times A_2$ (direktní součin):
+Zkonstruujeme automat $A_1 \times A_2$ (direktní součin):
 $$A_1 \times A_2 = \langle \Sigma,Q_1 \times Q_2,\delta, \langle q_{01},q_{02} \rangle,F_1 \times F_2 \rangle$$
 s přechodovou funkcí $\delta$:
 $$ \delta (\langle q,r \rangle , a) = \langle \delta_1 (q,a), \delta_2 (r,a) \rangle $$
@@ -2029,7 +2034,7 @@ Pokud je $L$ regulární, pak je $L^*$ regulární.
 
 Předpokládáme, že existuje automat $A$ tak, že $L = L(A)$
 \begin{poznamka}
-Automat rozpoznavající $L^*$ musí mít možnost dostat se z koncového stavu zpět na začátek.
+Automat rozpoznávající $L^*$ musí mít možnost dostat se z koncového stavu zpět na začátek.
 \end{poznamka}
 Pro automat $A = \langle \Sigma, Q, \delta, q_0, F \rangle$ je potřeba zavést nový počáteční stav $q_T \notin Q$. Konstruovaný \ekna\ bude vypadat následovně:
 $$A' = \langle \Sigma, Q \cup \lbrace q_T \rbrace, \delta ', \lbrace q_T \rbrace, F \cup \lbrace q_T \rbrace \rangle$$
@@ -2096,7 +2101,7 @@ Zdůvodníme pomocí konstrukce automatu rozpoznávající $L^R$ (viz cvičení 
 $Sfx(L) = \bigcup_{w \in L} Sfx(w)$
 
 \begin{dukaz}
-Pro $L$ uvažujeme $A$ tak, že $L = L(A)$. Navíc $A$ je KDA s úplnou přechodovu funkcí takový, že všechny jeho stavy jsou dosažitelné.
+Pro $L$ uvažujeme $A$ tak, že $L = L(A)$. Navíc $A$ je KDA s úplnou přechodovou funkcí takový, že všechny jeho stavy jsou dosažitelné.
 
 Námi hledaný automat je KNA definován jako:
 $$A' = \langle \Sigma,Q,\delta,Q,F \rangle$$
@@ -2192,7 +2197,7 @@ z &=& a_{j+1}a_{j+2}\ldots a_{m}
 
 \begin{dukaz}
  Předchozí příklad \ref{priklad-reg} není regulární, což dokážeme sporem. Nechť je tedy $L$ regulární a dle předchozí
-věty existuje číslo $n$ tak, že vezmem řetězec $a^{n}b^{n} = xyz$ tak, že $x = a^{k}, y = a^{l}, z = a^{n-k-l}b^{n}$.
+věty existuje číslo $n$ tak, že vezmeme řetězec $a^{n}b^{n} = xyz$ tak, že $x = a^{k}, y = a^{l}, z = a^{n-k-l}b^{n}$.
 \end{dukaz}
 
 %% 9. přednáška
@@ -2208,7 +2213,7 @@ $L(A_{1}) = L(A_{2})$, ale $|Q_{1}| < |Q_{2}|$.
 
 \begin{definice}
 Předpokládejme, že máme $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a relaci ekvivalence $\Theta \subseteq Q \times Q$ nazveme
-\textbf{zprava invariantní ekvilancí} vzhledem k $\delta$, pokud platí, že $\langle q_{r}  \rangle \in \Theta \text{ a } a \in \Sigma$,
+\textbf{zprava invariantní ekvivalencí} vzhledem k $\delta$, pokud platí, že $\langle q_{r}  \rangle \in \Theta \text{ a } a \in \Sigma$,
 pak $\langle  \delta(q, a) \delta(r, a) \rangle \in \Theta$.
 \end{definice}
 
@@ -2494,18 +2499,83 @@ N\'asledně rozklady:
 \end{VCPicture}
 
 \vspace*{30px}
-\begin{tabular}{c||c|c|c|c|c|c|c|}
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{c||c|c|c|c|c|c|c}
 & $q_0$ & $q_1$ & $q_2$ & $q_3$ & $q_4$ & $q_5$ & $q_6$ \\
 \hline
-% pokračovat v tabulce
+$q_0$ & * & X & X & * & X & X & X \\
+\hline
+$q_1$ & - & * & X & X & X & X & X \\
+\hline
+$q_2$ & - & - & * & X & X & * & X \\
+\hline
+$q_3$ & - & - & - & * & X & X & X \\
+\hline
+$q_4$ & - & - & - & - & * & X & * \\
+\hline
+$q_5$ & - & - & - & - & - & * & X \\
+\hline
+$q_6$ & - & - & - & - & - & - & * \\
 \end{tabular}
 \end{center}
-
-
+\caption{Tabulkový popis rozkladů stavů}\label{tabulka-x}
+\end{table}
+\end{center}
+V tabulce \ref{tabulka-x} se objevují znaky \textbf{X} na pozicích, pro které platí, že:
+\begin{eqnarray*}
+T[q,x] &\text{ kde platí }& q \in F, x \notin F \\
+&\text{ nebo }& q \notin F, x \in F
+\end{eqnarray*}
+Projdeme pr\'azdn\'a m\'ista, $T[q,r] = \text{\uv{pr\'azdno, pokud} } \exists a \in \Sigma \text{ tak, že:}$
+\begin{itemize}
+\item
+buď $T[\delta(q,a),\delta(r,a)] = X$
+\item
+nebo $T[\delta(r,a),\delta(q,a)] = X$
+\end{itemize}
+Pokud ano, tak \uv{X} na pozici $[q,r]$.
 \end{priklad}
 
+\section{Izomorfismus automatů}
+Pro KDA $A_1$ a $A_2$ mějme zobrazen\'i
+$$
+h: \quad Q_1 \rightarrow Q_2
+$$
+a toto zobrazení označme jako \textbf{izomorfismus}, pokud platí:
+\begin{enumerate}
+\item
+Zobrazení $h$ je bijektivní.
+\item
+Počáteční stav automatu $A_1$ e zobrazí na počáteční stav automatu $A_2$.
+\item
+Pro všechna $q \in Q$ platí, že $Q \in F_1$ právě, pokud $q \in F_2$.
+\item
+Zobrazení $h$ je kompatibilní s přechodovou funkcí.
+\end{enumerate}
 
 
+\begin{veta}
+Jsou-li dva automaty izomorfní, pak $L(A_1) = L(A_2)$.
+\end{veta}
+
+\begin{definice}
+Mějme regulární jazyk L, pak KDA s úplnou přechodovou funkcí je \textbf{minimálním automatem} pro $L$,
+pokud $L(A) = L$ a pro každý KDA $B$ takový, že $L(B) = L$ platí, že $B$ má tolik stavů jako $A$.
+\end{definice}
+
+\begin{veta}
+Je-li automat $A$ minimální pro jazyk $L$, pak je \textbf{redukovaný}a nemá nedosažitelné stavy.
+\end{veta}
+
+\begin{veta}
+Pokud jsou automaty $A, B$ KDA bez nedosažitelných stavů a pokud jsou tyto automaty navíc redukované a
+existuje stejný jazyk, který generují, pak jsou izomorfní.
+\end{veta}
+
+\begin{veta}
+$A$ je minimální automat pro jazyk $L$ právě tehdy, když $A$ neobsahuje nedosažitelné stavy a je redukovaný.
+\end{veta}
 %% pokračovat důkazem
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -2671,7 +2741,7 @@ nebo:
 
 $S \Rightarrow_{G,l} E \Rightarrow_{G,l} E*E \Rightarrow_{G,l} \ldots \Rightarrow_{G,l} a+10*c$ (už ve druhém odvození můžeme pozorovat rozdíl)
 
-Je to způsobeno jinou nejednoznačností než tou, ktrerou jsme eliminovali pomocí nejlevější derivace.
+Je to způsobeno jinou nejednoznačností než tou, kterou jsme eliminovali pomocí nejlevější derivace.
 \end{priklad}
 
 \subsection{Derivační stromy}
@@ -2702,7 +2772,7 @@ $S \Rightarrow_{G,l}^* a+10*c$
 \end{priklad}
 
 \begin{veta}
-Pokud $X \Rightarrow_{G,l}^* x$ pak exstuje derivační strom $x$ z $X$ podle $G$.
+Pokud $X \Rightarrow_{G,l}^* x$ pak existuje derivační strom $x$ z $X$ podle $G$.
 \end{veta}
 \begin{dukaz}
 Tvrzení dokážeme jak jinak, než indukcí přes délku P-derivace.
@@ -2751,7 +2821,7 @@ $
 $S\Rightarrow_{G,l}^* u$ právě když existuje derivační strom $u$ z $S$ podle $G$.
 \end{veta}
 
-\subsection{Jednoznačené a nejednoznačné bezkontextové gramatiky}
+\subsection{Jednoznačné a nejednoznačné bezkontextové gramatiky}
 
 \begin{definice}
 Bezkontextová gramatika $G = \langle N,\Sigma,P,S \rangle$ se nazývá nejednoznačná, pokud existuje věta $x \in L(G)$, která má více než jeden derivační strom z $S$ podle $G$. V opačném případě se nazývá jednoznačná bezkontextová gramatika.
@@ -2770,9 +2840,13 @@ Každý regulární jazyk je jednoznačný.
 \end{veta}
 
 \begin{dukaz}
-Pokud $L$ je regulární, pak existuje KDA $A$ s úplnou přechodovu funkcí $\delta$. Pak pro $A$ lze sestavit gramatiku $G$ tak, že bude platit $L(A) = L(G)$.
+Pokud $L$ je regulární, pak existuje KDA $A$ s úplnou přechodovou funkcí $\delta$. Pak pro $A$ lze sestavit gramatiku $G$ tak, že bude platit $L(A) = L(G)$.
 
 Z toho jak byla gramatika $G$ konstruována plyne, že pro každý $A \in N$ a $a\in\Sigma$ existuje nejvýše jedno pravidlo $A \rightarrow aB$. To jest, pro $x \in L$ existuje právě jedna P-derivace.
+\end{dukaz}
+
+\begin{dukaz}
+
 \end{dukaz}
 
 \begin{priklad}
