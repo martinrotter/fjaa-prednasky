@@ -2889,10 +2889,114 @@ Z toho jak byla gramatika $G$ konstruována plyne, že pro každý $A \in N$ a $
 $L=\lbrace a^nb^nc^pd^p\ |\ n,p\ge 0\rbrace$ je inherentně nejednoznačný.
 \end{priklad}
 
+\subsection{Uzávěrové vlastnosti bezkontextových jazyků}
 
+\begin{itemize}
+\item
+\textbf{Sjednocení}
 
+Mějme dány bezkontextové jazyky $L_1$, $L_2$ a korespondující bezkontexotvé gramatiky $G_1$ a $G_2$. Lze předpokládat, že množiny stavů obou gramatik jsou disjunktní (tj. $N_1 \cap N_2 = \emptyset$).
 
+Dále uvažujeme gramatiku $G = \langle N,\Sigma,P,S \rangle$, kde \\
+$N=N_1 \cup N_2 \cup \lbrace S \rbrace \\
+\Sigma = \Sigma_1 \cup \Sigma_2 \\
+P = P_1 \cup P_2 \cup \lbrace S \rightarrow S_1\ |\ S_2 \rbrace$
 
+Platí, že $L(G)=L(G_1) \cup L(G_2)$.
+
+\item
+\textbf{Produkt}
+
+$L_1$ a $L_2$ jsou bezkontextové jazyky, $G_1$ a $G_2$ jsou odpovídající bezkontextové gramatiky.
+
+Zavedeme gramatiku $G = \langle N,\Sigma,P,S \rangle$, kde \\
+$N=N_1 \cup N_2 \cup \lbrace S \rbrace \\
+\Sigma = \Sigma_1 \cup \Sigma_2 \\
+P = P_1 \cup P_2 \cup \lbrace S \rightarrow S_1S_2 \rbrace$
+
+Platí, že $L(G) = L(G_1) \cdot L(G_2)$.
+
+\item
+\textbf{Kleeneho uzávěr}
+
+Mějme bezkontextový jazyk $L$ a k němu odpovídající gramatiku $G$.
+
+Vytvoříme novou gramatiku $G' = \langle N \cup \lbrace S' \rbrace,\Sigma,P \cup \lbrace S' \rightarrow \varepsilon\ |\ SS'\rbrace,S' \rangle$.
+
+\item
+\textbf{Pozitivní uzávěr}
+
+Podobné jako u Kleeneho uzávěru, akorát výsledná gramatika se bude lišit v množině pravidel.
+
+$G' = \langle N \cup \lbrace S' \rbrace,\Sigma,P \cup \lbrace S' \rightarrow S\ |\ SS'\rbrace,S' \rangle$
+
+\item
+\textbf{Průnik}
+
+$\mathcal{L}_2$ není uzavřená na průnik.
+
+\begin{priklad}
+Uvedeme si příklad, který nám tvrzení potvrdí.\\
+$\Sigma = \lbrace a,b,c \rbrace \\
+L_1 = \lbrace a^nb^nc^*\ |\ n \ge 0 \rbrace \\
+L_2 = \lbrace a^*b^nc^n\ |\ n \ge 0 \rbrace \\
+\\
+L_1 \cap L_2 = \lbrace a^nb^nc^n\ |\ n \ge 0 \rbrace$
+\end{priklad}
+Z toho také plyne, že není uzavřená ani na Komplement či Množinový rozdíl (De Morganovy zákony).
+\end{itemize}
+
+\subsection{Bezkontextové gramatiky v programátorské praxi}
+
+\textbf{BNF}(Backus-Naurova forma):
+Vytvořili ji John Backus a Peter Naur. Zápis se řidí několika pravidly:
+\begin{itemize}
+\item
+neterminální symboly se zapisují do $\langle \ldots \rangle$
+\item
+používá se $::=$ místo $\rightarrow$
+\item
+terminální symboly se píší do uvozovek ($"*"$)
+\item
+pravidla se oddělují pomocí $|$
+\end{itemize}
+
+\begin{priklad}
+Uvedeme si příklad zápisu gramatiky pomocí BNF. \\
+\\
+$\langle expr \rangle ::= "(" \langle expr \rangle ")"\ |\ \langle expr \rangle\langle op \rangle\langle expr \rangle\ |\ \langle number \rangle \\
+\langle op \rangle ::= "+"\ |\ "-"\ |\ "*"\ |\ "/" \\
+\langle number \rangle ::= \langle digit \rangle \langle number \rangle\ |\ \langle digit \rangle \\
+\langle digit \rangle ::= "0"\ |\ \ldots\ |\ "9"$
+\end{priklad}
+
+\textbf{Extended BNF}: Zavedl Niklaus Wirth v roce 1977. Odpovídá BNF, pouze zjednodušuje její notaci a to tak že:
+\begin{itemize}
+\item
+každé pravidlo je ukončeno znakem $";"$
+\item
+terminální symboly se píší do uvozovek, neterminální ne
+\item
+$[,]$ značí volitelnou část výrazu
+\item
+$\lbrace,\rbrace$ indukují možnost opakování
+\item
+$(,)$ jsou použity pro shlukování výrazů
+\item
+místo $::=$ se používá $=$
+\item
+terminální a neterminální symboly se oddělují čárkou
+\end{itemize}
+
+\begin{priklad}
+Gramatiku z předchozího příkladu můžeme zapsat pomocí EBNF takto:  \\
+\\
+$expr="(",expr,")"\ |\ expr,op,expr\ |\ number;\\
+op="+"\ |\ "+"\ |\ "-"\ |\ "*"\ |\ "/";\\
+number=[signum],digit,\lbrace digit \rbrace;\\
+digit="0"\ |\ \ldots \ |\ "9";\\
+signum="+"\ |\ "-";$
+\end{priklad}
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
