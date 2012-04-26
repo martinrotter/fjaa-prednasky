@@ -2998,6 +2998,20 @@ digit="0"\ |\ \ldots \ |\ "9";\\
 signum="+"\ |\ "-";$
 \end{priklad}
 
+%%%%% 11 přednáška
+%%%%% Martin Rotter
+\section{Zásobníkový automat}
+Hledáme silnější analytický aparát, než jsou KDA, protože ty v určitých situacích selhávají.
+
+\begin{priklad}
+Mějme jazyk
+$$L = \lbrace x \in \Sigma^{*}| \quad x \text{ je korektně uzávorkovaný výraz} \rbrace$$
+Následně podrobněji
+$$L = \lbrace x \in \Sigma^{*}| \Sigma = \lbrace (,),[,] \rbrace \quad x \text{ je korektně uzávorkovaný výraz} \rbrace$$
+Do tohoto jazyka patří například řetězce $()[], ([]), \ldots$, ale nepatří do něj řetězce $()), ][][, \ldots$
+\end{priklad}
+
+
 %\newpage
 \renewcommand{\indexcolumns}{3}
 \printindex
