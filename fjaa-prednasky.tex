@@ -3000,7 +3000,7 @@ signum="+"\ |\ "-";$
 
 %%%%% 11 přednáška
 %%%%% Martin Rotter
-\section{Zásobníkový automat}
+\section{Nedeterministický zásobníkový automat}
 Hledáme silnější analytický aparát, než jsou KDA, protože ty v určitých situacích selhávají.
 
 \begin{priklad}
@@ -3010,6 +3010,39 @@ Následně podrobněji
 $$L = \lbrace x \in \Sigma^{*}| \Sigma = \lbrace (,),[,] \rbrace \quad x \text{ je korektně uzávorkovaný výraz} \rbrace$$
 Do tohoto jazyka patří například řetězce $()[], ([]), \ldots$, ale nepatří do něj řetězce $()), ][][, \ldots$
 \end{priklad}
+
+\begin{figure}[ht]
+\centering\includegraphics[width=7cm]{zasobnikovy.eps}
+\caption{Náčrt zásobníkového automatu.}
+\end{figure}
+
+\begin{definice}
+Jako \textbf{nedeterministický zásobníkový automat} označme následující strukturu:
+$$
+A = \langle \Sigma, \Gamma, Q, \delta, q_0, z_0, F \rangle
+$$
+Nyní si popišme význam nám dosud neznámých prvků tohoto automatu:
+\begin{eqnarray*}
+\Gamma &-& \text{ abeceda zásobnákových symbolů.} \\
+z_0 &-& \text{ počáteční zásobníkový symbol.} \\
+Q &-& \text{ konečná množina stavů.} \\
+\delta &-& \text{ přechodová funkce ve tvaru } \delta : Q \times (\Sigma \cup \lbrace \varepsilon \rbrace) \times \Gamma \rightarrow 2^{Q \times \Gamma^{*}}
+\end{eqnarray*}
+Navíc $\langle \sigma, abc \rangle \in \delta(q, a, d)$ znamená slovně: \uv{Ze stavu $q$ po přečtení $a$ ze vstupu a symbolu $d$ ze zásobníku
+ přejde automat $A$ do stavu $\sigma$ a na zásobník zapíše řetězec $"abc"$.} Mějme na paměti, že tento řetězec je na zásobník zapsán \uv{obráceně}.
+\end{definice}
+
+\begin{figure}[ht]
+\centering\includegraphics[width=7cm]{zasobnikovy-2.eps}
+\caption{Vkládání hodnot na zásobník u NZA.}
+\end{figure}
+
+\subsection{Reprezentace NZA}
+
+\subsubsection{Přechodová tabulka}
+% dodělat
+\subsubsection{Přechodový diagram}
+% dodělat
 
 
 %\newpage
