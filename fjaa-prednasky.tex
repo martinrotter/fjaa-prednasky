@@ -3040,10 +3040,201 @@ Navíc $\langle \sigma, abc \rangle \in \delta(q, a, d)$ znamená slovně: \uv{Z
 \subsection{Reprezentace NZA}
 
 \subsubsection{Přechodová tabulka}
-% dodělat
-\subsubsection{Přechodový diagram}
-% dodělat
+V přechodové tabulce řádky odpovídají stavům a sloupce odpovídají prvkům $(\Sigma \cup \lbrace \varepsilon \rbrace \times \Gamma$.
+\begin{priklad}
+\begin{eqnarray*}
+Q &=& \lbrace q_0, q_1 \rbrace \\
+\Sigma &=& \lbrace a, b \rbrace \\
+\Gamma &=& \lbrace 0, 1 \rbrace
+\end{eqnarray*}
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{ r || c | c | c | c | c | c}                   
+ & $\langle a, 0 \rangle$ & $\langle b, 0 \rangle$ & $\langle c, 0 \rangle$ & $\langle a, 1 \rangle$ & $\langle b, 1 \rangle$ & $\langle c, 1 \rangle$ \\
+\hline
+$\rightarrow q_0^{\cdot}$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ \\
+$q_1^{\cdot}$ & $\cdots$ & $\lbrace \langle r, w \rangle \rbrace$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$
+\end{tabular}
+\end{center}
+\caption{Ukázka přechodové tabulky pro NZA.}
+\end{table}
+\end{priklad}
 
+\subsubsection{Přechodový diagram}
+Přechodov\'e diagramy NZA jsou velmi podobn\'e diagramům KA.
+\begin{center}
+\begin{VCPicture}{(-2,-2)(2,2)}
+\State[q]{(-2,0)}{q}
+\State[r]{(2,0)}{r}
+\ArcL{q}{r}{\langle \varepsilon, r, abc \rangle}
+\end{VCPicture}
+\end{center}
+
+\begin{definice}
+Konfigurac\'i NZA je každ\'y prvek z množiny $Q \times \Sigma^* \times \Gamma^*$, tedy
+$\langle q, abc, 001 \rangle \in Q \times \Sigma^* \times \Gamma^*$ znamená, že NZA je ve stavu $q$, na vstupu
+zbývá přečíst řetězec \uv{abc} a na zásobníku je řetězec \uv{001}.
+
+Pro konfigurace $\langle q_i, w_i, x_i \rangle \text{ a } \langle q_j, w_j, x_j \rangle$ klademe 
+$\langle q_i, w_i, x_i \rangle \vdash \langle q_j, w_j, x_j \rangle$ právě, když platí:
+\begin{itemize}
+\item
+$x_i = zy \text{ ,kde } z \in \Gamma, y \in \Gamma^*$
+
+\item
+$w_i = aw_j \text{ ,kde } a \in (\Sigma \cup \lbrace \varepsilon \rbrace), w_j \in \Sigma^*$
+
+\item
+$\langle q_j, x \rangle \in \delta(q_i, a, z)$
+\end{itemize}
+Přičemž $x_j = xy$.
+\end{definice}
+
+Reflexivní a tranzitivní uzávěr $\Gamma$ označíme $\Gamma^*$ a platí:
+\begin{gather*}
+\langle q_i, w_i, x_i \rangle \vdash^* \langle q_j, w_j, x_j \rangle \text{ právě, když} \\
+\langle q_i, w_i, x_i \rangle \vdash \cdots \vdash \langle q_j, w_j, x_j \rangle
+\end{gather*}
+Pokud $\langle q_i, w_i, x_i \rangle \vdash^* \langle q_j, w_j, x_j \rangle$ tak říkáme, že existuje výpočet
+NZA, kterým přejde tento NZA z $\langle q_i, w_i, x_i \rangle \text{ do } \langle q_j, w_j, x_j \rangle$.
+
+\subsection{Jazyky rozpoznávané NZA}
+\begin{enumerate}
+\item
+Jazyk rozpoznávaný pomocí koncových stavů automatu, tedy:
+$$
+L(A) = \lbrace w \in \Sigma^* | \quad \langle q_0, w, z_0 \rangle \vdash^* \langle q, \varepsilon, x \rangle, q \in F, x \in \Gamma^* \rbrace
+$$
+
+\item
+Jazyk rozpoznávaný vyprazdňováním zásobníků, tedy:
+$$
+N(A) = \lbrace w \in \Sigma^* | \quad \langle q_0, w, z_0 \rangle \vdash^* \langle q, \varepsilon, \varepsilon \rangle, q \in Q \rbrace
+$$
+\end{enumerate}
+
+\subsection{Rozpoznání jazyk způsobem přechodu od koncových stavů k vyprázdnění zásobníku}
+\begin{veta}
+Ke každému NZA $A$ existuje NZA $A'$, pro který platí $L(A) = N(A') = L(A')$
+\end{veta}
+\begin{dukaz}
+Mějme automatu $A = \langle \Sigma, \Gamma, Q, \delta, q_0, z_0, F \rangle$. Zkonstruujeme automat $A'$ tak, že
+platí $L(A) = N(A') = L(A')$, načež je třeba vyřešit dvě věci:
+\begin{enumerate}
+\item
+V případě, že automat $A$ vyprázdní svůj zásobník, ale v koncovém stavu, potom $A'$ nesmí vyprázdnit zásobník, což se řeší
+přídáním symbolu $z_0'$ na dno zásobníku automatu $A$.
+
+\item
+V případě, že automat $A$ skončí (s prázdným vstupem), tak by v koncovém stavu automat $A'$ měl navíc ještě vyprázdnit
+zásobník, to ale zajistíme tak, že přidáme slovo $q_\#$, ve kterém $A'$ vyprazdňuje svůj zásobník.
+\end{enumerate} 
+\end{dukaz}
+
+Uvažujme
+$$
+A' = \langle \Sigma, \Gamma \cup \lbrace z_{0}' \rbrace, Q \cup \lbrace q_{0}', q_{\#}' \rbrace, \delta',
+q_0', z_0', \lbrace q_{\#}' \rbrace \rangle
+$$
+kde $\delta'$ je přechodová funkce, jež vznikne rozšířením původní přechodové funkce o následující přechody:
+\begin{gather*}
+\delta'(q_0', \varepsilon, z_0') = \lbrace \langle q_0, z_0, z_0' \rangle \rbrace \\
+\delta'(q, \varepsilon, z) = \delta(q, \varepsilon, z) \cup \lbrace \langle q_{\#}', \varepsilon \rangle \rbrace \text { pokud }
+q \in F, a \in \Gamma \cup \lbrace z_0' \rbrace \\
+\delta'(q_{\#}', \varepsilon, z) = \lbrace \rangle q_{\#}', \varepsilon \langle \rbrace \text{ pro } z \in \Gamma \cup \lbrace z_0' \rbrace
+\end{gather*}
+
+\subsection{Rozpoznání jazyk způsobem přechodu od vyprázdnění zásobníku k přijímání koncovými stavy}
+\begin{veta}
+Ke každému NZA $A = \langle \Sigma, \Gamma, Q, \delta, q_0, z_0, F \rangle$ existuje NZA $A'$ tak, že $N(A) = L(A') = N(A')$.
+\end{veta}
+\begin{dukaz}
+Něchť je dán $A = \langle \text{ nemám poznačeno } \rangle$. Konstruujeme $A'$, načež je třeba vyřešit dvě věci:
+\begin{enumerate}
+\item
+V případě, kdy výchozí automat $A$ vyprázdnil vstup a zásobník (to může nastat v libovolném stavu), pak přejdeme do koncového
+stavu. To řešíme přídáním nového zásobníkového symbolu $z_0'$.
+
+\item
+Je potřeba zamezit přijetí slova koncovým stavem bez vyprázdnění zásobníku. To řešíme tak, že máme jediný koncový stav, do kterého přejdeme
+jen pokud máme prázdný zásobník automatu $A$.
+\end{enumerate}
+\begin{gather*}
+A' = \langle \Sigma, \Gamma \cup \lbrace z_0' \rbrace, Q \cup \lbrace q_\#', q_0' \rbrace, \delta', q_0', z_0', \lbrace q_\#' \rbrace \rangle \\
+\delta' \text{ je navíc rozšířením } \delta \\
+\delta'(q_0', \varepsilon, z_0') = \lbrace \langle q_0, z_0z_0' \rangle \rbrace \\
+\delta'(q, \varepsilon, z_0') = \lbrace \langle q_\#', \varepsilon \rangle \rbrace, \quad \forall q \in Q
+\end{gather*}
+\end{dukaz}
+
+\subsection{Automaty pracující s celým zásobníkem}
+Pro automat pracující s celým zásobníkem má platit, že $\delta : Q \times (\Sigma \cup \lbrace \varepsilon \rbrace) \times \Gamma^*
+ \rightarrow 2^{Q \times \Gamma^*}$ s omezením, že přechodová funkce je pro každé $q \in Q, a \in (\Sigma \cup \lbrace \varepsilon \rbrace)$ definována
+pouze pro konečně mnoho řetězců $z \in \Gamma^*$ a navíc musí platit, že pro každý z konečně mnoha řetěczů je $\delta(q, a, z)$ konečná.
+
+Platí také:
+$$
+\langle q_i, w_i, z_i \rangle \vdash \langle q_j, w_j, z_j \rangle
+$$
+\begin{enumerate}
+\item
+$z_i = zy, z \in \Gamma^*, y \Gamma^*$
+
+\item
+$w_i = aw_j, a \in (\Sigma \cup \lbrace \varepsilon \rbrace)$
+
+\item
+$\langle q_j, x \rangle \in \delta(q_i, a, z)$
+
+\item
+$z_j = xy$
+\end{enumerate}
+
+\begin{veta}
+Pro každý NZA $A$ pracující s celým zásobníkem existuje NZA $A'$ pracující pouze s vrcholem zásobníku.
+\end{veta}
+\begin{dukaz}
+Mějme $A = \langle \Sigma, \Gamma, Q, \delta, q_0, z_0, F \rangle$ pracující s celým zásobníkem. Následně vytvoříme
+$A' = \langle \Sigma, \Gamma \cup \lbrace z_0' \rbrace, Q \cup \lbrace q_0', q_\# \rbrace \cup Q', q_0', z_0', F \rangle$ pracující s vrcholem
+zásobníku.
+\begin{itemize}
+\item
+$q_\#$ je nový nekoncový stav, ve kterém se vyprázdní zásobník automatu.
+
+\item
+$Q'$ je pomocná množina stavu, které potřebujeme pro nahrazení pravidel, která pracují s více zásobníkovými symboly.
+
+\item
+$\delta'$ je definována následovně:
+\begin{itemize}
+\item
+Na počátku je prázdná.
+
+\item
+Přidáme přechody $\delta'(q_0', \varepsilon, z_0') = \lbrace \langle q_0, z_0, z_0' \rangle \rbrace$.
+\begin{enumerate}
+\item
+Pokud $\langle r, y \rangle \in \delta(q, a, \varepsilon) \text{ pak pro každé } z \in \Gamma \cup \lbrace z_0' \rbrace \text{ přidáme }
+\langle r, yz \rangle \text{ do } \delta'(q, a, z)$.
+
+\item
+Pokud $\langle r, y \rangle \in \delta(q, a, z), z \in \Gamma$, pak přidáme přechod $\langle r, y \rangle \in \delta'(q, a, z)$.
+
+\item
+Pokud $\langle r, y \rangle \in \delta(q, a, z), z = z_1z_2z_3 \cdots z_n \text{ pro } n > 1$, v tomto případě zavedem dosud neuvažované stavy
+$q_1',q_2',\ldots,q_{n-1}'$ a ty přidáme do $Q'$ a zavedeme přechody $\delta'(q, a, z_1) = \lbrace \langle q_1', \varepsilon, \rangle \rbrace,
+\delta(q_1', \varepsilon) = \lbrace \langle q_2', \varepsilon \rangle \rbrace = \ldots = \delta'(q_{n-1}', \varepsilon, z_n) =
+\lbrace \langle q_\#, \varepsilon \rangle \rbrace$
+\end{enumerate}
+\end{itemize}
+
+\item
+Zavedeme přechod $\delta'(q, \varepsilon, z_0') = \lbrace \langle q_\#, \varepsilon \rangle \rbrace$.
+\end{itemize}
+\end{dukaz}
+\begin{dusledek}
+Třídy automatu jsou ekvivalentní.
+\end{dusledek}
 
 %\newpage
 \renewcommand{\indexcolumns}{3}
