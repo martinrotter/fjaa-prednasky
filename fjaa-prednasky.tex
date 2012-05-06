@@ -3236,6 +3236,225 @@ Zavedeme přechod $\delta'(q, \varepsilon, z_0') = \lbrace \langle q_\#, \vareps
 Třídy automatu jsou ekvivalentní.
 \end{dusledek}
 
+\subsection{Poznámky o vlastnostech NZA}
+
+\begin{enumerate}
+\item 
+Pokud $\langle q,u,x \rangle \vdash^* \langle p,v,y \rangle$ pak $\langle q,uw,x \rangle \vdash^* \langle p,vw,y \rangle$ pro libovolný řetězec $w \in \Sigma^*$.
+
+\item
+Pokud $\langle q,u,x \rangle \vdash^* \langle p,v,y \rangle$ pak $\langle q,u,xz \rangle \vdash^* \langle p,v,yz \rangle$ pro libovolný řetězec $w \in \Gamma^*$.
+
+\item
+Pokud $\langle q,uw,x \rangle \vdash^* \langle p,vw,y \rangle$ pak $\langle q,u,x \rangle \vdash^* \langle p,v,y \rangle$.
+
+\item[1.+2.]
+Pokud $\langle q,u,x \rangle \vdash^* \langle p,v,y \rangle$ pak $\langle q,uw,xz \rangle \vdash^* \langle p,vw,yz \rangle$ pro všechny řetězce $w \in \Sigma^* $ a $z \in \Gamma^*$.
+
+\item[1.+3.]
+$\langle q,u,x \rangle \vdash^* \langle p,v,y \rangle$ právě když $\langle q,uw,x \rangle \vdash^* \langle p,vw,y \rangle$.
+\end{enumerate}
+
+\begin{poznamka}
+Opak 2. vlastnosti neplatí: Pokud $\langle q,u,xz \rangle \vdash^* \langle p,v,yz \rangle$ pak obecně nelze odvodit, že $\langle q,u,x \rangle \vdash^* \langle p,v,y \rangle$.\\
+Speciálně: $x=y=\varepsilon$
+\end{poznamka}
+
+\begin{poznamka}
+$\langle q,u,z \rangle \vdash^* \langle p,\varepsilon,\varepsilon \rangle$: automat je schopen přejít ze stavu $q$ do $p$, přitom zkonzumuje řetězec $u$ ze vstupu a řetězec $z$ ze zásobníku, ale bez toho, aniž by se někdy během činnosti dostal pod úroveň řetězce $z$ na zásobníku.
+\end{poznamka}
+
+\subsection{Od gramatik k automatům}
+
+Prokážeme, že ke každé bezkontextové gramatice existuje NZA $A$ tak, že $L(G)=N(A)$.
+
+Uvažujme bezkontextovou gramatiku $G = \langle N,\Sigma,P,S \rangle$. Zkonstruujeme zásobníkový automat $A = \langle \Sigma,N \cup \Sigma,\lbrace q \rbrace,\delta,q,S,\emptyset \rangle$.
+
+\begin{itemize}
+\item
+Zásobníkové symboly se skládají z terminálních a neterminálních symbolů gramatiky
+\item
+Množina stavů je jednoprvková
+\item
+Množina koncových stavů je prázdná
+\item
+$S$ je počáteční zásobníkový symbol
+\item
+$\delta$ simuluje provádění nejlevějších derivací
+$$
+\delta(q,a,z)=\left\{
+\begin{array}{l@{\quad\mbox{}\quad}l}
+\lbrace \langle q, \varepsilon \rangle \rbrace & \text{pokud}\quad a \in \Sigma\ \text{a}\ z=a\\
+\lbrace \langle q,y \rangle\ |\ z\rightarrow y\ \in P \rbrace & \text{pokud}\quad a \in \Sigma\ \text{a}\ z \in N\\
+\emptyset & \text{jinak}
+\end{array}
+\right.
+$$
+
+\begin{itemize}
+\item
+Prvnímu případu říkáme \textbf{operace srovnání}: pokud je na vstupu i na vrcholu zásobníku stejný znak (terminál) pak jsou oba odebrány
+\item
+Druhý případ se jmenuje \textbf{operace expanze}: bez čtení vstupu při neterminálu na vrcholu zásobníku se tento neterminál nahradí pravou stranou některého pravidla s tímto neterminálem na levé straně
+\item
+U třetího případu dochází k zastavení činnosti
+\end{itemize}
+\end{itemize}
+
+\begin{priklad}
+Uvedeme si gramatiku a na ní ukážeme činnost takového automatu.
+
+$\begin{array}{l}
+G=\langle N,\Sigma,P,S \rangle \\
+\Sigma = \lbrace a,b,c,0,1,+,-,*,/,(,) \rbrace \\
+N = \lbrace S,E,C,V \rbrace \\
+\end{array}\\
+\begin{array}{l l}
+P= \lbrace &S \rightarrow E, \\
+& E \rightarrow E*E|E/E|E+E|E-E|-E|C|V|(E), \\
+& C \rightarrow 0C|1C|0|1, \\
+& V \rightarrow aV|bV|cV|a|b|c \quad \rbrace
+\end{array}
+$
+\begin{center}
+$
+\begin{array}{l r}
+\text{Řetězec na vstupu} & \text{Stav zásobníku} \\
+\\
+10+(ca*110) & S \\
+10+(ca*110) & E \\
+10+(ca*110) & E+E \\
+10+(ca*110) & C+E \\
+10+(ca*110) & 1C+E \\
+0+(ca*110) & C+E \\
+0+(ca*110) & 0+E \\
++(ca*110) & +E \\
+(ca*110) & E \\
+(ca*110) & (E) \\
+ca*110) & E) \\
+ca*110) & E*E) \\
+ca*110) & V*E) \\
+ca*110) & cV*E) \\
+a*110) & V*E) \\
+a*110) & a*E) \\
+*110) & *E) \\
+110) & E) \\
+110) & C) \\
+110) & 1C) \\
+10) & C) \\
+10) & 1C) \\
+0) & C) \\
+0) & 0) \\
+) & ) \\
+\varepsilon & \varepsilon \\
+\end{array}
+$
+\end{center}
+\end{priklad}
+
+\begin{veta}
+Pro každou bezkontextovou gramatiku $G$ existuje NZA $A$ tak, že $L(G)=N(A)$.
+\end{veta}
+
+\begin{dukaz}
+Uvažujeme gramatiku $G=\langle N,\Sigma,P,S \rangle$ a odtud $A$ zkonstruovaný pomocí oprací expanze a srovnání (předchozí způsob).
+
+Tvrdíme, že pro libovolný řetězec $w \in \Sigma^*$ platí:
+$$
+S \Rightarrow_{G,l}^* w \text{ právě když } \langle q,w,S \rangle \vdash^* \langle q,\varepsilon,\varepsilon \rangle
+$$
+
+\begin{itemize}
+\item
+\textbf{Implikace zleva:}
+
+Nechť $S \Rightarrow_{G,l}^* w$, to znamená, že existuje nejlevější derivace $S=X_0,\ldots,X_n=w$. Indukcí pro $i=0,\ldots,n$ prokážeme, že $\langle q,w,S \rangle \vdash^* \langle q,u_i,z_i \rangle$ pro $w = y_i\cdot u_i$. \\
+$X_i=y_iz_i$, kde buď 
+\begin{enumerate}
+\item
+$z_i = \varepsilon$
+
+nebo
+\item
+$z_i=Av_i$, kde $A \in N$
+\end{enumerate}
+
+Pro $i=0$ je tvrzení zřejmé, protože $x_0=S$ a můžeme položit $y_0=\varepsilon$, $u_i=w$ a $z_0=S$.
+
+Nechť platí tvrzení pro $i$. Prokážeme jej pro $i+1$.
+
+Z indukčního předpokladu $\langle q,w,S \rangle \vdash \langle q,u_i,z_i \rangle$ pro $w=y_iu_i$ a $x_i=y_iz_i$. Dále musí platit, že $z_i=Av_i$, jinak by byl $x_i$ ze samách terminálních symbolů a posloupnost $X_1,X_2,\ldots,X_i,X_{i+1},\ldots$ by nemohla být P-derivace.
+
+Dále z předpokladu $X_i \Rightarrow_{G,l}X_{i+1}$ to jest z indukčního předpokladu $x_i=y_iz_i=y_iAv_i$, $A$ je nejlevější neterminál, tj. existuje pravidlo $A \rightarrow w_i \in P$ tak, že $x_{i+1}=y_iw_iv_i$.
+
+NZA $A$ může přejít z konfigurace $\langle q,u_i,z_i \rangle = \langle q,u_i,Av_i \rangle$ do konfigurace $\langle q,u_i,w_iv_i \rangle$ (pomocí expanze). Dále může NZA přecházet do dalších konfiguací postupnou aplikací operace srovnání, dokud není vyprázdněn zásobník nebo není na vrcholu neterminál.
+Automat nakonec skončí v konfiguraci $\langle q,u_{i+1},z_{i+1} \rangle$, kde buď $z_{i+1}=\varepsilon$ nebo $z_{i+1}=Bv_{i+1}$ kde $B \in N$.
+
+Zřejmě $w=y_{i+1}u_{i+1}$ kde $x_{i+1}=y_iw_iv_i=y_{i+1}z_{i+1}$.
+
+Ve speciálním případě: $i=n$ dostáváme $\langle q,w,S \rangle \vdash^* \langle q,u_n,z_n \rangle$, kde $w=y_nu_n$, $X_n=y_nz_n=w$ tj. dle 1. vlastnosti, protože $z_n$ je celý z terminálnch symbolů, platí, že $z_n=\varepsilon$, to jest $x_n=y_nz_n=y_n=w$ ale $w=y_nu_n$, odtud $u_n=\varepsilon$.
+
+Takže $\langle q,w,S \rangle \vdash^* \langle q,\varepsilon,\varepsilon \rangle$.
+
+\item
+\textbf{Implikace zprava:}
+
+Prokážeme obecnější tvrzení:
+
+Pro každý neterminál $A \in N$ platí: pokud $\langle q,w,A \rangle \vdash^* \langle,\varepsilon,\varepsilon \rangle$ pak $A \Rightarrow_{G,l}^* w$.
+
+Požadované tvrzení získáme jako důsledek pro $S \in N$.
+
+Tvrzení se dokazuje přes délku výpočtu (pro $n=0$ nelze).
+
+Pro $n=1$ je triviální, protože $\langle q,w,A \rangle \vdash \langle q,\varepsilon,\varepsilon \rangle$ pak $w=\varepsilon$ a $A \rightarrow \varepsilon \in P$.
+
+Předpokládejme, že tvrzení platí pro libovolný výpočet nejvýše $u$ kroků dlouhý a předpokládejme, že výpočet, který se dostane z $\langle q,w,A \rangle$ do $\langle q,\varepsilon,\varepsilon \rangle$ má délku $n+1$.
+
+První přechod v tomto výpočtu musí nahradit $A$ na vrcholu zásobníku pravou stranou některého pravidla s $A$ na levé straně. Musí tedy existovat $A \rightarrow z_1z_2\ldots z_k \in P$ a $\langle q,w,A \rangle \vdash \langle q,w,z_1z_2\ldots z_k \rangle$ je první krok výpočtu. Zbývajících $n$ kroků výpočtu musí odstranit $z_1z_2\ldots z_k$ ze zásobníku.%%DOPLNIT poslední větu (nepřečtu po sobě, sorry)%%
+
+Řetězec $w$ je ve tvaru $w=x_1x_2\cdots x_i$, kde každá část $x_i$ odpovídá podřetězeci řetězce $w$, který byl odstraněn ze vstupu po odstranění $z_{i-1}$ z vrcholu zásobníku až do chvíle, kdy byl odstrněn $z_i$ z vrcholu zásobníku.
+
+Formálně: $\langle q,x_i,z_i \rangle \vdash^* \langle q,\varepsilon,\varepsilon \rangle$
+
+Jelikož výpočet nezávisí na části řetězce, který nebyl dosud zkoumán, platí $\langle q,x_ix_{i+1}\cdots x_k,z_i \rangle \vdash^* \langle q,x_{i+1}\cdots x_k,\varepsilon \rangle$.
+
+Každý z příslušných výpočtů má délku nejvýše $n$. Pokud je tedy $z_i$ neterminál, aplikujeme indukční předpoklad $z_i \Rightarrow_{G,l}^* x_i$.
+%%doplnit závorku%%
+
+To znamená:
+$$
+A \Rightarrow_{G,l} z_1z_2\cdots z_k \Rightarrow_{G,l}^* x_1z_2\cdots z_k \Rightarrow_{G,l}^* x_1x_2z_3\cdots z_k \Rightarrow_{G,l}^* x_1 \cdots x_k = w
+$$
+\end{itemize}
+\end{dukaz}
+
+\subsection{Od automatů ke gramatikám}
+
+\begin{veta}
+Pro každý NZA $A=\langle \Sigma,\Gamma,Q,\delta,q_0,z_0,F \rangle$ existuje bezkontextová gramatika $G$ tak, že $L(G)=N(A)$.
+\end{veta}
+
+\begin{dukaz}
+Množina $N$ je $N=Q \times \Gamma \times Q \cup \lbrace S \rbrace$.
+Pravidla gramatiky vypadají následovně:
+\begin{itemize}
+\item
+Pro každý stav $p \in Q$ obsahuje pravidlo $S \rightarrow \langle q_0,z_0,p \rangle$
+\item
+Pokud $\langle u,z_1z_2\cdots z_k \rangle \in \delta(q,a,z)$, kde $a \in \Sigma \cup \lbrace S \rbrace$, pak pro libovolnou posloupnost stavů $r_1,\ldots,r_n=p \in Q$ platí, že $P$ obsahuje pravidlo $\langle q,z,p \rangle \rightarrow a\langle r,z_1,u_1 \rangle\langle r_1,z_2,u_2 \rangle \cdots \langle r_{k-1},z_k,u_k \rangle$
+\end{itemize}
+
+Speciálně pokud $\langle r, \varepsilon \rangle \in \delta(q,a,z)$ pak $P$ obsahuje pravidlo $\langle q,z,r \rangle \rightarrow a$
+
+\textbf{Důkaz někdy příště \ldots}
+\end{dukaz}
+
+\begin{dusledek}
+Ke každému NZA existuje ekvivalentní automat rozpoznávající stejný jazyk, který má pouze 1 stav.
+\end{dusledek}
+
+
 %\newpage
 \renewcommand{\indexcolumns}{3}
 \printindex
