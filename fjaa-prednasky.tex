@@ -2962,8 +2962,8 @@ pravidla se oddělují pomocí $|$
 \end{itemize}
 
 \begin{priklad}
-Uvedeme si příklad zápisu gramatiky pomocí BNF. \\
-\\
+Uvedeme si příklad zápisu gramatiky pomocí BNF.
+
 $\langle expr \rangle ::= "(" \langle expr \rangle ")"\ |\ \langle expr \rangle\langle op \rangle\langle expr \rangle\ |\ \langle number \rangle \\
 \langle op \rangle ::= "+"\ |\ "-"\ |\ "*"\ |\ "/" \\
 \langle number \rangle ::= \langle digit \rangle \langle number \rangle\ |\ \langle digit \rangle \\
@@ -2989,8 +2989,8 @@ terminální a neterminální symboly se oddělují čárkou
 \end{itemize}
 
 \begin{priklad}
-Gramatiku z předchozího příkladu můžeme zapsat pomocí EBNF takto:  \\
-\\
+Gramatiku z předchozího příkladu můžeme zapsat pomocí EBNF takto:
+
 $expr="(",expr,")"\ |\ expr,op,expr\ |\ number;\\
 op="+"\ |\ "+"\ |\ "-"\ |\ "*"\ |\ "/";\\
 number=[signum],digit,\lbrace digit \rbrace;\\
@@ -3417,7 +3417,8 @@ První přechod v tomto výpočtu musí nahradit $A$ na vrcholu zásobníku prav
 
 Formálně: $\langle q,x_i,z_i \rangle \vdash^* \langle q,\varepsilon,\varepsilon \rangle$
 
-Jelikož výpočet nezávisí na části řetězce, který nebyl dosud zkoumán, platí $\langle q,x_ix_{i+1}\cdots x_k,z_i \rangle \vdash^* \langle q,x_{i+1}\cdots x_k,\varepsilon \rangle$.
+Jelikož výpočet nezávisí na části řetězce, který nebyl dosud zkoumán, platí
+$$\langle q,x_ix_{i+1}\cdots x_k,z_i \rangle \vdash^* \langle q,x_{i+1}\cdots x_k,\varepsilon \rangle$$
 
 Každý z příslušných výpočtů má délku nejvýše $n$. Pokud je tedy $z_i$ neterminál, aplikujeme indukční předpoklad $z_i \Rightarrow_{G,l}^* x_i$.
 %%doplnit závorku%%
@@ -3442,7 +3443,9 @@ Pravidla gramatiky vypadají následovně:
 \item
 Pro každý stav $p \in Q$ obsahuje pravidlo $S \rightarrow \langle q_0,z_0,p \rangle$
 \item
-Pokud $\langle u,z_1z_2\cdots z_k \rangle \in \delta(q,a,z)$, kde $a \in \Sigma \cup \lbrace S \rbrace$, pak pro libovolnou posloupnost stavů $r_1,\ldots,r_n=p \in Q$ platí, že $P$ obsahuje pravidlo $\langle q,z,p \rangle \rightarrow a\langle r,z_1,u_1 \rangle\langle r_1,z_2,u_2 \rangle \cdots \langle r_{k-1},z_k,u_k \rangle$
+Pokud $\langle u,z_1z_2\cdots z_k \rangle \in \delta(q,a,z)$, kde $a \in \Sigma \cup \lbrace S \rbrace$, pak pro
+libovolnou posloupnost stavů $r_1,\ldots,r_n=p \in Q$ platí, že $P$ obsahuje pravidlo
+$$\langle q,z,p \rangle \rightarrow a\langle r,z_1,u_1 \rangle\langle r_1,z_2,u_2 \rangle \cdots \langle r_{k-1},z_k,u_k \rangle$$
 \end{itemize}
 
 Speciálně pokud $\langle r, \varepsilon \rangle \in \delta(q,a,z)$ pak $P$ obsahuje pravidlo $\langle q,z,r \rangle \rightarrow a$
