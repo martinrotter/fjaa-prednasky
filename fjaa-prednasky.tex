@@ -841,7 +841,7 @@ sešit - automat (obr. 4.1)
 Formalizace:
 Konečný deterministický automat (s úplnou přechodovou funkcí) (nad vstupní abecedou $\Sigma$) je struktura:
 
-$\langle \Sigma, Q, d, q_{0} \rangle$ \\
+$\langle \Sigma, Q, F, q_{0} \rangle$ \\
 $\Sigma \ldots$ vstupní abeceda \\
 $Q \ldots$ konečná množina stavu, která je neprázdná \\
 $q_{0} \in Q \ldots$ počáteční stav \\
@@ -928,7 +928,7 @@ Následně přechodová funkce:
 & \langle q_{2}, a, \emptyset \rangle,
 \langle q_{2}, b, \emptyset \rangle,
 \langle q_{3}, a, \emptyset \rangle,
-\langle q_{3}, b, \emptyset \rangle 
+\langle q_{3}, b, \lbrace q_{1} \rbrace \rangle 
 \rbrace
 \end{eqnarray*}
 \end{priklad}
@@ -966,7 +966,7 @@ Předchozí příklad číslo \ref{priklad-3} lze reprezentovat několika způso
 \LoopN[.5]{q0}{a, b}
 \ArcL{q0}{q1}{a}
 \ArcL{q1}{q2}{a}
-\ArcL{q2}{q1}{b}
+\ArcR{q1}{q2}{b}
 \ArcL{q3}{q1}{b}
 \end{VCPicture}
 \end{center}
