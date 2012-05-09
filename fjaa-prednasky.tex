@@ -613,9 +613,10 @@ $L(G)$ je jazyk všech výrokových formulí.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% 3. a 4. přednáška - Tom
 
-
 \subsection{Gramatika nezkracující}
-Gramatika G se nazývá nezkracující, pokud má pouze nezkracující pravidla a může mít pravidlo ve tvaru $S \rightarrow \varepsilon$, přičemž $S$ se nenachází na žádné z pravých stran.
+Gramatika $G$ se nazývá nezkracující, pokud má pouze nezkracující
+pravidla. Avšak navíc může mít tato gramatika pravidlo ve
+tvaru $S \rightarrow \varepsilon$, přičemž $S$ se nesmí nacházet na pravé strané žádného pravidla.
 
 \begin{priklad}
 \begin{eqnarray*}
@@ -626,31 +627,37 @@ P &=& \lbrace S \rightarrow \varepsilon |abc|Ac, A \rightarrow aBcb, Bcb \righta
 \end{priklad}
 
 \begin{veta}
-Gramatiky typu 1(\ref{gram-1}) a 3(\ref{gram-3}) jsou nezkracující.
+Gramatiky typu 1(viz. \ref{gram-1}) a 3(viz. \ref{gram-3}) jsou nezkracující.
 \end{veta}
 
 \begin{veta}
-Ke každé gramatice $G$, existuje ekvivalentní gramatika $G^{'}$, ve které jsou všechna pravidla obsahující terminální symboly ve tvaru $A \rightarrow a$, kde $A \in N, a \in \Sigma$.
+Ke každé gramatice $G$, existuje ekvivalentní gramatika $G^{'}$, ve které
+jsou všechna pravidla obsahující terminální symboly ve tvaru $A \rightarrow a$, kde $A \in N, a \in \Sigma$.
 \end{veta}
 
 \begin{dukaz}
 Pro každý terminál $a \in \Sigma$, zavedeme terminál $N_{a}$ a pravidlo $N_{a} \rightarrow a$.
-Všechny výskyty terminálů ve výchozích pravidlech nahradíme příslušnými pomocnými neterminály.
-$$
-Bcb \rightarrow bBc \text{ se změní na } BN_{c}N_{b} \rightarrow N_{b} BN_{c}, 
-N_{c} \rightarrow c, N_{b} \rightarrow b
-$$
+Všechny výskyty terminálů ve výchozích pravidlech nahradíme příslušnými pomocnými neterminály, tedy:
+\begin{itemize}
+\item
+$Bcb \rightarrow bBc \text{ se změní na } BN_{c}N_{b} \rightarrow N_{b} BN_{c}$
+
+\item
+Pomocná pravidla jsou následně $N_{c} \rightarrow c$ a $N_{b} \rightarrow b$
+\end{itemize}
 \end{dukaz}
 
 \begin{veta}
-Ke každé nezkracující gramatice existuje ekvivalentní gramatika, která je kontextově \emph{závislá}.
+Ke každé nezkracující gramatice existuje ekvivalentní gramatika, která je kontextově závislá\footnote{Mějme na paměti, že říkáme-li, že je
+gramatika kontextové zásvislá, tak tím myslíme, že je kontextová.}.
 \end{veta}
 
 \begin{dukaz}
-Předpokládejme, že $G = \langle N, \Sigma, P, S \rangle$ je nezkracující gramatika. Dle věty 7 můžeme předpokládat, 
-že všechna pravidla jsou buď ve tvaru $A \rightarrow a$ (nevadí) nebo ve tvaru obecně. 
+Předpokládejme, že $G = \langle N, \Sigma, P, S \rangle$ je nezkracující gramatika. Pak můžeme předpokládat, 
+že všechna pravidla jsou buď ve tvaru $A \rightarrow a$ nebo ve tvaru obecně. 
 $A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{n}$, kde $A_{1}, \ldots,A_{m}, B_{1}, \ldots,B_{n} \in N$ a navíc $m \leq n$. 
-Tj. taková pravidla lze psát ve tvaru $A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{my}$, kde $y = B_{m+1} \cdots B_{n}$ 
+
+Taková pravidla lze psát ve tvaru $A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{my}$, kde $y = B_{m+1} \cdots B_{n}$ 
 Budeme uvažovat nové pomocné neterminály $X_{1},...,X_{m}$ \footnote{pro každé pravidlo se uvažují zvlášť}. 
 A zavedeme následující pravidla:
 \begin{gather*}
@@ -662,37 +669,46 @@ X_{1} X_{2} \cdots X_{my} \rightarrow B_{1} X_{2} X_{3} \cdots X_{my} \\
 \vdots \\
 B_{1} B_{2} \cdots B_{m-1} X_{my} \rightarrow B_{1} B_{2} \cdots B_{m-1}B_{my}
 \end{gather*}
-Tento postup se aplikuje pro všechna pravidla. Hledaná gramatika $G^{'}$ se skládá z $\Sigma, N$ + všechny pomocné terminály + všechna odvozená pravidla.
+Tento postup se aplikuje pro všechna pravidla. Hledaná gramatika $G^{'}$ se skládá
+z $\Sigma, N$ a navíc všech pomocných terminálů a odvozovacích pravidel.
 \end{dukaz}
 
 \subsection{Základní vlastnosti bezkontextových gramatik}
-\begin{itemize}		%% Je to dostatečně vyčerpávající?
+
+Pro bezkontextové gramatiky obecně platí:
+\begin{enumerate}		%% Je to dostatečně vyčerpávající?
 \item
-Levé strany pravidel obsahují jediný neterminál.
+Levé strany odvozovacích pravidel obsahují jediný neterminál\footnote{Toto tvrzení má praktický dopad. Jakmile se v odvozované větě objeví
+terminální symbol, tak již nemůže zmizet. Nemůže být například odvozen pravidlem, které na levé straně tento termínál obsahuje, protože takové pravidlo neexistuje.}.
 
 \item
 Odvozování nezávisí na kontextu.
+\end{enumerate}
 
-\end{itemize}
-
-\begin{veta}
-Mějme bezkontextovou gramatiku  $G = \langle N, \Sigma, P, S \rangle$ a nechť $X_{1} \cdots X_{k}, \ldots, z$ 
-je P-derivace délky $n$, kde $X_{1}, \ldots, X_{k} \in (N \cup \Sigma)$ a $z \in (N \cup \Sigma)^{*}$ 
+\begin{veta}\label{veta-bez}
+Mějme bezkontextovou gramatiku  $G = \langle N, \Sigma, P, S \rangle$ a nechť navíc existuje $X_{1} \cdots X_{k}, \ldots, z$
+P-derivace délky $n$, kde $X_{1}, \ldots, X_{k} \in (N \cup \Sigma)$ a $z \in (N \cup \Sigma)^{*}$ 
 a potom pro každé $i = 1, \ldots, k$  existuje řetězec $z_{i} \in (N \cup \Sigma)^{*}$ 
 a P-derivace $X_{i}, \ldots, z_{i}$ délky $n_{i}$ tak, že $z = z_{1} ,z_{2}, \ldots, z_{k}$ a $n = n_{1} + n_{2} + \cdots + n_{k}$
 \end{veta}
 
 \begin{dukaz}
-Tvrzení prokážeme indukcí přes délku výchozí derivace $X_{1} \cdots X_{k}, \ldots, z$.
-Pro $n = 0$: Triviální $z = X_{1} \cdots X_{k}, z_{i} = X_{i}, n_{i} = 0$. Každé $X_{i}$ je derivace délky $0$. 
+Větu \ref{veta-bez} prokážeme indukcí přes délku výchozí derivace $X_{1} \cdots X_{k}, \ldots, z$.
+\begin{enumerate}
+\item
+Pro $n = 0$ je situace triviální, protože $z = X_{1} \cdots X_{k}, z_{i} = X_{i}, n_{i} = 0$. Každé $X_{i}$ je derivace délky $0$.
+
+\item
 Nechť tvrzení platí pro libovolnou derivaci délky $n$ a dokážeme, že $X_{1} \cdots X_{k}$ je P-derivace délky $n + 1$.
 Jelikož má uvažovaná P-derivace délku n + 1, lze ji psát ve tvaru:
 $$
-X_{1} \cdots X_{k}, \ldots, y \footnote{$X_{1} \cdots X_{k}, \ldots$, y má délku n}, z 
+\underbrace {X_{1} \cdots X_{k}, \ldots, y}_{\text{délka je } n}, z
 $$
 Máme $y \Rightarrow_{G}z$. Můžeme aplikovat indukční předpoklad:
+
 Existují řetězce $y_{1}, \ldots, y_{k}$ a P-derivace $X_{1}, \ldots, y_{1}$ až $X_{k}, \ldots, y_{k}$ 
 délek $n_{1} \cdots n_{k}$ tak, že $y = y_{1} y_{2} \cdots y_{k}$ a $n = n_{1} + n_{2} + \cdots + n{k}$. 
+
 Z faktu, že $y  \Rightarrow_{G}z$ a z toho, že gramatika je bezkontextová plyne, že $y$ je ve tvaru 
 $y = y^{''} y^{'} A w^{'} w^{''}$ pro $i = 1, \ldots, k$. Pak $z$ je ve tvaru $z = y^{''} y^{'} u w^{'} w^{''}$ a $A \rightarrow n \in P$,
 to jest $X_{i}, \ldots, y_{i}, y^{'} u w^{'}$ je P-derivace délky $n_{i+1}$. Hledané derivace jsou:
@@ -704,6 +720,7 @@ X_{i}, \ldots, y_{i} y^{'} u w^{'} \\
 X_{1+1}, \ldots, y_{i+1} \\
 X_{k}, \ldots, j_{k} \\ %% zkontrolovat!!!
 \end{gather*}
+\end{enumerate}
 \end{dukaz}
 
 \begin{priklad}
@@ -712,8 +729,12 @@ N &=& \lbrace S \rbrace \\
 \Sigma &=& \lbrace a, b \rbrace \\
 P &=& \lbrace S \rightarrow SS|aSb|bSa| \varepsilon \rbrace
 \end{eqnarray*}
-Posloupnost: $SbSaS, SbSa, SbaSba, aSbbaSba , abbaSba$ je P-derivace délky 4. \\*
-Hledáme P-derivace:
+Posloupnost
+$$
+SbSaS, SbSa, SbaSba, aSbbaSba , abbaSba
+$$
+je P-derivací délky $4$.
+Následně hledané P-derivace jsou:
 \begin{enumerate}
 \item
 $S, aSb, ab$ (délka 2)
@@ -728,19 +749,15 @@ $S, \varepsilon $ (délka 1)
 \end{enumerate}
 \end{priklad}
 
-\begin{priklad}
-Gramatika s jediným pravidlem $aBc \rightarrow abc$
-\end{priklad}
-
 \begin{poznamka}
-U regulárních a kontextových gramatik lze hned vidět, jestli $\varepsilon \in L(G)$.
+U regulárních a kontextových gramatik jest hned vidět, zda $\varepsilon \in L(G)$.
 \end{poznamka}
 
 Pro bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ zavedeme následující podmnožiny
-\begin{gather*}
-E_{0} = \lbrace A \in N | A \rightarrow \varepsilon \in P \rbrace \\
-E_{i+1} = E_{i} \cup \lbrace A \in N | A \rightarrow x, \text{ kde } x \in E_{i}^* \rbrace
-\end{gather*}
+\begin{eqnarray*}
+E_{0} &=& \lbrace A \in N | A \rightarrow \varepsilon \in P \rbrace \\
+E_{i+1} &=& E_{i} \cup \lbrace A \in N | A \rightarrow x, \text{ kde } x \in E_{i}^* \rbrace
+\end{eqnarray*}
 
 \begin{priklad}
 \begin{eqnarray*}
