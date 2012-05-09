@@ -753,7 +753,7 @@ $S, \varepsilon $ (délka 1)
 U regulárních a kontextových gramatik jest hned vidět, zda $\varepsilon \in L(G)$.
 \end{poznamka}
 
-Pro bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ zavedeme následující podmnožiny
+Pro bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ zavedeme následující podmnožiny:
 \begin{eqnarray*}
 E_{0} &=& \lbrace A \in N | A \rightarrow \varepsilon \in P \rbrace \\
 E_{i+1} &=& E_{i} \cup \lbrace A \in N | A \rightarrow x, \text{ kde } x \in E_{i}^* \rbrace
@@ -776,6 +776,8 @@ E_{0} \subseteq E_{1} \subseteq E_{2} \subseteq \cdots \subseteq E_{i} = E_{i+1}
 E_{N} = E_{i}
 \end{gather*}
 \end{priklad}
+
+%%% pokračovat v opravě
 
 \begin{veta}
 Pro každou bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ a pro příslušné $E_{N}$ platí následující $A \Rightarrow_{G}^{*}\varepsilon$, pak $A \in E_{N}$. 
