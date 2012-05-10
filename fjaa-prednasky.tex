@@ -771,13 +771,11 @@ $$
 E_{i} \subseteq N, E_{N} = \bigcup_{i=0}^{\infty} E_{i}
 $$
 Jelikož je $N$ konečná, musí platit:
-\begin{gather*}
-E_{0} \subseteq E_{1} \subseteq E_{2} \subseteq \cdots \subseteq E_{i} = E_{i+1} = E_{i+2} \\
-E_{N} = E_{i}
-\end{gather*}
+\begin{eqnarray*}
+E_{0} \subseteq E_{1} \subseteq E_{2} \subseteq \cdots \subseteq E_{i} = E_{i+1} &=& E_{i+2} \\
+E_{N} &=& E_{i}
+\end{eqnarray*}
 \end{priklad}
-
-%%% pokračovat v opravě
 
 \begin{veta}
 Pro každou bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ a pro příslušné $E_{N}$ platí následující $A \Rightarrow_{G}^{*}\varepsilon$, pak $A \in E_{N}$. 
@@ -785,30 +783,44 @@ Speciálně $\varepsilon \in L(G)$, pak $S \in E_{N}$.
 \end{veta}
 
 \begin{dukaz}
-Prokážeme obě implikace: \\
+Dokazujeme obě implikace:
+\begin{enumerate}
+\item
 Pokud $A \Rightarrow_{G}^{*}\varepsilon$, pak prokážeme indukci přes délku P-derivace, tj. triviální případ je $A \Rightarrow_{G}\varepsilon$, 
 tj. existuje pravidlo $A \rightarrow \varepsilon \in P$ tj. $A \in E_{0}$.
+
 Předpokládejme, že tvrzení platí pro všechny P-derivace délky $n$.
+
 Mějme $A, \ldots, \varepsilon$ P-derivace délky n + 1. Použitím předchozí věty $(A, X_{1} \cdots X_{k}, \ldots, \varepsilon)$ $A, X_{i} \cdots X_{n}, \ldots, \varepsilon$.
 Tzn. existují derivace $X_{i}, \ldots, \varepsilon$ délek nejvýše $n$. Z předpokladu $X_{i} \in E_{n}$, pro každé $i$ tj. i $A \in E_{N}$. 
-$\Leftarrow$ Dokáže, že pro každé $E_{i}$ platí, pokud $E \in E_{i}$ pak $A \Rightarrow_{G}^{*}\varepsilon$. Pro $E_{0}$ zřejmé.
+
+\item
+Opačnou implikaci bychom dokázali tak, že pro každé $E_{i}$ platí, pokud $E \in E_{i}$ a tedy pak $A \Rightarrow_{G}^{*}\varepsilon$. Pro $E_{0}$ zřejmé.
 $A \rightarrow X_{0} \cdots X_{k}, A \in E_{j}$.
+\end{enumerate}
 \end{dukaz}
 
 \begin{veta}
-Pro každou bezkontextovou gramatiku $G$, existuje bezkontextová gramatika $G^{'}$ neobsahující $\varepsilon$ pravidla tak, že $L(G) \setminus \lbrace \varepsilon \rbrace = L(G^{'})$.
+Pro každou bezkontextovou gramatiku $G$ existuje bezkontextová gramatika $G^{'}$, neobsahující $\varepsilon$ - pravidla tak, že $L(G) \setminus \lbrace \varepsilon \rbrace = L(G^{'})$.
 \end{veta}
 
 \begin{dukaz}
-$G = \langle N, \Sigma, P,S \rangle$ - výchozí gramatika.\\
-Stanovíme množinu $E_{n}$ dle předchozího postupu $G^{'} = \langle N, \Sigma, P^{'},S \rangle$.
-$P^{'} = \lbrace A \rightarrow y|A \rightarrow x \in P$ a $y \in D_{(x)} \rbrace$, kde $D_{(x)}$ značí množinu řetězců, které jsou neprázdné 
-a vznikly z řetězce $x$ vynecháním libovolného množství neterminálů z $E_{N}$.
+Mějme gramatiku $G = \langle N, \Sigma, P,S \rangle$.
+
+Stanovme množinu $E_{n}$ dle předchozího postupu a pak stanovme gramatiku
+\begin{eqnarray*}
+G^{'} &=& \langle N, \Sigma, P^{'},S \rangle \\
+P^{'} &=& \lbrace A \rightarrow y|A \rightarrow x \in P \text{ a } y \in D_{(x)} \rbrace
+\end{eqnarray*}
+Kde $D_{(x)}$ značí množinu řetězců, které jsou neprázdné a vznikly z řetězce $x$ vynecháním
+libovolného množství neterminálů z $E_{N}$.
 \end{dukaz}
 
 \begin{priklad}
+Mějme množinu $E_{n} = \lbrace A, B \rbrace$.
+
+Následně pravidla:
 \begin{eqnarray*}
-E_{n} &=& \lbrace A, B \rbrace \\
 X &\rightarrow& aAbAB \\
 &\ldots& \\
 X &\rightarrow& aAbAB \\
@@ -824,62 +836,76 @@ X &\rightarrow& ab
 \end{priklad}
 
 \begin{veta}
-Pro každou bezkontextovou gramatiku existuje ekvivalentní bezkontextová gramatika, která je navíc kontextová (a tudíž nezkracující)
+Pro každou bezkontextovou gramatiku existuje ekvivalentní bezkontextová gramatika, která je navíc kontextová (a tudíž nezkracující).
 \end{veta}
 
 \begin{dukaz}
-Vstupní gramatika $G$. Dle předchozí věty existuje $G^{'}$ tak, že $L(G) \setminus \lbrace \varepsilon \rbrace = L(G^{'})$. 
-$G^{'}$ je nezkracující a kontextová, protože nemá $\varepsilon$ pravidla. Pokud $\varepsilon$ nepatří do $L(G)$, pak jsme hotovi.
-Pokud $\varepsilon \in L(G)$. Pak $G^{'}$ rozšíříme tak, že přidáme startovní symbol $S^{'}$ 
+Mějme gramatiku $G$.
+
+Dle předchozí věty existuje $G^{'}$ tak, že $L(G) \setminus \lbrace \varepsilon \rbrace = L(G^{'})$.
+$G^{'}$ je nezkracující a kontextová, protože nemá $\varepsilon$ - pravidla. Pokud $\varepsilon$ nepatří do $L(G)$, pak jsme hotovi.
+Pokud $\varepsilon \in L(G)$. Pak $G^{'}$ rozšíříme tak, že přidáme startovní neterminální symbol $S^{'}$ 
 a pravidlo $S^{'} \rightarrow \varepsilon$ a $S^{'} \rightarrow S$.
 \end{dukaz}
-dopsat jednu stránku
 
-% 4. přednáška
-\section{Automaty}
-Gramatiky x automaty
+%%%%
+%% obrazek druhé vychodilovo vajicko
+%%%%
 
-generativní formalismus
+\subsection{Jazyky bez gramatického základu}
 
-Automaty - analytické formalismy
+\begin{veta}
+Označme třídu všech jazyků nad abecedou $\Sigma$ jako $2^{\Sigma^{*}}$. Následně o takovéto třídě můžeme prohlásit,
+že je nespočetná.
+\end{veta}
 
-Konečné automaty: neformální
-výpočetní formalismus \uv{jednoduchý počítač}
-omezená paměť
-vstup: řetězec nad vstupní abecedou $\Sigma.$ Řídící jednotka. Skládá se z konečně mnoha stavů.
-\textbf{Počátek činnosti:} Vstup = celý vstupní řetězec. Řídící jednotka je v počátečním (iniciálním) stavu.
-\textbf{Činnost automatu:} Na základě prvního symbolu na vstupu a na základě aktuálního stavu se řídící jednotka 
-přepne do jiného stavu a odebere vstupní symbol.\\
-\textbf{Konec činnosti:} Byl přečten celý vstupní řetězec. Podle toho v jaké končí automat stavu říkáme, 
-že buď přijímá nebo zamítá vstupní řetězec. Některé stavy jsou označené jako přijímací.
+\begin{dukaz}
+Víme, že samotná množiny Kleeneho uzávěru $\Sigma^{*}$ je nespočetná, lze tedy psát,
+že $\Sigma^* = \lbrace x_1,x_2,\ldots,x_5,\ldots \rbrace$.
 
-\begin{priklad}
-sešit - automat (obr. 4.1)
-\end{priklad}
+Sporem nechť je množina $2^{\Sigma^{*}}$ spočetná, lze tedy napsat, že $2^{\Sigma^{*}} = \lbrace L_1, L_2, \ldots \rbrace$
+a $L = \lbrace x_i | \quad x_i \notin L_i \rbrace$.
 
-Formalizace:
-Konečný deterministický automat (s úplnou přechodovou funkcí) (nad vstupní abecedou $\Sigma$) je struktura:
+Kdyby pro nějaké $j$ platilo, že $L = L_j$, pak $x_j \in L \Longleftrightarrow x_j \in L_1$, což je spor.
+\end{dukaz}
 
-$\langle \Sigma, Q, F, q_{0} \rangle$ \\
-$\Sigma \ldots$ vstupní abeceda \\
-$Q \ldots$ konečná množina stavu, která je neprázdná \\
-$q_{0} \in Q \ldots$ počáteční stav \\
-$F \subseteq Q \ldots$ množina koncových stavů (přijímacích) \\
-$\delta$ je zobrazení $\delta: Q x \sigma \rightarrow Q$ \\
-$\delta(r,a) = q$ čteme: automat A při vstupním symbolu $A \in \Sigma$ a aktuálním stavu $r \in Q$
- přejde do stavu $q \in Q$
-\\ \\
-Pozn.: $Q$ je konečná
-$\delta \ldots$ zobrazení
+%%%%%%%% 4 PREDNASKA mr
 
+\section{Determinismus versus nedeterminismus}
+Za \emph{determinismus} považujme takovou konfiguraci, pro kterou platí, že je v \textbf{každém jejím kroku jasné}, co bude následovat.
+Naopak u \emph{nedeterministických} konfigurací \textbf{není v určitých případech možné další krok přesně vyjádřit} na základě znalostí aktuálního kroku.
+
+Automaty realizují tzv. analytický formalismus a naproti tomu gramatiky realizují tzv. generativní formalismus.
+
+\section{Konečné deterministické automaty}
+
+Jak již bylo řečeno, tak KDA realizují analytický (resp. výpočetní) formalismus a představují jakési \uv{jednoduché počítače}.
+KDA a jejich činnost jsou charakterizovány několika prvky:
+\begin{enumerate}
+\item
+Vstupem jsou řetězce nad určitou abecedou, která se obvvykle značí $\Sigma$.
+
+\item
+Řídící jednotka automatu se skládá z konečně mnoha stavů (aby byla reprezentovatelná v počítačích).
+
+\item
+Počátek činnosti automatu představuje okamžik, kdy na vstupu automatu je celý vstupní řetězec a
+řídící jednotka je v iniciálním stavu.
+
+\item
+Automat vykonává svou primární činnost tím, že přečte ze vstupu aktuální symbol a na základě stavu, ve kterém se právě
+nachází se řídící jednotka přepne do jiného stavu a odebere onen přečtený symbol ze vstupního řetězce.
+
+\item
+Konec činnosti automatu nastává v případě, že na vstupu již není co číst. Byl tedy zpracován celý
+vstupní řetězec. V tomto okamžiku automat nachází v určitém stavu, podle typu stavu následně řekneme, že
+automat řetězec přijímá nebo zamítá. Existují tedy přijímací (neboli koncové) stavy a nepřijímací (neboli nekoncové) stavy.
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%% Martin Rotter
+%%%%%%%%%%%%% 5 prednaska Martin Rotter
 
-\begin{definice}
-Za \emph{determinismus} považujme takovou konfiguraci, pro kterou platí, že je v každém jejím kroku jasné, co bude následovat.
-Naopak u \emph{nedeterministických} konfigurací není v určitých případech možné další krok přesně vyjádřit na základě znalostí aktuálního kroku.
-\end{definice}
+\section{Konečné nedeterministické automaty}
 
 \begin{priklad}
 \vspace{20px}
