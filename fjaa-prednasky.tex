@@ -1,31 +1,32 @@
-%%%% Martin Rotter, Tomáš Kukučka, Jiří Zehnula - FJAA (zápisky z přednášek)
+%%%% Martin Rotter, Jiří Zehnula - FJAA (zápisky z přednášek)
 %%%%
-%%%% kompilováno přes cslatex --> dvips --> ps2pdf
+%%%% kompilováno přes cslatex --> dvips --> (případně) ps2pdf
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[10pt, a4paper, titlepage]{article}
 
-\usepackage{czech}						% napsáno česky
-\usepackage[utf8]{inputenc}				% napsáno v UTF-8
-\usepackage[tables,figures]{upreport}	% UPOL styl
+\usepackage{czech}				% napsáno česky
+\usepackage[utf8]{inputenc}			% napsáno v UTF-8
+\usepackage[tables,figures]{upreport}		% UPOL styl
 \usepackage{upstyles}
 \usepackage{a4wide}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
+\usepackage{vaucanson-g}			% makro pro kreslení grafů a automatů
 \usepackage{alltt}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
 
 \title{KMI/FJAA  -- Formální jazyky a automaty}
-\author{M.~Rotter, T.~Kukučka, J.~Zehnula}
+\author{Martin Rotter (rotter.martinos@gmail.com) \\
+	Jiří Zehnula}
 \date{\today}
 
-\docinfo{M.~Rotter, T.~Kukučka, J.~Zehnula}{KMI/FJAA  -- Formální jazyky a automaty}
+\docinfo{Martin Rotter, Jiří Zehnula}{KMI/FJAA  -- Formální jazyky a automaty}
 
 \newtheoremstyle{note}
 {15pt}
@@ -37,13 +38,14 @@
 {.5em}
 {}
 \theoremstyle{note}
-\newtheorem{veta}{\textbf{Věta}}
-\newtheorem{definice}{\textbf{Definice}}
-\newtheorem{dukaz}{\textbf{Důkaz}}
-\newtheorem{priklad}{\textbf{Příklad}}
-\newtheorem{poznamka}{\textbf{Poznámka}}
-\newtheorem{dusledek}{\textbf{Důsledek}}
-\newcommand{\ekna}{$\varepsilon$KNA} %byl jsem línej to pořád psát
+\newtheorem{veta}{Věta}
+\newtheorem{definice}{Definice}
+\newtheorem{dukaz}{Důkaz}
+\newtheorem{priklad}{Příklad}
+\newtheorem{poznamka}{Poznámka}
+\newtheorem{dusledek}{Důsledek}
+
+\newcommand{\ekna}{$\varepsilon$KNA}		%byl jsem línej to pořád psát (tak určitě :D)
 \newcommand{\aut}[1]{$A_#1= \langle \Sigma,Q_#1,\delta_#1,q_{0#1},F_#1 \rangle$}
 
 \abstract{Tento dokument je pouze přepisem zápisků a poznámek z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.}
