@@ -2260,8 +2260,8 @@ $L(A_{1}) = L(A_{2})$, ale $|Q_{1}| < |Q_{2}|$.
 
 \begin{definice}
 Předpokládejme, že máme $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a relaci ekvivalence $\Theta \subseteq Q \times Q$ nazveme
-\textbf{zprava invariantní ekvivalencí} vzhledem k $\delta$, pokud platí, že $\langle q_{r}  \rangle \in \Theta \text{ a } a \in \Sigma$,
-pak $\langle  \delta(q, a) \delta(r, a) \rangle \in \Theta$.
+\textbf{zprava invariantní ekvivalencí} vzhledem k $\delta$, pokud platí, že $\langle q,r  \rangle \in \Theta \text{ a } a \in \Sigma$,
+pak $\langle  \delta(q, a), \delta(r, a) \rangle \in \Theta$.
 \end{definice}
 
 Pravá invariance reprezentuje přirozenou vlastnost, kterou musí mít relace nerozlišitelnosti stavů.
@@ -2269,7 +2269,7 @@ Pravá invariance reprezentuje přirozenou vlastnost, kterou musí mít relace n
 Mezními případy invariantních relací zprava jsou:
 \begin{enumerate}
 \item 
-identita $\Theta = \lbrace <p,q> | \quad q \in Q \rbrace$
+identita $\Theta = \lbrace <q,q> | \quad q \in Q \rbrace$
 \item
 $\Theta = Q \times Q$
 \end{enumerate}
@@ -3486,18 +3486,57 @@ Pro každý NZA $A=\langle \Sigma,\Gamma,Q,\delta,q_0,z_0,F \rangle$ existuje be
 \begin{dukaz}
 Množina $N$ je $N=Q \times \Gamma \times Q \cup \lbrace S \rbrace$.
 Pravidla gramatiky vypadají následovně:
-\begin{itemize}
+\begin{enumerate}
 \item
 Pro každý stav $p \in Q$ obsahuje pravidlo $S \rightarrow \langle q_0,z_0,p \rangle$
 \item
 Pokud $\langle u,z_1z_2\cdots z_k \rangle \in \delta(q,a,z)$, kde $a \in \Sigma \cup \lbrace S \rbrace$, pak pro
 libovolnou posloupnost stavů $r_1,\ldots,r_n=p \in Q$ platí, že $P$ obsahuje pravidlo
 $$\langle q,z,p \rangle \rightarrow a\langle r,z_1,u_1 \rangle\langle r_1,z_2,u_2 \rangle \cdots \langle r_{k-1},z_k,u_k \rangle$$
-\end{itemize}
+\end{enumerate}
 
 Speciálně pokud $\langle r, \varepsilon \rangle \in \delta(q,a,z)$ pak $P$ obsahuje pravidlo $\langle q,z,r \rangle \rightarrow a$
 
-\textbf{Důkaz někdy příště \ldots}
+Budeme se snažit dokázat tvrzení $\langle q,z,p \rangle \Rightarrow_{G,l}^* w$ právě když $\langle q,w,z \rangle \vdash^* \langle p,\varepsilon ,\varepsilon   \rangle$
+
+\begin{itemize}
+\item
+\textbf{Implikace zleva}
+
+Důkaz provedeme indukcí přes délku nejlevější derivace. předpokládejme, že $\langle q,z,p \rangle \Rightarrow_{G,l}^* w$
+
+$\langle q,z,p \rangle \Rightarrow_{G,l} w$. Pak existuje $\langle q,z,p \rangle \rightarrow w$, tj. pravidlo je speciálním případem pravidla z bodu 2. To jest $w \in \Sigma \cup \lbrace \varepsilon \rbrace$ a $\langle p, \varepsilon \rangle \in \delta (q,w,z)$ - platí z toho, jak jsme zavedli pravidla. Potom ale $\langle q,w,z \rangle \vdash \langle p,\varepsilon,\varepsilon \rangle$.
+
+Předpokládejme, že nejlevější derivace $w$ z $\langle q,z,p \rangle$ má délku $n > 1$ a tvrzení platí pro všechny derivace kratší délky.
+
+Rozepsáním $\langle q,z,p \rangle \Rightarrow_{G,l}^* w$ dostaneme, že $\langle q,z,p \rangle \Rightarrow_{G,l} a \langle r_0,z_1,r_1 \rangle \cdots \langle r_{k-1},z_k,r_k \rangle \Rightarrow_{G,l}^* w$ kde $r_1,\ldots,r_k \in Q,\ r_k=p$ a $\langle q,z,p \rangle \rightarrow a \langle r_0,z_1,r_1 \rangle \cdots \langle r_{k-1},z_k,r_k \rangle$ je pravidlo dle bodu 2.
+
+Dle bodu 2, musí platit, že $\langle r_0,z_1\cdots z_k \rangle \in \delta (p,x,z)$ a $w=a\cdot x$, kde $x \in \Sigma^*$ a $a \in \Sigma \cup \lbrace \varepsilon \rbrace$. Jelikož $\langle r_i,z_{i+1},r_{i+1} \rangle$ jsou všechno neterminály gramatiky.
+
+Z vlastností bezkontextových gramatik platí, že $x$ lze vyjádřit jako $x=w_1w_2\cdots w_k$ tak, že $\langle r_{i-1},z_i,r_i \rangle \Rightarrow_{G,l}^* w_i$.
+
+Každá z těchto nejlevějších derivací má délku nejvýše $n$. Na každou z nich aplikujeme indukční předpoklad, tj.: $\langle r_{i-1},w_i,z_i \rangle \vdash^* \langle r_i,\varepsilon,\varepsilon \rangle$.
+
+Nyní můžeme zřetězit posloupnosti odpovídajících konfigurací:
+$$
+\langle q,w,z \rangle = \langle q,ax,z \rangle \vdash \langle r_0,x,z_1z_2\cdots z_k \rangle \vdash^* \langle r_1,w_2 \cdots w_k,z_2 \cdots z_k \rangle \vdash^* \cdots \vdash^* \langle r_k,\varepsilon,\varepsilon \rangle = \langle p, \varepsilon, \varepsilon \rangle
+$$
+
+což jsme měli dokázat.
+
+\item
+\textbf{Implikace zprava}
+
+Dokážeme indukcí přes délku výpočtu automatu $A$.
+
+Předpokládejme, že platí $\langle q,w,z \rangle \vdash^* \langle p, \varepsilon,\varepsilon \rangle$. Výpočet má alespoň jeden krok, protože je třeba vyprázdnit zásobník. V tomto případě $w \in \Sigma \cup \lbrace \varepsilon \rbrace$.
+
+Dále musí $\langle p, \varepsilon \rangle \in \delta(q,w,z)$. Ze speciálního případu bodu 2, pak máme, že $\langle q,z,p \rangle \rightarrow w$ je jedno z pravidel gramatiky. použitím tohoto pravidla $\langle q,z,p \rangle \Rightarrow_{G,l}^* w$.
+
+Předpokládejme, že výpočet $\langle q,w,z \rangle \vdash^* \langle q,\varepsilon , \varepsilon \rangle$ má délku $n>1$ a tvrzení platí pro všechny výpočty ostře kratších délek.
+
+První krok výpočtu $\langle q,w,z \rangle \vdash \langle r_0,x,z_1 \cdots z_k \rangle \vdash^* \langle p,\varepsilon,\varepsilon \rangle$, kde $w$ lze psát jako $w=a\cdot x$, kde $a \in \Sigma \cup \lbrace \varepsilon \rbrace$ a platí, že $\langle r_0,z_1 \cdots z_k \rangle \in \delta (q,a,z)$
+\end{itemize}
 \end{dukaz}
 
 \begin{dusledek}
