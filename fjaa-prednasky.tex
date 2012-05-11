@@ -3536,12 +3536,58 @@ Dále musí $\langle p, \varepsilon \rangle \in \delta(q,w,z)$. Ze speciálního
 Předpokládejme, že výpočet $\langle q,w,z \rangle \vdash^* \langle q,\varepsilon , \varepsilon \rangle$ má délku $n>1$ a tvrzení platí pro všechny výpočty ostře kratších délek.
 
 První krok výpočtu $\langle q,w,z \rangle \vdash \langle r_0,x,z_1 \cdots z_k \rangle \vdash^* \langle p,\varepsilon,\varepsilon \rangle$, kde $w$ lze psát jako $w=a\cdot x$, kde $a \in \Sigma \cup \lbrace \varepsilon \rbrace$ a platí, že $\langle r_0,z_1 \cdots z_k \rangle \in \delta (q,a,z)$
+
+Z bodu 2, definujícího odvozovací pravidla gramatiky, máme, že existují pravidla ve tvarech $\langle q,z,p \rangle \rightarrow a \langle r_0,z_1,r_1 \rangle \cdots \langle r_{k-1},z_k,r_k \rangle$ kde $r_1,\ldots,r_{k-1}$ jsou libovolné stavy z $Q$ a $r_k=p$.
+
+%%% OVĚŘIT tento odstavec pls, možná mi něco chybí, v sešitě jsem si udělal značku otazníku, tak nevím co to znamenalo :-)
+Jelikož $\langle r_0,x,z_1\cdots z_k \rangle \vdash^* \langle p,\varepsilon,\varepsilon \rangle$ pak můžeme $x$ psát ve tvaru $x=w_1w_2\cdots w_k$ a existují stavy $r_1,\ldots,r_{k-1}$ tak, že $\langle r_{i-1},w_i,z_i \rangle \vdash^* \langle r_i,\varepsilon,\varepsilon \rangle$
+
+Dle indukčního předpokladu:
+$$
+\langle r_{i-1},z_i,r_i \rangle \Rightarrow_{G,l}^* w_i
+$$$$
+\langle q,z,p \rangle \Rightarrow_{G,l} a \langle r_0,z_1,r_1 \rangle \cdots \langle r_{k-1},z_k,r_k \rangle
+$$
 \end{itemize}
 \end{dukaz}
 
 \begin{dusledek}
 Ke každému NZA existuje ekvivalentní automat rozpoznávající stejný jazyk, který má pouze 1 stav.
 \end{dusledek}
+
+\section{Deterministické zásobníkové automaty}
+
+\begin{definice}
+Řekneme, že zásobníkový automat $A = \langle \Sigma,\Gamma,Q,\delta,q_0,z_0,F \rangle$ je \textbf{deterministický} (DZA), pokud jsou pro každé $q \in Q$ a $z \in \Gamma$ splněny následující podmínky:
+\begin{enumerate}
+\item
+pro všechny $a \in \Sigma \cup \lbrace \varepsilon \rbrace$ platí $|\delta (q,a,z)| \le 1$
+\item
+pokud $\delta (q,\varepsilon,z) \neq \emptyset$ pak $\delta (q,a,z) = \emptyset$ pro každé $a \in \Sigma$
+\end{enumerate}
+\end{definice}
+
+Nabízí se otázka, jaké třídy jazyků, jsou vlastně rozpoznatelné deterministickým zásobníkový automatem pomocí buď koncových stavů, nebo vyprázdněním zásobníku.
+
+\begin{definice}
+Bezkontextový jazyk $L$ se nazývá \textbf{deterministický}, pokud existuje deterministický zásobníkový automat $A$ tak, že $L = L(A)$.
+\end{definice}
+
+\begin{definice}
+Bezkontextový jazyk $L$ má \textbf{prefixovou vlastnost}, pokud $L$ neobsahuje dva různé řetězce $x,y$ tak, že $x$ je prefixem $y$.
+\end{definice}
+
+\begin{veta}
+Pro libovolný bezkontextový jazyk $L$ jsou následující tvrzení ekvivalentní:
+\begin{enumerate}
+\item
+$L = N(A)$ pro nějaký DZA $A$
+\item
+$L = L(A')$ pro nějaký DZA $A'$ a $L$ má prefixovou vlastnost
+\end{enumerate}
+\end{veta}
+
+
 
 
 %\newpage
