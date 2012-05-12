@@ -904,6 +904,102 @@ vstupní řetězec. V tomto okamžiku automat nachází v určitém stavu, podle
 automat řetězec přijímá nebo zamítá. Existují tedy přijímací (neboli koncové) stavy a nepřijímací (neboli nekoncové) stavy.
 \end{enumerate}
 
+\begin{figure}[ht]
+\begin{center}
+\begin{VCPicture}{(-5,-4)(5,4)}
+
+\State[q_{0}]{(-5,0)}{q0}
+
+\FinalState[q_{1}]{(-2,2)}{q1}
+
+\State[q_{2}]{(-2,-1)}{q2}
+\State[q_{3}]{(-2,-3)}{q3}
+
+\FinalState[q_{4}]{(1,-1)}{q4}
+
+\State[q_{5}]{(1,2)}{q5}
+\State[q_{6}]{(4,0)}{q6}
+
+\FinalState[q_{7}]{(5,2)}{q7}
+
+\Initial{q0}
+\LoopN[.3]{q1}{0-9}
+\ArcL{q0}{q1}{0-9}
+\ArcL{q0}{q2}{+/-}
+\ArcR{q0}{q3}{\cdot}
+\ArcR{q3}{q4}{0-9}
+\ArcL{q1}{q4}{\cdot}
+\ArcR{q2}{q3}{\cdot}
+\ArcR{q2}{q1}{0-9}
+\ArcL{q1}{q5}{E}
+\ArcL{q5}{q7}{0-9}
+\ArcL{q6}{q7}{0-9}
+\LoopE[.3]{q7}{0-9}
+\ArcR{q5}{q6}{+/-}
+\end{VCPicture}
+\end{center}
+\caption{Grafické zobrazení KDA}\label{obr-kda}
+\end{figure}
+
+Dvojitě kroužkovaný stav označuje stav koncový. Šipky mezi jednotlivými stavy označují přechody, přičemž popisek u jednotlivých přechodů
+indikuji symbol, který se čte, pokud je tento přechod využit. Automat na obrázku \ref{obr-kda} by přijímal například slovo $13.6E+2$, obecně
+jakékoliv číslo kodované v tradiční fixní a pohyblivé notaci s desetinnou tečkou.
+
+\begin{definice}
+Konečný deterministický automat s úplnou přechodovou funkcí je struktura:
+$$
+A = \langle \Sigma, Q, \delta, q_0, F \rangle
+$$
+Nyní si popišme jednotlivé členy automatu:
+\begin{eqnarray*}
+\Sigma &=& \text{vstupní abeceda} \\
+Q &=& \text{konečná množina stavů} \\
+q_0 \in Q &=& \text{počáteční stav} \\
+F \subseteq Q &=& \text{množina koncových stavů} \\
+\delta &=& \text{zobrazení } \delta:\quad Q \times \Sigma \rightarrow Q \text{, neboli přechodová funkce}
+\end{eqnarray*}
+U přechodové funkce $\delta$ uvažujeme zápis například $\delta(r, a) = q$, který čteme: \uv{Při vstupním symbolu $a \in \Sigma$ a aktuálním
+stavu $r$ přejde automat do nového stavu $q$.}
+
+Předpokládáme, že $Q$ je konečná a $\delta$ je zobrazení.
+\end{definice}
+
+\begin{priklad}
+Automat s nadefinovanými přechody dle $\delta$ by mohl vypadat například takto:
+\begin{eqnarray*}
+A &=& \langle \Sigma, Q, \delta, q_0, F \rangle \\
+\Sigma &=& \lbrace a, b, c \rbrace \\
+Q &=& \lbrace q_0, q_1, q_2, q_3, q_4 \rbrace \\
+F &=& \lbrace q_4 \rbrace \\
+\delta &=& \lbrace <q_0, a, q_0>, <q_0, b, q_0>, <q_0, c, q_1> \\
+& & <q_1, a, q_2>, <q_1, b, q_0>, <q_1, c, q_1> \\
+& & <q_2, a, q_0>, <q_2, b, q_3>, <q_2, c, q_1> \\
+& & <q_3, a, q_2>, <q_4, b, q_0>, <q_3, c, q_4> \\
+& & <q_4, a, q_4>, <q_4, b, q_4>, <q_4, c, q_4> \rbrace
+\end{eqnarray*}
+\end{priklad}
+
+\subsection{Reprezentace KDA}
+\subsubsection{Reprezentace přechodovou tabulkou}
+Řádky tabulky představují stavy a sloupce jednotlivé symboly vstupní abecedy. Znak $^*$ označuje, že stav je koncový.
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{r || c | c | c}
+ & a & b & c \\
+\hline
+ $q_0$ & $q_0$ & $q_0$ & $q_1$ \\
+ $q_1$ & $q_2$ & $q_0$ & $q_1$ \\
+ $q_2$ & $q_0$ & $q_3$ & $q_1$ \\
+ $q_3$ & $q_2$ & $q_0$ & $q_4$ \\
+ $q_4^*$ & $q_4$ & $q_4$ & $q_4$ \\
+\end{tabular}
+\end{center}
+\caption{Přechodová tabulka pro KDA}
+\end{table}
+
+
+\subsubsection{Reprezentace přechodovým diagramem}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% 5 prednaska Martin Rotter
 
