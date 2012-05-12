@@ -1062,7 +1062,7 @@ $w_0 = w$
 \item
 $w_n = \varepsilon$
 
-\item
+\item \label{vypocet-bod-4}
 $w_i = a_i w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$ pro každé $i \in \lbrace 0,1,\ldots,n \rbrace$
 \end{enumerate}
 nazveme \textbf{výpočet automatu A délky $n$ pro řetězec $w$}.
@@ -1096,6 +1096,101 @@ Typický automatový výpočet vypadá například takto:
 \begin{veta}
 KDA $A$ má pro řetězec délky $n$ jednoznačný výpočet rovněž délky $n$.
 \end{veta}
+
+\subsection{Rozšířená přechodová funkce pro KDA}
+
+Rozšířená přechodová funkce má rekurzivní předpis:
+\begin{gather*}
+\delta^*:\quad Q \times \Sigma^* \rightarrow Q \\
+\delta^*(q, u) = \lbrace
+\begin{array}{l l}
+q & \text{pokud } u = \varepsilon \\
+\delta^*(\delta(q, a), u) & \text{pokud } u = av, a \in \Sigma, 
+\end{array}
+\end{gather*}
+
+\begin{veta}\label{veta-kdaaa}
+Pro každé $u,v \in \Sigma^* \text{ platí, že } \delta^*(q, uv) = \delta^*(\delta^*(q, u), v)$
+\end{veta}
+
+\begin{dukaz}
+Větu \ref{veta-kdaaa} dokážeme indukcí přes délku řetězce následujícím způsobem:
+\begin{enumerate}
+\item
+Pokud $|u| = 0$, pak $\delta^*(\delta^*(q,u),v) = \delta^*(\delta^*(q, \varepsilon),v) = \delta^*(q,v) = \delta^*(q, \varepsilon v)
+= \delta^*(q,uv)$
+
+\item
+Pokud $|u| > 0$, pak předpokládáme, že tvrzení platí pro $\forall$ řetězce kratší délky. Tj. pro $u = aw, a \in \Sigma, w \in \Sigma^*$ máme:
+\begin{eqnarray*}
+\delta^*(\delta^*(q,u),v) &=& \delta^*(\delta^*(q, aw),v) \\
+&=& \delta^*(\delta^*(\delta(q,a),w),v) \\
+&=& \delta^*(\delta(q,a),wv) \\
+&=& \delta^*(q,awv) \\
+&=& \delta^*(a,wv)
+\end{eqnarray*}
+\end{enumerate}
+\end{dukaz}
+
+\begin{poznamka}
+Automat $A$ přijím řetězec $a$, pokud $\delta^*(q_0,w) \in F$.
+\end{poznamka}
+
+\begin{veta}
+Řetězec $w$ je přijat automatem, právě když existuje přijímací výpočet pro $w$.
+\end{veta}
+
+\begin{dukaz}
+Stačí dokázat, že $\delta^*(q_0,w) \in F$ každý výpočet $\langle r_0, w_0 \rangle \cdots \langle r_i, w_i \rangle$ je přijímající,
+tj. když $r_i \in F$ pro každé $\langle r_0, w_0 \rangle$, tak prokážeme, že $\delta^*(r_i, w_i) = r_n$, což dokazujeme indukcí.
+\begin{enumerate}
+\item
+Pro $i = n$ mějme $\delta^*(r_n,w_n) = \delta^*(r_n, \varepsilon) = r_n$. Pak lze předpokládat, že máme nějaké $i$ a pro každé $j$ takové,
+že $i < j \leq n$ tvrzení platí.
+
+\item
+Dle bodu \ref{vypocet-bod-4} z definice výpočtu platí, že $w_i = a_i + w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$.
+Tj.  $\delta^*(r_i,w_i) = \delta^*(r_i,a_i,w_{i+1}) = \delta^*(\delta(r_i, a_i), w_{i+1}) = \delta^*(r_{i+1}, r_{i+1}) = r_n$
+\end{enumerate}
+\end{dukaz}
+
+Jazyk rozpoznaný konečným deterministickým automate lze formulovat jako
+$L(A) = \lbrace w \in \Sigma^* |\quad \delta^*(q_0,w) \in F \rbrace$.
+
+\subsection{KDA s úplnou přechodovou funkcí}
+
+Mějme KDA $A = \langle \Sigma, Q, \delta, q_0, F \rangle$ a upřesněme $\delta$, které se liší.
+
+$\delta$ je úplná přechodová funkce tvaru $\delta \subseteq Q \times \Sigma \times Q$, přičemž také platí, že
+pokud $\langle q, a, r_1 \rangle \in \delta$ a $\langle q,a,r_2 \rangle \in \delta$, pak $r_1 = r_2$ a $\delta:\quad Q \times \Sigma \rightarrow Q$.
+
+Z toho plynou dvě situace:
+\begin{enumerate}
+\item
+$\delta(q, a)$ je definována, $\langle q,a,r \rangle \in \delta$ pro nějaké $r$ takové, že $\delta(q,a) = r$.
+
+\item
+$\delta(q,a)$ není definováno, pokud $\langle q, a, r \rangle \notin \delta$ pro žádná $r$.
+
+V grafu se toto projeví tak, že ze stavu $q_i$ nevede žádná hrana pro symbol $a_i$.
+
+Výpočet se liší v bodu \ref{vypocet-bod-4} $w_i = a_i w_{i+1}$ a $\delta(r_i, a_i)$ je definována a $\delta(r_i,a_i) = r_{i+1}$
+pro každé $i \in \lbrace 0,1,\ldots,n \rbrace$.
+\end{enumerate}
+
+Řetězec $w$ je přijat automatem $A$, právě když existuje výpočet $A$ pro $w$, kteý je přijímající.
+
+Následně jazyk rozpoznaný automatem $A$ je $L(A) = \lbrace w \in \Sigma^*| \quad \delta^*(q_0,w) \in F \rbrace$.
+
+\begin{veta}
+Ke každému KDA s neúplnou přechodovu funkcí $\delta$ existuje KDA s úplnou přechodovu funkcí $\delta$, který rozpoznává stejný jazyk.
+\end{veta}
+
+\begin{dukaz}
+Každý KDA s úplnou přechodovou funkcí je zároveň KDA s úplnou přechodovou funkcí.
+\end{dukaz}
+
+%%% případně dodělat...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% 5 prednaska Martin Rotter
@@ -3714,9 +3809,10 @@ Z vlastností bezkontextových gramatik platí, že $x$ lze vyjádřit jako $x=w
 Každá z těchto nejlevějších derivací má délku nejvýše $n$. Na každou z nich aplikujeme indukční předpoklad, tj.: $\langle r_{i-1},w_i,z_i \rangle \vdash^* \langle r_i,\varepsilon,\varepsilon \rangle$.
 
 Nyní můžeme zřetězit posloupnosti odpovídajících konfigurací:
-$$
-\langle q,w,z \rangle = \langle q,ax,z \rangle \vdash \langle r_0,x,z_1z_2\cdots z_k \rangle \vdash^* \langle r_1,w_2 \cdots w_k,z_2 \cdots z_k \rangle \vdash^* \cdots \vdash^* \langle r_k,\varepsilon,\varepsilon \rangle = \langle p, \varepsilon, \varepsilon \rangle
-$$
+\begin{eqnarray*}
+\langle q,w,z \rangle &=& \langle q,ax,z \rangle \vdash \langle r_0,x,z_1z_2\cdots z_k \rangle \vdash^* \langle r_1,w_2 \cdots w_k,z_2 \cdots z_k \rangle \vdash^* \cdots \vdash^* \langle r_k,\varepsilon,\varepsilon \rangle \\
+&=& \langle p, \varepsilon, \varepsilon \rangle
+\end{eqnarray*}
 
 což jsme měli dokázat.
 
