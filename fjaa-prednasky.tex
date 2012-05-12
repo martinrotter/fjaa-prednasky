@@ -7,15 +7,15 @@
 
 \documentclass[10pt, a4paper, titlepage]{article}
 
-\usepackage{czech}				% napsáno česky
-\usepackage[utf8]{inputenc}			% napsáno v UTF-8
-\usepackage[tables,figures]{upreport}		% UPOL styl
+\usepackage{czech}						% napsáno česky
+\usepackage[utf8]{inputenc}				% napsáno v UTF-8
+\usepackage[tables,figures]{upreport}	% UPOL styl
 \usepackage{upstyles}
 \usepackage{a4wide}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{vaucanson-g}			% makro pro kreslení grafů a automatů
+\usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
 \usepackage{alltt}
 
 \setlength{\parindent}{0pt}
@@ -48,7 +48,8 @@
 \newcommand{\ekna}{$\varepsilon$KNA}		%byl jsem línej to pořád psát (tak určitě :D)
 \newcommand{\aut}[1]{$A_#1= \langle \Sigma,Q_#1,\delta_#1,q_{0#1},F_#1 \rangle$}
 
-\abstract{Tento dokument je pouze přepisem zápisků a poznámek z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.}
+\abstract{Tento dokument je pouze přepisem zápisků a poznámek
+z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.}
 
 \pagestyle{empty}
 \makeindex
@@ -1187,7 +1188,19 @@ Ke každému KDA s neúplnou přechodovu funkcí $\delta$ existuje KDA s úplnou
 \end{veta}
 
 \begin{dukaz}
-Každý KDA s úplnou přechodovou funkcí je zároveň KDA s úplnou přechodovou funkcí.
+Každý KDA s úplnou přechodovou funkcí je zároveň KDA s úplnou přechodovou funkcí. Tedy
+$A' = \langle \Sigma, Q \cup \lbrace \# \rbrace, \delta', q_0, F \rangle$
+
+\begin{gather*}
+\delta'(q,a) = \left\lbrace
+\begin{array}{c l}
+\delta(q,a) & \text{pokud } \delta(q,a) \text{ je definováno} \\
+\# & \text{pokud } q = \#, \forall a \in \Sigma \\
+\# & \text{pokud } \delta(q,a) \text{ není definováno}
+\end{array}
+\right. \\
+\end{gather*}
+Následně tedy $L(A) = L(A')$.
 \end{dukaz}
 
 %%% případně dodělat...
