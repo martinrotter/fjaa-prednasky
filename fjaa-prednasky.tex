@@ -904,6 +904,9 @@ vstupní řetězec. V tomto okamžiku automat nachází v určitém stavu, podle
 automat řetězec přijímá nebo zamítá. Existují tedy přijímací (neboli koncové) stavy a nepřijímací (neboli nekoncové) stavy.
 \end{enumerate}
 
+\begin{priklad}
+Nyní si ukažme, jak vypadá typický KDA.
+
 \begin{figure}[ht]
 \begin{center}
 \begin{VCPicture}{(-5,-4)(5,4)}
@@ -938,8 +941,9 @@ automat řetězec přijímá nebo zamítá. Existují tedy přijímací (neboli 
 \ArcR{q5}{q6}{+/-}
 \end{VCPicture}
 \end{center}
-\caption{Grafické zobrazení KDA}\label{obr-kda}
+\caption{Názorný příklad KDA}\label{obr-kda}
 \end{figure}
+\end{priklad}
 
 Dvojitě kroužkovaný stav označuje stav koncový. Šipky mezi jednotlivými stavy označují přechody, přičemž popisek u jednotlivých přechodů
 indikuji symbol, který se čte, pokud je tento přechod využit. Automat na obrázku \ref{obr-kda} by přijímal například slovo $13.6E+2$, obecně
@@ -981,6 +985,7 @@ F &=& \lbrace q_4 \rbrace \\
 
 \subsection{Reprezentace KDA}
 \subsubsection{Reprezentace přechodovou tabulkou}
+
 Řádky tabulky představují stavy a sloupce jednotlivé symboly vstupní abecedy. Znak $^*$ označuje, že stav je koncový.
 \begin{table}[h]
 \begin{center}
@@ -1000,25 +1005,120 @@ F &=& \lbrace q_4 \rbrace \\
 
 \subsubsection{Reprezentace přechodovým diagramem}
 
+\begin{figure}[ht]
+\begin{center}
+\begin{VCPicture}{(-3,-3)(3,3)}
+
+\State[q_{0}]{(-3,-1)}{q0}
+\State[q_{1}]{(-3,2)}{q1}
+\State[q_{2}]{(0,2)}{q2}
+\State[q_{3}]{(0,-1)}{q3}
+\FinalState[q_{4}]{(3,0)}{q4}
+
+\Initial{q0}
+\LoopS[.3]{q0}{a,b}
+\ArcL{q0}{q1}{c}
+\LoopW[.3]{q1}{c}
+\ArcL{q1}{q2}{a}
+\ArcL{q2}{q1}{c}
+\EdgeL{q2}{q0}{a}
+\ArcR{q2}{q3}{b}
+\ArcL{q3}{q0}{b}
+\ArcR{q3}{q2}{a}
+\ArcR{q3}{q4}{c}
+\LoopE[.3]{q4}{a,b,c}
+\end{VCPicture}
+\end{center}
+\caption{Přechodový diagram pro KDA}
+\end{figure}
+
+\subsection{Konfigurace a výpočet KDA}
+
+Konfgurace jednoznačně určuje aktuální fázi výpočtu a jsou to dvojice $\langle q, w \rangle, q \in Q, w \in \Sigma^*$, následně
+samotná konfigurace $Q \times \Sigma^*$.
+
+Počáteční konfigurace zahrnuje obvykle počáteční stav $q_0$, tedy například $\langle q_0, w \rangle$.
+
+Koncová konfigurace je konfigurací, kdy jsme přečetli celý vstupní řetězec,
+tedy $\langle q, \varepsilon \rangle$. Nicméně je třeba rozlišit dva stavy:
+\begin{enumerate}
+\item
+Koncová přijímací konfigurace, pro případ, kdy $q \in F$.
+
+\item
+Koncová zamítací konfigurace, pro případ, kdy $q \notin F$.
+\end{enumerate}
+
+\begin{definice}
+Mějme automat $A = \langle \Sigma, Q, \delta, q_0, F \rangle$ a řetězec $w \in \Sigma^*$. Pak posloupnost
+konfigurací $r_i, w_i$ pro $i \in \lbrace 0, 1, \ldots, n \rbrace$ splňující podmínky:
+\begin{enumerate}
+\item
+$r_0$ je počáteční stav automatu $A$.
+
+\item
+$w_0 = w$
+
+\item
+$w_n = \varepsilon$
+
+\item
+$w_i = a_i w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$ pro každé $i \in \lbrace 0,1,\ldots,n \rbrace$
+\end{enumerate}
+nazveme \textbf{výpočet automatu A délky $n$ pro řetězec $w$}.
+
+Popíšme si nyní jeden krok výpočtu, tj. obecně:
+$$
+\langle r_i, w_i \rangle = \langle r_{i+1}, w_{i+1} \rangle
+$$
+tj. $w_{i+1}$ vzniknlo z $w_i$ odebráním prvního symbolu, který si označme $a_i$. Do stavu $r_{i+1}$ jsme se dostali ze
+stavu $r_i$ při vstupním symbolu $a_i$.
+\end{definice}
+
+\newpage
+\begin{priklad}
+Typický automatový výpočet vypadá například takto:
+
+\begin{gather*}
+\langle q_0 ; accbcabca \rangle \\
+\langle q_0 ; ccbcabca \rangle \\
+\langle q_1 ; cbcabca \rangle \\
+\langle q_1 ; bcabca \rangle \\
+\langle q_0 ; cabca \rangle \\
+\langle q_1 ; abca \rangle \\
+\langle q_2 ; bca \rangle \\
+\langle q_3 ; ca \rangle \\
+\langle q_4 ; c \rangle \\
+\langle q_4 ; \varepsilon \rangle \\
+\end{gather*}
+\end{priklad}
+
+\begin{veta}
+KDA $A$ má pro řetězec délky $n$ jednoznačný výpočet rovněž délky $n$.
+\end{veta}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% 5 prednaska Martin Rotter
 
 \section{Konečné nedeterministické automaty}
 
 \begin{priklad}
-\vspace{20px}
-\begin{VCPicture}{(-8,-1)(4,2)}
+Mějme automat:
+
+\vspace*{40px}
+\begin{center}
+\begin{VCPicture}{(-3,-1)(3,2)}
 \ChgStateLabelScale{0.8}
-\State[q_{0}]{(-5,0)}{q0}
-\State[q_{1}]{(-3,0)}{q1}
-\FinalState[q_{2}]{(-1,0)}{q2}
+\State[q_{0}]{(-2,0)}{q0}
+\State[q_{1}]{(0,0)}{q1}
+\FinalState[q_{2}]{(2,0)}{q2}
 
 \Initial{q0}
 \LoopN[.5]{q0}{a, b}
 \ArcL{q0}{q1}{a}
 \ArcL{q1}{q2}{a, b}
 \end{VCPicture}
-
+\end{center}
 
 Vstupní řetězce: \textit{abba} (nepřijat), \textit{baba} (nepřijat), \textit{baab} (přijat), \textit{bbaa} (přijat).
 
