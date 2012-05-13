@@ -3892,7 +3892,71 @@ $L = L(A')$ pro nějaký DZA $A'$ a $L$ má prefixovou vlastnost
 \end{enumerate}
 \end{veta}
 
+\begin{dukaz}
+Nechť platí 1. tvrzení: $L=N(A)$ \emph{pro DZA A}
 
+\begin{enumerate}
+\item
+pozorování: $L$ má prefixovou vlastnost
+
+$x \in L=N(A)$ tj. $x$ je přijat vyprázdněním zásobníku. Zjišťujem, že $\langle q_0,x,z_0 \rangle \vdash^* \langle p,\varepsilon,\varepsilon \rangle$ je \textbf{jednoznačně} daný výpočet.
+
+\item
+pozorování:
+
+Hledaný automat $A'$ můžeme najít tak, že vytvoříme nový pomocný zásobníkový symbol $z_0'$, který umístíme na počátku činnosti na dno zásobníku. Pak rozšíříme automat o přechody $\delta (p,\Sigma,z_0') = \lbrace \langle p\#,\varepsilon \rangle \rbrace$. $p\#$ je nový a zároveň jediný koncový stav automatu $A'$.
+\end{enumerate}
+
+Nechť platí 2. tvrzení.
+
+Jelikož má $L$ prefixovou vlastnost, pak automat $A'$ můžeme upravit tak, že z každého koncového stavu zrušíme všechny vycházející přechody. Vzniklý automat opět přijímá $L$ pomocí koncových stavů. Z koncových stavů vytvoříme $\varepsilon$-přechody do nového stavu, ve kterém vyprázdníme zásobník.
+\end{dukaz}
+
+\begin{dusledek}
+Deterministický bezkontextový jazyk má prefixovou vlastnost, právě když je přijímán nějakým DZA pomocí vyprázdnění zásobníku.
+\end{dusledek}
+
+\begin{veta}
+Každý regulární jazyk je deterministický.
+\end{veta}
+
+\begin{dukaz}
+Pro $L$ existuje KDA $A = \langle \Sigma,Q,\delta,q_0,F \rangle$ s úplnou přechodovou funkcí.
+%%%DOPLNIT z nahrávky, v sešitě nic%%%
+\end{dukaz}
+
+\begin{priklad}
+Následující jazyk je deterministický:
+$$
+L = \lbrace a^nb^n\ |\ n\ge1 \rbrace
+$$
+\end{priklad}
+
+\begin{poznamka}
+Mnoho regulárních jazyků \textbf{nemá} prefixovou vlastnost.
+\end{poznamka}
+
+\begin{veta}
+Pokud $L=N(A)$ pro DZA $A$, pak je $L$ jednoznačný.
+\end{veta}
+
+\begin{dukaz}
+Náznak důkazu je následující:
+
+Na základě $A$ sestavíme gramatiku $G$ tak, že $L(G) = N(A)$ a navíc prokážeme, že gramatika $G$ má jednoznačné odvození každé věty.
+\end{dukaz}
+
+\begin{veta}
+Pokud $L=L(A)$ pro DZA $A$, pak je $L$ jednoznačný. Deterministické bezkontextové jazyky jsou jednoznačné.
+\end{veta}
+
+\begin{dukaz}
+Náznak důkazu:
+
+Vyjdeme z toho, že $L=L(A)$ a uvažujeme, že $L'=L \cdot \lbrace \$ \rbrace$. I ten je deterministický. Tj. existuje $A'$ tak, že $L(A')=L'=L \cdot \lbrace \$ \rbrace$. Dle předchozí věty existuje jednoznačná gramatika $G$ tak, že $L(G) = L \cdot \lbrace \$ \rbrace$.
+\end{dukaz}
+
+%%Vychodilovo vajíčko$$
 
 
 %\newpage
