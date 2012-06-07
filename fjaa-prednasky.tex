@@ -18,15 +18,18 @@
 \usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
 \usepackage{alltt}
 
+\renewcommand{\familydefault}{\sfdefault}
+
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
 
-\title{KMI/FJAA  -- Formální jazyky a automaty}
+\title{\textbf{KMI/FJAA  -- Formální jazyky a automaty}}
 \author{Martin Rotter (rotter.martinos@gmail.com) \\
-	Jiří Zehnula (jiri.zehnula01@upol.cz)}
+	Jiří Zehnula (jiri.zehnula01@upol.cz) \\
+	Radek Janoštík (radek.janostik01@upol.cz)}
 \date{\today}
 
-\docinfo{Martin Rotter, Jiří Zehnula}{KMI/FJAA  -- Formální jazyky a automaty}
+\docinfo{Martin Rotter, Jiří Zehnula, Radek Janoštík}{KMI/FJAA  -- Formální jazyky a automaty}
 
 \newtheoremstyle{note}
 {15pt}
@@ -48,8 +51,10 @@
 \newcommand{\ekna}{$\varepsilon$KNA}		%byl jsem línej to pořád psát (tak určitě :D)
 \newcommand{\aut}[1]{$A_#1= \langle \Sigma,Q_#1,\delta_#1,q_{0#1},F_#1 \rangle$}
 
-\abstract{Tento dokument je pouze přepisem zápisků a poznámek
-z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.}
+\abstract{
+\textsf{
+Tento dokument je pouze přepisem zápisků a poznámek
+z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.}}
 
 \pagestyle{empty}
 \makeindex
@@ -3407,7 +3412,7 @@ $\rightarrow q_0^{\cdot}$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$
 $q_1^{\cdot}$ & $\cdots$ & $\lbrace \langle r, w \rangle \rbrace$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$
 \end{tabular}
 \end{center}
-\caption{Ukázka přechodové tabulky pro NZA.}
+\caption{Ukázka přechodové tabulky pro NZA}
 \end{table}
 \end{priklad}
 
@@ -3474,7 +3479,7 @@ platí $L(A) = N(A') = L(A')$, načež je třeba vyřešit dvě věci:
 \begin{enumerate}
 \item
 V případě, že automat $A$ vyprázdní svůj zásobník, ale v koncovém stavu, potom $A'$ nesmí vyprázdnit zásobník, což se řeší
-přídáním symbolu $z_0'$ na dno zásobníku automatu $A$.
+přidáním symbolu $z_0'$ na dno zásobníku automatu $A$.
 
 \item
 V případě, že automat $A$ skončí (s prázdným vstupem), tak by v koncovém stavu automat $A'$ měl navíc ještě vyprázdnit
@@ -3504,7 +3509,7 @@ Něchť je dán $A = \langle \text{ nemám poznačeno } \rangle$. Konstruujeme $
 \begin{enumerate}
 \item
 V případě, kdy výchozí automat $A$ vyprázdnil vstup a zásobník (to může nastat v libovolném stavu), pak přejdeme do koncového
-stavu. To řešíme přídáním nového zásobníkového symbolu $z_0'$.
+stavu. To řešíme přidáním nového zásobníkového symbolu $z_0'$.
 
 \item
 Je potřeba zamezit přijetí slova koncovým stavem bez vyprázdnění zásobníku. To řešíme tak, že máme jediný koncový stav, do kterého přejdeme
@@ -3521,7 +3526,7 @@ A' = \langle \Sigma, \Gamma \cup \lbrace z_0' \rbrace, Q \cup \lbrace q_\#', q_0
 \subsection{Automaty pracující s celým zásobníkem}
 Pro automat pracující s celým zásobníkem má platit, že $\delta : Q \times (\Sigma \cup \lbrace \varepsilon \rbrace) \times \Gamma^*
  \rightarrow 2^{Q \times \Gamma^*}$ s omezením, že přechodová funkce je pro každé $q \in Q, a \in (\Sigma \cup \lbrace \varepsilon \rbrace)$ definována
-pouze pro konečně mnoho řetězců $z \in \Gamma^*$ a navíc musí platit, že pro každý z konečně mnoha řetěczů je $\delta(q, a, z)$ konečná.
+pouze pro konečně mnoho řetězců $z \in \Gamma^*$ a navíc musí platit, že pro každý z konečně mnoha řetězců je $\delta(q, a, z)$ konečná.
 
 Platí také:
 $$
@@ -3572,7 +3577,7 @@ Pokud $\langle r, y \rangle \in \delta(q, a, \varepsilon) \text{ pak pro každé
 Pokud $\langle r, y \rangle \in \delta(q, a, z), z \in \Gamma$, pak přidáme přechod $\langle r, y \rangle \in \delta'(q, a, z)$.
 
 \item
-Pokud $\langle r, y \rangle \in \delta(q, a, z), z = z_1z_2z_3 \cdots z_n \text{ pro } n > 1$, v tomto případě zavedem dosud neuvažované stavy
+Pokud $\langle r, y \rangle \in \delta(q, a, z), z = z_1z_2z_3 \cdots z_n \text{ pro } n > 1$, v tomto případě zavedeme dosud neuvažované stavy
 $q_1',q_2',\ldots,q_{n-1}'$ a ty přidáme do $Q'$ a zavedeme přechody $\delta'(q, a, z_1) = \lbrace \langle q_1', \varepsilon, \rangle \rbrace,
 \delta(q_1', \varepsilon) = \lbrace \langle q_2', \varepsilon \rangle \rbrace = \ldots = \delta'(q_{n-1}', \varepsilon, z_n) =
 \lbrace \langle q_\#, \varepsilon \rangle \rbrace$
@@ -3644,16 +3649,16 @@ $$
 
 \begin{itemize}
 \item
-Prvnímu případu říkáme \textbf{operace srovnání}: pokud je na vstupu i na vrcholu zásobníku stejný znak (terminál) pak jsou oba odebrány
+Prvnímu případu říkáme \textbf{operace srovnání}: pokud je na vstupu i na vrcholu zásobníku stejný znak (terminál) pak jsou oba odebrány.
 \item
-Druhý případ se jmenuje \textbf{operace expanze}: bez čtení vstupu při neterminálu na vrcholu zásobníku se tento neterminál nahradí pravou stranou některého pravidla s tímto neterminálem na levé straně
+Druhý případ se jmenuje \textbf{operace expanze}: bez čtení vstupu při neterminálu na vrcholu zásobníku se tento neterminál nahradí pravou stranou některého pravidla s tímto neterminálem na levé straně.
 \item
-U třetího případu dochází k zastavení činnosti
+U třetího případu dochází k zastavení činnosti.
 \end{itemize}
 \end{itemize}
 
 \begin{priklad}
-Uvedeme si gramatiku a na ní ukážeme činnost takového automatu.
+Uvedeme si gramatiku a na ní ukážeme činnost takového automatu:
 
 $\begin{array}{l}
 G=\langle N,\Sigma,P,S \rangle \\
@@ -3708,7 +3713,7 @@ Pro každou bezkontextovou gramatiku $G$ existuje NZA $A$ tak, že $L(G)=N(A)$.
 \end{veta}
 
 \begin{dukaz}
-Uvažujeme gramatiku $G=\langle N,\Sigma,P,S \rangle$ a odtud $A$ zkonstruovaný pomocí oprací expanze a srovnání (předchozí způsob).
+Uvažujeme gramatiku $G=\langle N,\Sigma,P,S \rangle$ a odtud $A$ zkonstruovaný pomocí operací expanze a srovnání (předchozí způsob).
 
 Tvrdíme, že pro libovolný řetězec $w \in \Sigma^*$ platí:
 $$
@@ -3899,7 +3904,7 @@ Nechť platí 1. tvrzení: $L=N(A)$ \emph{pro DZA A}
 \item
 pozorování: $L$ má prefixovou vlastnost
 
-$x \in L=N(A)$ tj. $x$ je přijat vyprázdněním zásobníku. Zjišťujem, že $\langle q_0,x,z_0 \rangle \vdash^* \langle p,\varepsilon,\varepsilon \rangle$ je \textbf{jednoznačně} daný výpočet.
+$x \in L=N(A)$ tj. $x$ je přijat vyprázdněním zásobníku. Zjišťujeme, že $\langle q_0,x,z_0 \rangle \vdash^* \langle p,\varepsilon,\varepsilon \rangle$ je \textbf{jednoznačně} daný výpočet.
 
 \item
 pozorování:
