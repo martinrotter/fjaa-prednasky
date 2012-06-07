@@ -536,7 +536,7 @@ Zároveň platí pro každé pravidlo (s výjimkou pravidla $S \rightarrow \vare
 $$
 A \rightarrow x, \text{ kde } A \in N, x \in (\Sigma \cup N)^{*}
 $$
-Na levých stranách pravidel tedy očekáváme pouze neterminální symbol a na pravé straně očekáváme minimálně jeden symbol (s výjimkou pravidla $S \rightarrow \varepsilon$). $S$ se navíc nesmí vyskytovat na pravých stranách pravidel.
+Na levých stranách pravidel tedy očekáváme pouze neterminální symbol a na pravé straně očekáváme minimálně jeden symbol (s výjimkou $\varepsilon$-pravidla).
 
 \begin{priklad}
 Mějme tuto gramatiku:
@@ -559,7 +559,7 @@ $A \rightarrow bB, \text{ kde } A,B \in N, b \in \Sigma$
 $A \rightarrow a$
 
 \item
-$S \rightarrow \varepsilon$
+$S \rightarrow \varepsilon$ (přičemž platí stejné podmínky, jako u gramatik typu 1)
 \end{enumerate}
 
 \end{itemize}
@@ -665,17 +665,17 @@ Předpokládejme, že $G = \langle N, \Sigma, P, S \rangle$ je nezkracující gr
 že všechna pravidla jsou buď ve tvaru $A \rightarrow a$ nebo ve tvaru obecně. 
 $A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{n}$, kde $A_{1}, \ldots,A_{m}, B_{1}, \ldots,B_{n} \in N$ a navíc $m \leq n$. 
 
-Taková pravidla lze psát ve tvaru $A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{my}$, kde $y = B_{m+1} \cdots B_{n}$ 
+Taková pravidla lze psát ve tvaru $A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{m}y$, kde $y = B_{m+1} \cdots B_{n}$ 
 Budeme uvažovat nové pomocné neterminály $X_{1},...,X_{m}$ \footnote{pro každé pravidlo se uvažují zvlášť}. 
 A zavedeme následující pravidla:
 \begin{gather*}
 A_{1} A_{2} \cdots A_{m} \rightarrow X_{1} A_{2} \cdots A_{m} \\
 X_{1} A_{2} \cdots A_{m} \rightarrow X_{1} X_{2} A_{3} \cdots A_{m} \\
 \vdots \\
-X_{1} X_{2} \cdots X_{m-1} A_{m} \rightarrow X_{1} \cdots X_{m-1} X_{my} \\
-X_{1} X_{2} \cdots X_{my} \rightarrow B_{1} X_{2} X_{3} \cdots X_{my} \\
+X_{1} X_{2} \cdots X_{m-1} A_{m} \rightarrow X_{1} \cdots X_{m-1} X_{m}y \\
+X_{1} X_{2} \cdots X_{m}y \rightarrow B_{1} X_{2} X_{3} \cdots X_{m}y \\
 \vdots \\
-B_{1} B_{2} \cdots B_{m-1} X_{my} \rightarrow B_{1} B_{2} \cdots B_{m-1}B_{my}
+B_{1} B_{2} \cdots B_{m-1} X_{m}y \rightarrow B_{1} B_{2} \cdots B_{m-1}B_{m}y
 \end{gather*}
 Tento postup se aplikuje pro všechna pravidla. Hledaná gramatika $G^{'}$ se skládá
 z $\Sigma, N$ a navíc všech pomocných terminálů a odvozovacích pravidel.
@@ -697,7 +697,7 @@ Odvozování nezávisí na kontextu.
 Mějme bezkontextovou gramatiku  $G = \langle N, \Sigma, P, S \rangle$ a nechť navíc existuje $X_{1} \cdots X_{k}, \ldots, z$
 P-derivace délky $n$, kde $X_{1}, \ldots, X_{k} \in (N \cup \Sigma)$ a $z \in (N \cup \Sigma)^{*}$ 
 a potom pro každé $i = 1, \ldots, k$  existuje řetězec $z_{i} \in (N \cup \Sigma)^{*}$ 
-a P-derivace $X_{i}, \ldots, z_{i}$ délky $n_{i}$ tak, že $z = z_{1} ,z_{2}, \ldots, z_{k}$ a $n = n_{1} + n_{2} + \cdots + n_{k}$
+a P-derivace $X_{i}, \ldots, z_{i}$ délky $n_{i}$ tak, že $z = z_{1} \cdot z_{2} \cdots z_{k}$ a $n = n_{1} + n_{2} + \cdots + n_{k}$
 \end{veta}
 
 \begin{dukaz}
@@ -718,7 +718,7 @@ Existují řetězce $y_{1}, \ldots, y_{k}$ a P-derivace $X_{1}, \ldots, y_{1}$ a
 délek $n_{1} \cdots n_{k}$ tak, že $y = y_{1} y_{2} \cdots y_{k}$ a $n = n_{1} + n_{2} + \cdots + n{k}$. 
 
 Z faktu, že $y  \Rightarrow_{G}z$ a z toho, že gramatika je bezkontextová plyne, že $y$ je ve tvaru 
-$y = y^{''} y^{'} A w^{'} w^{''}$ pro $i = 1, \ldots, k$. Pak $z$ je ve tvaru $z = y^{''} y^{'} u w^{'} w^{''}$ a $A \rightarrow n \in P$,
+$y = y^{''} y^{'} A w^{'} w^{''}$ pro $i = 1, \ldots, k$. Pak $z$ je ve tvaru $z = y^{''} y^{'} u w^{'} w^{''}$ a $A \rightarrow u \in P$,
 to jest $X_{i}, \ldots, y_{i}, y^{'} u w^{'}$ je P-derivace délky $n_{i+1}$. Hledané derivace jsou:
 \begin{gather*}
 X_{1}, \ldots, y_{1} \\
@@ -1111,7 +1111,7 @@ Rozšířená přechodová funkce má rekurzivní předpis:
 \delta^*(q, u) = \lbrace
 \begin{array}{l l}
 q & \text{pokud } u = \varepsilon \\
-\delta^*(\delta(q, a), u) & \text{pokud } u = av, a \in \Sigma, 
+\delta^*(\delta(q, a), v) & \text{pokud } u = av, a \in \Sigma, 
 \end{array}
 \end{gather*}
 
@@ -1133,7 +1133,7 @@ Pokud $|u| > 0$, pak předpokládáme, že tvrzení platí pro $\forall$ řetěz
 &=& \delta^*(\delta^*(\delta(q,a),w),v) \\
 &=& \delta^*(\delta(q,a),wv) \\
 &=& \delta^*(q,awv) \\
-&=& \delta^*(a,wv)
+&=& \delta^*(q,uv)
 \end{eqnarray*}
 \end{enumerate}
 \end{dukaz}
@@ -1360,11 +1360,11 @@ nazveme \textbf{nedeterministický výpočet}.
 \begin{definice}
 Rozšířená přechodová funkce má tvar:
 \begin{gather*}
-\delta^{*} : \Sigma^{Q} \times \Sigma^{*} \rightarrow \Sigma^{Q} \\
+\delta^{*} : 2^{Q} \times \Sigma^{*} \rightarrow 2^{Q} \\
 \delta^{*}(R, w) = \left\lbrace
 \begin{array}{l l}
 R & \text{ pokud } w = \varepsilon \\
-\delta^{*}(\bigcup\limits_{q \in R} \delta(q, w), u) & \text{ pokud } w = au\text{, kde } a \in \Sigma, u \in \Sigma^{q} \\
+\delta^{*}(\bigcup\limits_{q \in R} \delta(q, a), u) & \text{ pokud } w = au\text{, kde } a \in \Sigma, u \in \Sigma^{*} \\
 \end{array}
 \right\rbrace
 \end{gather*}
