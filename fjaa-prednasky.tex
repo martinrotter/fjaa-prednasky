@@ -18,12 +18,12 @@
 \usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
 \usepackage{alltt}
 
-\renewcommand{\familydefault}{\sfdefault}
+%\renewcommand{\familydefault}{\sfdefault}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
 
-\title{\textbf{KMI/FJAA  -- Formální jazyky a automaty}}
+\title{KMI/FJAA  -- Formální jazyky a automaty}
 \author{Martin Rotter (rotter.martinos@gmail.com) \\
 	Jiří Zehnula (jiri.zehnula01@upol.cz) \\
 	Radek Janoštík (radek.janostik01@upol.cz)}
@@ -52,9 +52,8 @@
 \newcommand{\aut}[1]{$A_#1= \langle \Sigma,Q_#1,\delta_#1,q_{0#1},F_#1 \rangle$}
 
 \abstract{
-\textsf{
 Tento dokument je pouze přepisem zápisků a poznámek
-z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.}}
+z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.}
 
 \pagestyle{empty}
 \makeindex
@@ -213,19 +212,13 @@ x = u, y = v \\
 $$
 x^{n} = \left\lbrace
 \begin{array}{l l}
-x & \text{pro } n=1 \\
-xx^{n-1} & \text{v ostatních případech} \\
-\end{array}
-\right\rbrace
-$$
-respektive
-$$ x^{n} = \left\lbrace
-\begin{array}{l l}
 \varepsilon & \text{pro } n=0 \\
-xx^{n-1} & \text{v ostatních případech} \\
+x & \text{pro } n=1 \\
+xx^{n-1} & \text{pro } x>1 \\
 \end{array}
 \right\rbrace
 $$
+
 \begin{poznamka}
 Mějme na paměti, že operace mocnění má vyšší prioritu než-li operace konkatenace (zřetězení).
 \end{poznamka}
@@ -568,7 +561,7 @@ $S \rightarrow \varepsilon$ (přičemž platí stejné podmínky, jako u gramati
 Každý konečný jazyk je regulární.
 \end{poznamka}
 
-\begin{dukaz}
+\begin{proof}
 Mějme jazyk $L = \lbrace x_{1},\ldots, x_{n} \rbrace$. Abychom tento jazyk prohlásili za regulární, tak je třeba najít regulární gramatiku,
 která tento jazyk generuje.
 
@@ -581,7 +574,7 @@ $x_{i} = \varepsilon \text{ a následně } S \rightarrow \varepsilon$
 \item
 $x_{i} = a_{1}\ldots a_{k} \text{ a následně } S \rightarrow a_{i1}A^{'}, A^{'} \rightarrow a_{i2}A^{''},\ldots\ldots, A^{k-1} \rightarrow a_{ik}A^{k}$
 \end{enumerate}
-\end{dukaz}
+\end{proof}
 
 \begin{figure}[ht]
 \centering\includegraphics[width=8cm]{vajicko-1.eps}
@@ -643,7 +636,7 @@ Ke každé gramatice $G$, existuje ekvivalentní gramatika $G^{'}$, ve které
 jsou všechna pravidla obsahující terminální symboly ve tvaru $A \rightarrow a$, kde $A \in N, a \in \Sigma$.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Pro každý terminál $a \in \Sigma$, zavedeme terminál $N_{a}$ a pravidlo $N_{a} \rightarrow a$.
 Všechny výskyty terminálů ve výchozích pravidlech nahradíme příslušnými pomocnými neterminály, tedy:
 \begin{itemize}
@@ -653,14 +646,14 @@ $Bcb \rightarrow bBc \text{ se změní na } BN_{c}N_{b} \rightarrow N_{b} BN_{c}
 \item
 Pomocná pravidla jsou následně $N_{c} \rightarrow c$ a $N_{b} \rightarrow b$
 \end{itemize}
-\end{dukaz}
+\end{proof}
 
 \begin{veta}
 Ke každé nezkracující gramatice existuje ekvivalentní gramatika, která je kontextově závislá\footnote{Mějme na paměti, že říkáme-li, že je
 gramatika kontextové zásvislá, tak tím myslíme, že je kontextová.}.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Předpokládejme, že $G = \langle N, \Sigma, P, S \rangle$ je nezkracující gramatika. Pak můžeme předpokládat, 
 že všechna pravidla jsou buď ve tvaru $A \rightarrow a$ nebo ve tvaru obecně. 
 $A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{n}$, kde $A_{1}, \ldots,A_{m}, B_{1}, \ldots,B_{n} \in N$ a navíc $m \leq n$. 
@@ -679,7 +672,7 @@ B_{1} B_{2} \cdots B_{m-1} X_{m}y \rightarrow B_{1} B_{2} \cdots B_{m-1}B_{m}y
 \end{gather*}
 Tento postup se aplikuje pro všechna pravidla. Hledaná gramatika $G^{'}$ se skládá
 z $\Sigma, N$ a navíc všech pomocných terminálů a odvozovacích pravidel.
-\end{dukaz}
+\end{proof}
 
 \subsection{Základní vlastnosti bezkontextových gramatik}
 
@@ -700,7 +693,7 @@ a potom pro každé $i = 1, \ldots, k$  existuje řetězec $z_{i} \in (N \cup \S
 a P-derivace $X_{i}, \ldots, z_{i}$ délky $n_{i}$ tak, že $z = z_{1} \cdot z_{2} \cdots z_{k}$ a $n = n_{1} + n_{2} + \cdots + n_{k}$
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Větu \ref{veta-bez} prokážeme indukcí přes délku výchozí derivace $X_{1} \cdots X_{k}, \ldots, z$.
 \begin{enumerate}
 \item
@@ -729,7 +722,7 @@ X_{1+1}, \ldots, y_{i+1} \\
 X_{k}, \ldots, j_{k} \\ %% zkontrolovat!!!
 \end{gather*}
 \end{enumerate}
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}
 \begin{eqnarray*}
@@ -790,7 +783,7 @@ Pro každou bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ a pro 
 Speciálně $\varepsilon \in L(G)$, pak $S \in E_{N}$.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Dokazujeme obě implikace:
 \begin{enumerate}
 \item
@@ -806,13 +799,13 @@ Tzn. existují derivace $X_{i}, \ldots, \varepsilon$ délek nejvýše $n$. Z př
 Opačnou implikaci bychom dokázali tak, že pro každé $E_{i}$ platí, pokud $E \in E_{i}$ a tedy pak $A \Rightarrow_{G}^{*}\varepsilon$. Pro $E_{0}$ zřejmé.
 $A \rightarrow X_{0} \cdots X_{k}, A \in E_{j}$.
 \end{enumerate}
-\end{dukaz}
+\end{proof}
 
 \begin{veta}
 Pro každou bezkontextovou gramatiku $G$ existuje bezkontextová gramatika $G^{'}$, neobsahující $\varepsilon$ - pravidla tak, že $L(G) \setminus \lbrace \varepsilon \rbrace = L(G^{'})$.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Mějme gramatiku $G = \langle N, \Sigma, P,S \rangle$.
 
 Stanovme množinu $E_{n}$ dle předchozího postupu a pak stanovme gramatiku
@@ -822,7 +815,7 @@ P^{'} &=& \lbrace A \rightarrow y|A \rightarrow x \in P \text{ a } y \in D_{(x)}
 \end{eqnarray*}
 Kde $D_{(x)}$ značí množinu řetězců, které jsou neprázdné a vznikly z řetězce $x$ vynecháním
 libovolného množství neterminálů z $E_{N}$.
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}
 Mějme množinu $E_{n} = \lbrace A, B \rbrace$.
@@ -847,14 +840,14 @@ X &\rightarrow& ab
 Pro každou bezkontextovou gramatiku existuje ekvivalentní bezkontextová gramatika, která je navíc kontextová (a tudíž nezkracující).
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Mějme gramatiku $G$.
 
 Dle předchozí věty existuje $G^{'}$ tak, že $L(G) \setminus \lbrace \varepsilon \rbrace = L(G^{'})$.
 $G^{'}$ je nezkracující a kontextová, protože nemá $\varepsilon$ - pravidla. Pokud $\varepsilon$ nepatří do $L(G)$, pak jsme hotovi.
 Pokud $\varepsilon \in L(G)$. Pak $G^{'}$ rozšíříme tak, že přidáme startovní neterminální symbol $S^{'}$ 
 a pravidlo $S^{'} \rightarrow \varepsilon$ a $S^{'} \rightarrow S$.
-\end{dukaz}
+\end{proof}
 
 %%%%
 %% obrazek druhé vychodilovo vajicko
@@ -867,15 +860,15 @@ Označme třídu všech jazyků nad abecedou $\Sigma$ jako $2^{\Sigma^{*}}$. Ná
 že je nespočetná.
 \end{veta}
 
-\begin{dukaz}
-Víme, že samotná množiny Kleeneho uzávěru $\Sigma^{*}$ je nespočetná, lze tedy psát,
+\begin{proof}
+Víme, že Kleeneho uzávěr $\Sigma^{*}$ je spočetná množina, lze tedy psát,
 že $\Sigma^* = \lbrace x_1,x_2,\ldots,x_5,\ldots \rbrace$.
 
 Sporem nechť je množina $2^{\Sigma^{*}}$ spočetná, lze tedy napsat, že $2^{\Sigma^{*}} = \lbrace L_1, L_2, \ldots \rbrace$
 a $L = \lbrace x_i | \quad x_i \notin L_i \rbrace$.
 
 Kdyby pro nějaké $j$ platilo, že $L = L_j$, pak $x_j \in L \Longleftrightarrow x_j \in L_1$, což je spor.
-\end{dukaz}
+\end{proof}
 
 %%%%%%%% 4 PREDNASKA mr
 
@@ -1119,7 +1112,7 @@ q & \text{pokud } u = \varepsilon \\
 Pro každé $u,v \in \Sigma^* \text{ platí, že } \delta^*(q, uv) = \delta^*(\delta^*(q, u), v)$
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Větu \ref{veta-kdaaa} dokážeme indukcí přes délku řetězce následujícím způsobem:
 \begin{enumerate}
 \item
@@ -1136,7 +1129,7 @@ Pokud $|u| > 0$, pak předpokládáme, že tvrzení platí pro $\forall$ řetěz
 &=& \delta^*(q,uv)
 \end{eqnarray*}
 \end{enumerate}
-\end{dukaz}
+\end{proof}
 
 \begin{poznamka}
 Automat $A$ přijím řetězec $a$, pokud $\delta^*(q_0,w) \in F$.
@@ -1146,7 +1139,7 @@ Automat $A$ přijím řetězec $a$, pokud $\delta^*(q_0,w) \in F$.
 Řetězec $w$ je přijat automatem, právě když existuje přijímací výpočet pro $w$.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Stačí dokázat, že $\delta^*(q_0,w) \in F$ každý výpočet $\langle r_0, w_0 \rangle \cdots \langle r_i, w_i \rangle$ je přijímající,
 tj. když $r_i \in F$ pro každé $\langle r_0, w_0 \rangle$, tak prokážeme, že $\delta^*(r_i, w_i) = r_n$, což dokazujeme indukcí.
 \begin{enumerate}
@@ -1158,7 +1151,7 @@ Pro $i = n$ mějme $\delta^*(r_n,w_n) = \delta^*(r_n, \varepsilon) = r_n$. Pak l
 Dle bodu \ref{vypocet-bod-4} z definice výpočtu platí, že $w_i = a_i + w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$.
 Tj.  $\delta^*(r_i,w_i) = \delta^*(r_i,a_i,w_{i+1}) = \delta^*(\delta(r_i, a_i), w_{i+1}) = \delta^*(r_{i+1}, r_{i+1}) = r_n$
 \end{enumerate}
-\end{dukaz}
+\end{proof}
 
 Jazyk rozpoznaný konečným deterministickým automate lze formulovat jako
 $L(A) = \lbrace w \in \Sigma^* |\quad \delta^*(q_0,w) \in F \rbrace$.
@@ -1192,7 +1185,7 @@ Následně jazyk rozpoznaný automatem $A$ je $L(A) = \lbrace w \in \Sigma^*| \q
 Ke každému KDA s neúplnou přechodovu funkcí $\delta$ existuje KDA s úplnou přechodovu funkcí $\delta$, který rozpoznává stejný jazyk.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Každý KDA s úplnou přechodovou funkcí je zároveň KDA s úplnou přechodovou funkcí. Tedy
 $A' = \langle \Sigma, Q \cup \lbrace \# \rbrace, \delta', q_0, F \rangle$
 
@@ -1206,7 +1199,7 @@ $A' = \langle \Sigma, Q \cup \lbrace \# \rbrace, \delta', q_0, F \rangle$
 \right. \\
 \end{gather*}
 Následně tedy $L(A) = L(A')$.
-\end{dukaz}
+\end{proof}
 
 %%% případně dodělat...
 
@@ -1373,7 +1366,7 @@ R & \text{ pokud } w = \varepsilon \\
 \begin{veta}
 Platí $\delta^{*}(R,w) = \delta^{*}(\delta^{*}(R,u),v), \forall R \subseteq Q, uv \in \Sigma^{*}$.
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Předchozí tvrzení dokazujeme indukcí přes délku řetězce.
 
 \begin{enumerate}
@@ -1391,7 +1384,7 @@ Nyní aplikujme definici.
 \delta^{*}(\delta^{*}(R, ay), v) = \delta^{*}(\delta^{*}(R,u),v)
 \end{gather*}
 \end{enumerate}
-\end{dukaz}
+\end{proof}
 
 \begin{veta}
 Platí následující tvrzení:
@@ -1399,7 +1392,7 @@ $$
 \delta^{*}(\bigcup\limits_{i=1}^{k} R_{i},w) = \bigcup\limits_{i=1}^{k} \delta^{*}(R_{i},w) \text{ pro každé} R_{i} \subseteq Q, w \in \Sigma^{*}
 $$
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Předchozí tvrzení dokazujeme indukcí přes délku řetězce w.
 \begin{gather*}
 \delta^{*}(\bigcup\limits_{i=1}^{k}R_{i},w) = \delta^{*}(\bigcup\limits_{i=1}^{k}R_{i},au) = \delta^{*}(q \in \bigcup\limits_{\bigcup_{i=1}^{k}} \delta(q, a), u) \\
@@ -1407,7 +1400,7 @@ Předchozí tvrzení dokazujeme indukcí přes délku řetězce w.
 \bigcup\limits_{i=1}^{k} \delta^{*}(\bigcup\limits_{q \in R_{i}} \delta(q,a),u) \\
 \bigcup\limits_{i=1}^{k} \delta^{*}(R,a_{n}) = \bigcup\limits_{q \in R_{i}} \delta(R,w)
 \end{gather*}
-\end{dukaz}
+\end{proof}
 
 \subsection{Řetězce přijímané KNA}
 KNA $A$ přijímá řetězec $w$, pokud $\delta^{*}(I,w) \cap F \neq \emptyset$.
@@ -1416,27 +1409,27 @@ Navíc jazyk, přijímaný KNA $A$ si definujme jako $L(A) = \lbrace w \in \Sigm
 \begin{veta}
 Platí, že $w \in L(a)$ právě tehdy, když KNA $A$ má přijímací výpočet pro $w$.
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Předchozí tvrzení lze dokázat indukcí přes délku řetězce w.
 
 \begin{gather*}
 q \in \delta^{*}(I,w) \text{ právě tehdy, když existuje výpočet pro w, končící ve stavu } q \\
 \text{dekompozice navíc } w = ua
 \end{gather*}
-\end{dukaz}
+\end{proof}
 
 \subsection{Determinizace KNA}
 \begin{veta}
 Pro každý KDA $A=\langle \Sigma, Q, \delta, q_{0}, F \rangle \exists \text{ KNA } A' \text{ tak, že } L(A)=L(A') $.
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Pro výchozí $A$ uvažujme $A'=\langle \langle \Sigma, Q, \delta', q_{0}, F \rangle$, pak $\delta'(q,a) = \lbrace \delta(q,a) \rbrace$. Zbytek důkazu je zřejmý.
-\end{dukaz}
+\end{proof}
 
 \begin{veta}
 Pro každý KNA $A$ existuje KDA $A^{D}$ tak, že $L(A) = L(A^{D})$.
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Předchozí větu lze dokázat následujícím způsobem:
 
 \begin{enumerate}
@@ -1454,7 +1447,7 @@ Předpokládejme, že tvrzení platí pro řetězce délky $n$ a nechť $w$ má 
 = \delta^{*}(\delta^{D}(R,a)u) = \delta^{*}(\delta^{*}(R,a),u) = \delta^{*}(R, au) = \delta^{*}(R,w)
 \end{gather*}
 \end{enumerate}
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}
 Vemme KNA z příkladu \ref{priklad-3}.
@@ -1586,7 +1579,7 @@ Uveďme si příklad konečného slovníkového automatu $D_{L}$, který je poch
 Pro každou regulární gramatiku $G=\langle N,\Sigma,P,S \rangle$ existuje konečný deterministický automat $A$ tak, že jazyk generovaný gramatikou je totéž, jako jazyk rozpoznatelný automatem, tj. $L(G)=L(A)$
 \end{veta} 
 
-\begin{dukaz}
+\begin{proof}
 Nejprve uvažujeme situaci, že $\varepsilon \notin L(G)$. Uvažujme konečný nedeterministický automat $A = \langle \Sigma, N \cup \lbrace \# \rbrace, \delta, \lbrace S \rbrace,\lbrace \# \rbrace \rangle$.
 
 $$
@@ -1621,7 +1614,7 @@ Tj. existuje $ B \in \delta (A,b) $ tak, že $ \#\in\delta^* ( \lbrace B \rbrace
 \item
 Aplikací indukčního předpokladu, existuje P-derivace $B,\ldots,y$. Hledaná P-derivace je ve tvaru: $A,bB,\ldots,by=x$,tj. $A \Rightarrow^*_Gx$.
 \end{enumerate}
-\end{dukaz}
+\end{proof}
 
 V případě, že $\varepsilon \in L(G)$, rozšíříme automat následovně, jednou ze tří možností:
 \begin{enumerate}
@@ -1703,7 +1696,7 @@ Když tento automat zdeterminizujeme, dostaneme následující automat:
 Pro každý konečný deterministický automat $A = \langle \Sigma,Q,\delta,q_0,F \rangle$ existuje regulární gramatika $G$ tak, že $L(A)=L(G)$.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Za neterminální symboly $G$ vezmeme stavy automatu. Startovní neterminál bude $q_0$. Uvažujeme gramatiku:
 $G = \langle Q,\Sigma,P,q_0 \rangle$
 
@@ -1726,7 +1719,7 @@ Uvažujeme nový neterminál $S$, který bude nový startovní symbol, tj. míst
 $P'= \lbrace S \rightarrow \varepsilon \rbrace \cup \lbrace S \rightarrow x | q_0 \rightarrow x \in P \rbrace \cup P$
 
 Pak $L(A)=L(G)$.
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}\label{priklad-4}
 
@@ -1778,7 +1771,7 @@ Obsahují pravidla ve tvaru $ A \rightarrow Bb $. Analogicky se neterminál nach
 Pro každou zleva regulární gramatiku $ G = \langle N,\Sigma,P,S \rangle $ existuje konečný deterministický automat \textit{A} tak, že \textit{L(A)=L(G)}.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Budeme konstruovat automat, jehož stavy budou \textit{N}, nový pomocný počáteční stav $ \# $ a jediný koncový stav je \textit{S}.
 
 Hledaný KNA $ A = \langle \Sigma,N \cup \lbrace \# \rbrace,\delta,\lbrace \# \rbrace,\lbrace S \rbrace \rangle$ s následovně definovanou přechodovou funkcí $\delta$
@@ -1801,7 +1794,7 @@ $ x_0=S,x_1,x_2,\ldots,x_{n-1},x_n=x $
 jsme schopni sestavit posloupnost
 
 $ \langle \# , X_n \rangle,\langle A_{n-1} , y_{n-1} \rangle,\ldots,\langle A_1 , y_1 \rangle,\langle S , \varepsilon \rangle $ kde $x_i=A_{i}y_{i}$
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}
 Máme gramatiku $G$ s následovně definovanými pravidly.
@@ -1838,7 +1831,7 @@ Automat rozpoznávající jazyk generovaný touto gramatikou bude vypadat násle
 Pro každý konečný deterministický automat \textit{A} existuje zleva regulární gramatika taková, že \textit{L(A)=L(G)}
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Neterminály gramatiky jsou stavy automatu a budeme uvažovat dodatečný startovní neterminál S.
 
 \begin{eqnarray*}
@@ -1847,7 +1840,7 @@ P = &\lbrace& \delta (q,a) \rightarrow qa | q \in Q \wedge a \in \Sigma \rbrace 
 &\lbrace& S \rightarrow w|w \ \text{je pravá strana každého pravidla}\ q \rightarrow w\text{, kde } q \in F \rbrace
 \end{eqnarray*}
 
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}
 Vezmeme KDA z příkladu \ref{priklad-4}.
@@ -2017,7 +2010,7 @@ Pro libovolné množiny $R_i \subseteq Q \quad (i=1,\ldots,k)$ platí:
 $\bigcup_{i=1}^k E_A(R_i)=E_A(\bigcup_{i=1}^kR_i)$
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Z monotonie $E_A$ dostáváme
 
 \quad$E_A(R_i) \subseteq E_A(\bigcup_{i=1}^k R_i)$ pro všechna $i$
@@ -2035,7 +2028,7 @@ Stačí tedy ukázat, že $\bigcup_{i=1}^k E_A(R_i)$ je $\varepsilon$-uzavřená
 \quad$q \in \bigcup_{i=1}^k E_A(R_i) \Rightarrow \exists k \ q \in E_A(R_i)$
 
 Protože $E_A(R_i)$ je $\varepsilon$-uzavřená, $\delta(q,\varepsilon) \in E_A(R_i) \Rightarrow \delta(q,\varepsilon) \in \bigcup_{i=1}^k E_A(R_i) \Rightarrow \bigcup_{i=1}^k(E_A(R_i))$ je $\varepsilon$-uzavřená množina.
-\end{dukaz}
+\end{proof}
 
 Nechť $A=\langle\Sigma,Q,\delta,I,F\rangle$ je \ekna. Řetězec $w \in \Sigma^*$ nazýváme řetězec \textbf{přijímaný} $A$, pokud
 
@@ -2049,7 +2042,7 @@ jinak $w$ nazýváme řetězec \textbf{zamítaný} $A$.
 Ke každému \ekna \ $A=\langle\Sigma,Q,\delta,I,F\rangle$ existuje KNA $A^S=\langle\Sigma,Q,\delta^S,I^S,F\rangle$ takový, že $L(A)=L(A^S)$.
 \end{veta}
  
- \begin{dukaz}
+ \begin{proof}
  $I^S=E_A(I)$
  
  $\delta^S(q,a)=\delta^*(\lbrace q \rbrace , a)= E_A(\bigcup_{u \in E_A(\lbrace q \rbrace )} \delta(u,a))$ 
@@ -2076,7 +2069,7 @@ $$
 	&=& \delta^{*} (R, w)
  \end{eqnarray*}
  \end{enumerate} 
- \end{dukaz}
+ \end{proof}
 
 \section{Algoritmus na převod $\varepsilon$ KNA na KDA}
 
@@ -2203,7 +2196,7 @@ Každý regulární výraz lze převést na konečný automat.
 Každý jazyk generovaný regulárním výrazem je regulární.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Předchozí body dokážeme indukcí dle složitosti regulárního výrazu.
 
 \begin{itemize}
@@ -2228,7 +2221,7 @@ nový koncový stav, který bude navíc novým počátečním stave a do kteréh
 $\varepsilon$ přechod do původního počátečního stavu.
 %% obrázek
 \end{itemize}
-\end{dukaz}
+\end{proof}
 
 \begin{veta}
 Každý regulární jazyk lze generovat regulárním výrazem.
@@ -2243,18 +2236,18 @@ Každý regulární jazyk lze generovat regulárním výrazem.
 \textbf{Komplement}
 
 Pokud je $L$ regulární, pak je $\Sigma^* \backslash L$ regulární.
-\begin{dukaz}
+\begin{proof}
 Pro $L$ existuje KDA s úplnou přechodovou funkcí tak, že $L(A) = L$. Na základě tohoto automatu zkonstruujeme $A'=\langle \Sigma, Q, \delta,q_0,Q \backslash F \rangle$, $A$ i $A'$ mají stejnou rozšířenou přechodovu funkci $\delta^*$.
 
 Tj. $\Sigma^* \backslash L = L(A')$
-\end{dukaz}
+\end{proof}
 
 \item
 \textbf{Sjednocení} 
 
 Jsou-li $L_1$ a $L_2$ regulární, pak je $L_1 \cup L_2$ regulární.
 
-\begin{dukaz}
+\begin{proof}
 Pro $L_1$ existuje \aut{1}, tak že $L_1=L(A_1)$
 
 Pro $L_2$ existuje \aut{2}, tak že $L_2=L(A_2)$
@@ -2270,7 +2263,7 @@ $$
 \end{array}
 \right.
 $$
-\end{dukaz}
+\end{proof}
 \begin{priklad}
 Nyní si uvedeme protipříklad, co by se stalo, kdyby množiny stavů nebyly disjunktní.
 
@@ -2305,7 +2298,7 @@ S použitím De Morganových zákonů, dostáváme:
 $$L_1 \cap L_2 = \Sigma^* \backslash (\Sigma^* \backslash L_1 \cup \Sigma^* \backslash L_2 )$$
 tj. $L_1 \cap L_2$ je regulární.
 
-\begin{dukaz}
+\begin{proof}
 Uvažujeme konečné deterministické automaty s úplnou přechodovou funkcí\\
 \aut{1} a \aut{2}
 
@@ -2315,7 +2308,7 @@ s přechodovou funkcí $\delta$:
 $$ \delta (\langle q,r \rangle , a) = \langle \delta_1 (q,a), \delta_2 (r,a) \rangle $$
 platí:
 $$L_1 \cap L_2 = L(A_1 \times A_2)$$
-\end{dukaz}
+\end{proof}
 
 \item
 \textbf{Produkt (zřetězení)} 
@@ -2456,14 +2449,14 @@ Zdůvodníme pomocí konstrukce automatu rozpoznávající $L^R$ (viz cvičení 
 
 $Sfx(L) = \bigcup_{w \in L} Sfx(w)$
 
-\begin{dukaz}
+\begin{proof}
 Pro $L$ uvažujeme $A$ tak, že $L = L(A)$. Navíc $A$ je KDA s úplnou přechodovou funkcí takový, že všechny jeho stavy jsou dosažitelné.
 
 Námi hledaný automat je KNA definován jako:
 $$A' = \langle \Sigma,Q,\delta,Q,F \rangle$$
 s přechodovou funkcí
 $$\delta(q,a) = \lbrace \delta(q,a) \rbrace$$
-\end{dukaz}
+\end{proof}
 \begin{poznamka}
 Všechny stavy jsou označeny za počáteční, aby měl automat možnost skočit do libovolné fáze výpočtu a tím "uhádnout" vynechané znaky řetězce, jehož sufix zkoumáme.
 \end{poznamka}
@@ -2504,7 +2497,7 @@ pro každé $i \ge 0$ platí, že $xy^iz \in L$
 \end{enumerate}
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Rozlišíme dva případy.
 \begin{itemize}
 \item
@@ -2545,16 +2538,16 @@ y &=& a_{i+1}a_{i+2}\ldots a_{j} \\
 z &=& a_{j+1}a_{j+2}\ldots a_{m}
 \end{eqnarray*}
 \end{itemize}
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}\label{priklad-reg}
  Jazyk $L = \lbrace a^{n}b^{n} | \quad \text{ kde } n \in N \rbrace$ není regulární.
 \end{priklad}
 
-\begin{dukaz}
+\begin{proof}
  Předchozí příklad \ref{priklad-reg} není regulární, což dokážeme sporem. Nechť je tedy $L$ regulární a dle předchozí
 věty existuje číslo $n$ tak, že vezmeme řetězec $a^{n}b^{n} = xyz$ tak, že $x = a^{k}, y = a^{l}, z = a^{n-k-l}b^{n}$.
-\end{dukaz}
+\end{proof}
 
 %% 9. přednáška
 
@@ -2597,12 +2590,12 @@ $$F^{A/\Theta} = \lbrace [q]_{\Theta} | \quad q \in F \rbrace$$.
 Automat $A$ je dobře definovaný KDA.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Větu \ref{veta-aut} si ověříme tak, že definice $\delta^{A/\Theta}$ nezávisí na výběru prvků z třídy rozkladu
 dle $\Theta$.
 
 Mějme $[q]_\Theta = [r]_\Theta$,  to jest $\langle q,r \rangle \in \Theta$. Potom pro $a \in \Sigma$ platí $\langle \delta(q,a), \delta(r,a) \rangle \in \Theta$, to jest $[ \delta(q,a)]_\Theta = [ \delta(r,a)]_\Theta$.
-\end{dukaz}
+\end{proof}
 
 Obecně $L(A/\Theta) \neq L(A)$. Snažíme se najít co největší $\Theta$, tak aby tato rovnost platila.
 
@@ -2626,7 +2619,7 @@ $\Theta = Q \times Q$
 Platí, že $(\delta^{A/\Theta})^*([q]_\Theta,x)=[\delta^*(q,x)]_\Theta$ pro každý $x \in \Sigma^*$.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Dokážeme indukcí přes délku řetězce.
 \begin{itemize}
 \item
@@ -2640,7 +2633,7 @@ pak nechť toto tvrzení platí pro $u \in \Sigma^{*}$ a řetězec $x = au$, kde
 = (\delta^{A/ \Theta})^{*} ([\delta(q, a)]_{\Theta}, u) = [\delta^{*} (\delta(q, a), u]_{\Theta} = [\delta^{*} (q, au)]_{\Theta}
 \end{gather*}
 \end{itemize}
-\end{dukaz}
+\end{proof}
 
 \begin{definice}
 Mějme KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ s úplnou přechodovou funkcí.
@@ -2652,7 +2645,7 @@ pokud $\delta^{*}(r,x) \in F$.
 $\equiv_{A}$ je zprava invariantní operace.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Dokazujeme větu \ref{veta-zprava}. Důkaz reflexivity je zřejm\'y, stejně tak symetrie i tranzitivita.
 
 Nechť $q \equiv_{A} r \text{ a m\'ame } a \in \Sigma$. M\'ame dok\'azat, že $\delta(q,a) \equiv_{A} \delta(r,a)$. Pro každ\'eD
@@ -2665,13 +2658,13 @@ $x \in \Sigma^{*}$ plat\'i:
 Užit\'im faktu, že $\delta^{*(q, ax} \in F$ dostaneme $\delta^{*}(r,ax) \in F$, tedy
 $\delta^{*}(\delta(q,a),x) \in F$ pr\'avě tehdy, když $\delta^{*}(\delta(r,a),x) \in F$, to jest
 $\delta(q,a) \equiv_{A} \delta{r, a}$ a tedy $A/ \equiv_{A}$.
-\end{dukaz}
+\end{proof}
 
 \begin{veta}\label{veta-4}
 Pro $A/ \equiv_{A}$ a stav $q \in Q$ plat\'i, že $q \in F$ pr\'avě, když $[q]_{\equiv_{A}} \in F^{A/ \equiv_{A}}$.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Předchoz\'i větu dok\'ažeme tak, že dok\'ažme implikace z obou stran.
 \begin{itemize}
 \item
@@ -2683,7 +2676,7 @@ $\exists r \in F$ tak, že $r \in [q]_{\equiv_{A}}$. To znamen\'a, že $r \equiv
 $\delta^{*}(r,x) \in F$ pr\'avě tehdy, když $\delta^{*}(q,x) \in F$, speci\'alně pro $x = \varepsilon$, nav\'ic
 $\delta^{*}(r, \varepsilon) = r \in F$, to jest $\delta^{*}(q,\varepsilon) = q \in F$.
 \end{itemize}
-\end{dukaz}
+\end{proof}
 
 \begin{dusledek}
 KDA $A$ nazveme redukovan\'y, pokud je $\equiv_{A}$ identita.
@@ -2693,7 +2686,7 @@ KDA $A$ nazveme redukovan\'y, pokud je $\equiv_{A}$ identita.
 KDA $A$ je identita.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Automat $A \equiv_{A}$ označme jako $B$, n\'asledně prok\'ažeme, že $\equiv_{B}$ je identita,
 tozn., že pokud $[q]_{\equiv_{A}} \equiv_{B} [r]_{\equiv_{A}}$,
 tak pak jsou si rovny.
@@ -2715,17 +2708,17 @@ $$
 \delta^{*}(q, x) \in F \text{ pr\'avě tehdy, když } \delta^{*}(r, x) \in F \text{ , tozn., že } q \equiv_{A} r \text{ a tedy } [q]_{\equiv_{A}} = [r]_{\equiv_{A}}
 $$
 \end{itemize}
-\end{dukaz}
+\end{proof}
 
 \begin{veta}
 $L(A) = L(A/ \equiv_{A})$, což plyne užit\'im vět \ref{veta-4} a \ref{veta-x2}.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 M\'ame dok\'azat, že $\delta^{*} \in F$, pr\'avě, když $(\delta^{A/ \equiv_{A}})([q_{0}]_{\equiv_{A}}, x) \in F^{A/ \equiv_{A}}$.
 
 Z věty \ref{veta-x2}: $\delta^{*}(q_{0},x)$ pr\'avě, když $[\delta^{*}(q_{0}, x)]_{\equiv_{A}} \in F^{A/ \equiv_{A}}$, to ale plat\'i z věty \ref{veta-4}.
-\end{dukaz}
+\end{proof}
 
 \begin{dusledek}
 Obecně plat\'i, že $L(A) \subseteq L(A/ \Theta)$.
@@ -2760,7 +2753,7 @@ Pokud $S = R$, pak vlož\'ime $R$ do $\varphi_{i}$, pokud $S \subseteq R$, pak v
 Korektnost algoritmu pro nalezen\'i $\equiv_{A}$: pokud $\varphi_{i} = \varphi_{i+1}$, pak $\varphi_{i} = Q/ \equiv_{A}$.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Ověříme, že $q \equiv_{A} r$ právě, když $q \in [r]_{\varphi_{i}}$.
 
 Pokud $q \in [r]_{\varphi_{i}}$, pak z toho, jak jsme zavedli
@@ -2788,7 +2781,7 @@ to jest $\delta(q, a) \in [\delta(q, a)]_{\varphi_{i}}$ - zde použijeme indukč
 \end{enumerate}
 
 Tvrzen\'i dok\'az\'ano pro každ\'e $x$,tedy $q \equiv_{A} r$.
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}
 Mějme v\'yraz $b(ab)^{*}ba^{*}$. D\'ale
@@ -3043,7 +3036,7 @@ Odvození pomocí nejlevější derivace značíme $u \Rightarrow_{G,l} v$.
 \begin{veta}
 Mějme $v \in \Sigma^*$ a $X \in N$. Pokud existuje P-derivace $X,\ldots,v$, pak existuje nejlevější P-derivace $X,\ldots,v$ používající stejnou množinu pravidel jako výchozí P-derivace.
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Tvrzení dokážeme indukcí přes délku P-derivace
 \begin{itemize}
 \item
@@ -3071,7 +3064,7 @@ $
 
 To jest, existuje nejlevější P-derivace $X,\ldots,w_0 \cdots w_k$
 \end{itemize}
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}
 Uvažujme gramatiku z příkladu \ref{priklad-6}
@@ -3166,7 +3159,7 @@ $S \Rightarrow_{G,l}^* a+10*c$ \quad Derivační strom bude vypadat následovně
 \begin{veta}
 Pokud $X \Rightarrow_{G,l}^* x$ pak existuje derivační strom $x$ z $X$ podle $G$.
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Tvrzení dokážeme jak jinak, než indukcí přes délku P-derivace.
 
 Předpokládejme, že tvrzení platí pro derivace délky $n$ a méně.
@@ -3178,12 +3171,12 @@ $x_1=w_0X_1w_1X_2w_2 \ldots X_kw_k$ kde $w_i \in \Sigma^*,\ X_i\in N$
 $x_{n+1}$ je ve tvaru $w_0u_1w_1u_2\ldots u_kw_k$
 
 $X_i \Rightarrow_{G,l}^* u_i \ldots$ délky nejvýše $n$. Z indukčního předpokladu vyplývá, že existují derivační stromy $X_i \Rightarrow_{G,l}^* u_i$.
-\end{dukaz}
+\end{proof}
 
 \begin{veta}
 Pokud existuje derivační strom $x$ z $X$ podle $G$, pak $X \Rightarrow_{G,l}^* x$
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Dokážeme indukcí přes výšku stromu.
 \begin{itemize}
 \item
@@ -3207,7 +3200,7 @@ X & \Rightarrow_{G,l}\  w_0X_1w_1X_2 \ldots X_{i_k}w_k \\
 \end{array}
 $
 \end{itemize}
-\end{dukaz}
+\end{proof}
 
 \begin{veta}
 $S\Rightarrow_{G,l}^* u$ právě když existuje derivační strom $u$ z $S$ podle $G$.
@@ -3231,15 +3224,15 @@ Bezkontextový jazyk $L$ se nazývá \textbf{inherentně} nejednoznačný, pokud
 Každý regulární jazyk je jednoznačný.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Pokud $L$ je regulární, pak existuje KDA $A$ s úplnou přechodovou funkcí $\delta$. Pak pro $A$ lze sestavit gramatiku $G$ tak, že bude platit $L(A) = L(G)$.
 
 Z toho jak byla gramatika $G$ konstruována plyne, že pro každý $A \in N$ a $a\in\Sigma$ existuje nejvýše jedno pravidlo $A \rightarrow aB$. To jest, pro $x \in L$ existuje právě jedna P-derivace.
-\end{dukaz}
+\end{proof}
 
-\begin{dukaz}
+\begin{proof}
 
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}
 $L=\lbrace a^nb^nc^pd^p\ |\ n,p\ge 0\rbrace$ je inherentně nejednoznačný.
@@ -3446,7 +3439,7 @@ $\langle q_j, x \rangle \in \delta(q_i, a, z)$
 Přičemž $x_j = xy$.
 \end{definice}
 
-Reflexivní a tranzitivní uzávěr $\Gamma$ označíme $\Gamma^*$ a platí:
+Reflexivní a tranzitivní uzávěr $\vdash$ označíme $\vdash^*$ a platí:
 \begin{gather*}
 \langle q_i, w_i, x_i \rangle \vdash^* \langle q_j, w_j, x_j \rangle \text{ právě, když} \\
 \langle q_i, w_i, x_i \rangle \vdash \cdots \vdash \langle q_j, w_j, x_j \rangle
@@ -3473,7 +3466,7 @@ $$
 \begin{veta}
 Ke každému NZA $A$ existuje NZA $A'$, pro který platí $L(A) = N(A') = L(A')$
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Mějme automatu $A = \langle \Sigma, \Gamma, Q, \delta, q_0, z_0, F \rangle$. Zkonstruujeme automat $A'$ tak, že
 platí $L(A) = N(A') = L(A')$, načež je třeba vyřešit dvě věci:
 \begin{enumerate}
@@ -3485,7 +3478,7 @@ přidáním symbolu $z_0'$ na dno zásobníku automatu $A$.
 V případě, že automat $A$ skončí (s prázdným vstupem), tak by v koncovém stavu automat $A'$ měl navíc ještě vyprázdnit
 zásobník, to ale zajistíme tak, že přidáme slovo $q_\#$, ve kterém $A'$ vyprazdňuje svůj zásobník.
 \end{enumerate} 
-\end{dukaz}
+\end{proof}
 
 Uvažujme
 $$
@@ -3504,7 +3497,7 @@ q \in F, a \in \Gamma \cup \lbrace z_0' \rbrace \\
 \begin{veta}
 Ke každému NZA $A = \langle \Sigma, \Gamma, Q, \delta, q_0, z_0, F \rangle$ existuje NZA $A'$ tak, že $N(A) = L(A') = N(A')$.
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Něchť je dán $A = \langle \text{ nemám poznačeno } \rangle$. Konstruujeme $A'$, načež je třeba vyřešit dvě věci:
 \begin{enumerate}
 \item
@@ -3521,7 +3514,7 @@ A' = \langle \Sigma, \Gamma \cup \lbrace z_0' \rbrace, Q \cup \lbrace q_\#', q_0
 \delta'(q_0', \varepsilon, z_0') = \lbrace \langle q_0, z_0z_0' \rangle \rbrace \\
 \delta'(q, \varepsilon, z_0') = \lbrace \langle q_\#', \varepsilon \rangle \rbrace, \quad \forall q \in Q
 \end{gather*}
-\end{dukaz}
+\end{proof}
 
 \subsection{Automaty pracující s celým zásobníkem}
 Pro automat pracující s celým zásobníkem má platit, že $\delta : Q \times (\Sigma \cup \lbrace \varepsilon \rbrace) \times \Gamma^*
@@ -3549,7 +3542,7 @@ $z_j = xy$
 \begin{veta}
 Pro každý NZA $A$ pracující s celým zásobníkem existuje NZA $A'$ pracující pouze s vrcholem zásobníku.
 \end{veta}
-\begin{dukaz}
+\begin{proof}
 Mějme $A = \langle \Sigma, \Gamma, Q, \delta, q_0, z_0, F \rangle$ pracující s celým zásobníkem. Následně vytvoříme
 $A' = \langle \Sigma, \Gamma \cup \lbrace z_0' \rbrace, Q \cup \lbrace q_0', q_\# \rbrace \cup Q', q_0', z_0', F \rangle$ pracující s vrcholem
 zásobníku.
@@ -3587,7 +3580,7 @@ $q_1',q_2',\ldots,q_{n-1}'$ a ty přidáme do $Q'$ a zavedeme přechody $\delta'
 \item
 Zavedeme přechod $\delta'(q, \varepsilon, z_0') = \lbrace \langle q_\#, \varepsilon \rangle \rbrace$.
 \end{itemize}
-\end{dukaz}
+\end{proof}
 \begin{dusledek}
 Třídy automatu jsou ekvivalentní.
 \end{dusledek}
@@ -3712,7 +3705,7 @@ $
 Pro každou bezkontextovou gramatiku $G$ existuje NZA $A$ tak, že $L(G)=N(A)$.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Uvažujeme gramatiku $G=\langle N,\Sigma,P,S \rangle$ a odtud $A$ zkonstruovaný pomocí operací expanze a srovnání (předchozí způsob).
 
 Tvrdíme, že pro libovolný řetězec $w \in \Sigma^*$ platí:
@@ -3784,7 +3777,7 @@ $$
 A \Rightarrow_{G,l} z_1z_2\cdots z_k \Rightarrow_{G,l}^* x_1z_2\cdots z_k \Rightarrow_{G,l}^* x_1x_2z_3\cdots z_k \Rightarrow_{G,l}^* x_1 \cdots x_k = w
 $$
 \end{itemize}
-\end{dukaz}
+\end{proof}
 
 \subsection{Od automatů ke gramatikám}
 
@@ -3792,7 +3785,7 @@ $$
 Pro každý NZA $A=\langle \Sigma,\Gamma,Q,\delta,q_0,z_0,F \rangle$ existuje bezkontextová gramatika $G$ tak, že $L(G)=N(A)$.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Množina $N$ je $N=Q \times \Gamma \times Q \cup \lbrace S \rbrace$.
 Pravidla gramatiky vypadají následovně:
 \begin{enumerate}
@@ -3859,7 +3852,7 @@ $$$$
 \langle q,z,p \rangle \Rightarrow_{G,l} a \langle r_0,z_1,r_1 \rangle \cdots \langle r_{k-1},z_k,r_k \rangle
 $$
 \end{itemize}
-\end{dukaz}
+\end{proof}
 
 \begin{dusledek}
 Ke každému NZA existuje ekvivalentní automat rozpoznávající stejný jazyk, který má pouze 1 stav.
@@ -3897,7 +3890,7 @@ $L = L(A')$ pro nějaký DZA $A'$ a $L$ má prefixovou vlastnost
 \end{enumerate}
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Nechť platí 1. tvrzení: $L=N(A)$ \emph{pro DZA A}
 
 \begin{enumerate}
@@ -3915,7 +3908,7 @@ Hledaný automat $A'$ můžeme najít tak, že vytvoříme nový pomocný zásob
 Nechť platí 2. tvrzení.
 
 Jelikož má $L$ prefixovou vlastnost, pak automat $A'$ můžeme upravit tak, že z každého koncového stavu zrušíme všechny vycházející přechody. Vzniklý automat opět přijímá $L$ pomocí koncových stavů. Z koncových stavů vytvoříme $\varepsilon$-přechody do nového stavu, ve kterém vyprázdníme zásobník.
-\end{dukaz}
+\end{proof}
 
 \begin{dusledek}
 Deterministický bezkontextový jazyk má prefixovou vlastnost, právě když je přijímán nějakým DZA pomocí vyprázdnění zásobníku.
@@ -3925,10 +3918,10 @@ Deterministický bezkontextový jazyk má prefixovou vlastnost, právě když je
 Každý regulární jazyk je deterministický.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Pro $L$ existuje KDA $A = \langle \Sigma,Q,\delta,q_0,F \rangle$ s úplnou přechodovou funkcí.
 %%%DOPLNIT z nahrávky, v sešitě nic%%%
-\end{dukaz}
+\end{proof}
 
 \begin{priklad}
 Následující jazyk je deterministický:
@@ -3945,21 +3938,21 @@ Mnoho regulárních jazyků \textbf{nemá} prefixovou vlastnost.
 Pokud $L=N(A)$ pro DZA $A$, pak je $L$ jednoznačný.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Náznak důkazu je následující:
 
 Na základě $A$ sestavíme gramatiku $G$ tak, že $L(G) = N(A)$ a navíc prokážeme, že gramatika $G$ má jednoznačné odvození každé věty.
-\end{dukaz}
+\end{proof}
 
 \begin{veta}
 Pokud $L=L(A)$ pro DZA $A$, pak je $L$ jednoznačný. Deterministické bezkontextové jazyky jsou jednoznačné.
 \end{veta}
 
-\begin{dukaz}
+\begin{proof}
 Náznak důkazu:
 
 Vyjdeme z toho, že $L=L(A)$ a uvažujeme, že $L'=L \cdot \lbrace \$ \rbrace$. I ten je deterministický. Tj. existuje $A'$ tak, že $L(A')=L'=L \cdot \lbrace \$ \rbrace$. Dle předchozí věty existuje jednoznačná gramatika $G$ tak, že $L(G) = L \cdot \lbrace \$ \rbrace$.
-\end{dukaz}
+\end{proof}
 
 \begin{figure}[ht]
 \centering\includegraphics[width=9cm]{vajicko-3.eps}
