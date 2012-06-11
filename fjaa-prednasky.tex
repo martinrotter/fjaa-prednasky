@@ -2638,7 +2638,7 @@ pak nechť toto tvrzení platí pro $u \in \Sigma^{*}$ a řetězec $x = au$, kde
 \begin{definice}
 Mějme KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ s úplnou přechodovou funkcí.
 Pro stavy $q, r \in Q$ položme $q \equiv_{A} r$, pokud pro každ\'y řetězec $x \in \Sigma{*}$ plat\'i, že $\delta^{*}(q,x) \in F$,
-pokud $\delta^{*}(r,x) \in F$.
+právě když $\delta^{*}(r,x) \in F$.
 \end{definice}
 
 \begin{veta}\label{veta-zprava}
@@ -2648,7 +2648,7 @@ $\equiv_{A}$ je zprava invariantní operace.
 \begin{proof}
 Dokazujeme větu \ref{veta-zprava}. Důkaz reflexivity je zřejm\'y, stejně tak symetrie i tranzitivita.
 
-Nechť $q \equiv_{A} r \text{ a m\'ame } a \in \Sigma$. M\'ame dok\'azat, že $\delta(q,a) \equiv_{A} \delta(r,a)$. Pro každ\'eD
+Nechť $q \equiv_{A} r \text{ a m\'ame } a \in \Sigma$. M\'ame dok\'azat, že $\delta(q,a) \equiv_{A} \delta(r,a)$. Pro každ\'e
 $x \in \Sigma^{*}$ plat\'i:
 
 \begin{eqnarray*}
@@ -2683,25 +2683,25 @@ KDA $A$ nazveme redukovan\'y, pokud je $\equiv_{A}$ identita.
 \end{dusledek}
 
 \begin{veta}
-KDA $A$ je identita.
+KDA $A/ \equiv_{A}$ je redukovaný.
 \end{veta}
 
 \begin{proof}
 Automat $A \equiv_{A}$ označme jako $B$, n\'asledně prok\'ažeme, že $\equiv_{B}$ je identita,
 tozn., že pokud $[q]_{\equiv_{A}} \equiv_{B} [r]_{\equiv_{A}}$,
-tak pak jsou si rovny.
+tak pak $[q]_{\equiv_{A}} = [r]_{\equiv_{A}}$.
 
-Předpokl\'adejme, že plat\'i $[q]_{\equiv_{A}} \equiv [r]_{\equiv_{A}}$.
+Předpokl\'adejme, že plat\'i $[q]_{\equiv_{A}} \equiv_{B} [r]_{\equiv_{A}}$.
 \begin{itemize}
 \item
-Pak podle definice $\equiv_{B}$ tozn, že pro $x \in \Sigma^{*}$
-plat\'i $\delta^{A/ \equiv_{A}} ([q]_{\equiv_{A}},x) \in F$ pr\'avě,  když
+Pak podle definice $\equiv_{B}$ tozn, že pro $\forall x \in \Sigma^{*}$
+plat\'i $(\delta^{A/ \equiv_{A}})^{*} ([q]_{\equiv_{A}},x) \in F^{A/ \equiv_{A}}$ pr\'avě,  když
 $(\delta^{A/ \equiv_{A}})^{*}([r]_{\equiv_{A}},x) \in F^{A/ \equiv_{A}}$.
 
 \item
 S využit\'im věty \ref{veta-x2} pro každ\'e $x \in \Sigma^{*}$:
 $$
-[\delta^{*}(q,x)] \in F^{A/ \equiv_{A}} \text{ právě tehdy, když } [\delta^{*}(r, x)]_{\equiv{A}} \in F^{A/ \equiv_{A}}
+[\delta^{*}(q,x)]_{\equiv_{A}} \in F^{A/ \equiv_{A}} \text{ právě tehdy, když } [\delta^{*}(r, x)]_{\equiv{A}} \in F^{A/ \equiv_{A}}
 $$
 N\'asledně aplikujeme větu \ref{veta-4}:
 $$
@@ -2715,7 +2715,7 @@ $L(A) = L(A/ \equiv_{A})$, což plyne užit\'im vět \ref{veta-4} a \ref{veta-x2
 \end{veta}
 
 \begin{proof}
-M\'ame dok\'azat, že $\delta^{*} \in F$, pr\'avě, když $(\delta^{A/ \equiv_{A}})([q_{0}]_{\equiv_{A}}, x) \in F^{A/ \equiv_{A}}$.
+M\'ame dok\'azat, že $\delta^{*}(q_{0}, x) \in F$, pr\'avě, když $(\delta^{A/ \equiv_{A}})^{*}([q_{0}]_{\equiv_{A}}, x) \in F^{A/ \equiv_{A}}$.
 
 Z věty \ref{veta-x2}: $\delta^{*}(q_{0},x)$ pr\'avě, když $[\delta^{*}(q_{0}, x)]_{\equiv_{A}} \in F^{A/ \equiv_{A}}$, to ale plat\'i z věty \ref{veta-4}.
 \end{proof}
