@@ -514,7 +514,7 @@ Gramatiky $G_{1}$ a $G_{2}$ jsou \textbf{ekvivalentní}, pokud generují stejný
 Ty splňují následující omezení na tvar pravidel. Pro každé pravidlo gramatik tohoto typu platí, že:
 \begin{enumerate}
 \item
-Buď je (pravidlo) ve tvaru $pAq \rightarrow p \times q, \text{ kde } p, q \in (\Sigma \cup N)^{*}, A \in N, x \in (\Sigma \cup N)^{*}$, kde \emph{p} a \emph{q}
+Buď je (pravidlo) ve tvaru $pAq \rightarrow p x q, \text{ kde } p, q \in (\Sigma \cup N)^{*}, A \in N, x \in (\Sigma \cup N)^{*}$, kde \emph{p} a \emph{q}
 se nazývají levým resp. pravým \textbf{kontextem}.
 
 \item
@@ -557,9 +557,9 @@ $S \rightarrow \varepsilon$ (přičemž platí stejné podmínky, jako u gramati
 
 \end{itemize}
 
-\begin{poznamka}
+\begin{veta}
 Každý konečný jazyk je regulární.
-\end{poznamka}
+\end{veta}
 
 \begin{dukaz}
 Mějme jazyk $L = \lbrace x_{1},\ldots, x_{n} \rbrace$. Abychom tento jazyk prohlásili za regulární, tak je třeba najít regulární gramatiku,
@@ -637,7 +637,7 @@ jsou všechna pravidla obsahující terminální symboly ve tvaru $A \rightarrow
 \end{veta}
 
 \begin{dukaz}
-Pro každý terminál $a \in \Sigma$, zavedeme terminál $N_{a}$ a pravidlo $N_{a} \rightarrow a$.
+Pro každý terminál $a \in \Sigma$, zavedeme pomocný neterminál $N_{a}$ a pravidlo $N_{a} \rightarrow a$.
 Všechny výskyty terminálů ve výchozích pravidlech nahradíme příslušnými pomocnými neterminály, tedy:
 \begin{itemize}
 \item
@@ -655,7 +655,7 @@ gramatika kontextové zásvislá, tak tím myslíme, že je kontextová.}.
 
 \begin{dukaz}
 Předpokládejme, že $G = \langle N, \Sigma, P, S \rangle$ je nezkracující gramatika. Pak můžeme předpokládat, 
-že všechna pravidla jsou buď ve tvaru $A \rightarrow a$ nebo ve tvaru obecně. 
+že všechna pravidla jsou buď ve tvaru $A \rightarrow a$ nebo ve tvaru obecně:
 $A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{n}$, kde $A_{1}, \ldots,A_{m}, B_{1}, \ldots,B_{n} \in N$ a navíc $m \leq n$. 
 
 Taková pravidla lze psát ve tvaru $A_{1} A_{2} \cdots A_{m} \rightarrow B_{1} B_{2} \cdots B_{m}y$, kde $y = B_{m+1} \cdots B_{n}$ 
@@ -671,7 +671,7 @@ X_{1} X_{2} \cdots X_{m}y \rightarrow B_{1} X_{2} X_{3} \cdots X_{m}y \\
 B_{1} B_{2} \cdots B_{m-1} X_{m}y \rightarrow B_{1} B_{2} \cdots B_{m-1}B_{m}y
 \end{gather*}
 Tento postup se aplikuje pro všechna pravidla. Hledaná gramatika $G^{'}$ se skládá
-z $\Sigma, N$ a navíc všech pomocných terminálů a odvozovacích pravidel.
+z $\Sigma, N$ a navíc všech pomocných neterminálů a odvozovacích pravidel.
 \end{dukaz}
 
 \subsection{Základní vlastnosti bezkontextových gramatik}
@@ -708,7 +708,7 @@ $$
 Máme $y \Rightarrow_{G}z$. Můžeme aplikovat indukční předpoklad:
 
 Existují řetězce $y_{1}, \ldots, y_{k}$ a P-derivace $X_{1}, \ldots, y_{1}$ až $X_{k}, \ldots, y_{k}$ 
-délek $n_{1} \cdots n_{k}$ tak, že $y = y_{1} y_{2} \cdots y_{k}$ a $n = n_{1} + n_{2} + \cdots + n{k}$. 
+délek $n_{1} \cdots n_{k}$ tak, že $y = y_{1} y_{2} \cdots y_{k}$ a $n = n_{1} + n_{2} + \cdots + n_{k}$. 
 
 Z faktu, že $y  \Rightarrow_{G}z$ a z toho, že gramatika je bezkontextová plyne, že $y$ je ve tvaru 
 $y = y^{''} y^{'} A w^{'} w^{''}$ pro $i = 1, \ldots, k$. Pak $z$ je ve tvaru $z = y^{''} y^{'} u w^{'} w^{''}$ a $A \rightarrow u \in P$,
@@ -764,6 +764,8 @@ E_{i+1} &=& E_{i} \cup \lbrace A \in N | A \rightarrow x, \text{ kde } x \in E_{
 \begin{eqnarray*}
 A &\rightarrow& \varepsilon \\
 B &\rightarrow& \varepsilon \\
+F &\rightarrow& ABBA \\
+B &\rightarrow& BAF \\
 E_{0} &=& \lbrace A, B \rbrace \\
 E_{1} &=& \lbrace A, B, F \rbrace \\
 E_{2} &=& \lbrace A, B, F, G \rbrace
@@ -779,8 +781,8 @@ E_{N} &=& E_{i}
 \end{priklad}
 
 \begin{veta}
-Pro každou bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ a pro příslušné $E_{N}$ platí následující $A \Rightarrow_{G}^{*}\varepsilon$, pak $A \in E_{N}$. 
-Speciálně $\varepsilon \in L(G)$, pak $S \in E_{N}$.
+Pro každou bezkontextovou gramatiku $G = \langle N, \Sigma, P,S \rangle$ a pro příslušné $E_{N}$ platí následující $A \Rightarrow_{G}^{*}\varepsilon$ právě když $A \in E_{N}$. 
+Speciálně $\varepsilon \in L(G)$ právě když $S \in E_{N}$.
 \end{veta}
 
 \begin{dukaz}
