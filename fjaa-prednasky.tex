@@ -1260,7 +1260,7 @@ Strukturu $A = \langle \Sigma, Q, \delta, I, F \rangle$ nazvěme \textbf{konečn
 \item
 $\Sigma, Q \text{ a } F$ jsou stejné jako u konečného deterministického automatu.
 \item
-\textit{I} označuje množinu počátečních stavů, která by měla být obecně neprázdná.
+$I\subseteq Q$ označuje množinu počátečních stavů, která by měla být obecně neprázdná.
 \item
 $\delta$ označuje přechodovou funkci ve tvaru $\delta : Q \times \Sigma \rightarrow 2^{Q}$, tedy $\delta (q, a) = \lbrace r_{1}, \ldots, r_{k} \rbrace$. Totéž slovně: \uv{Automat může při stavu \textit{q} při symbolu \textit{a}
 přejít do kteréhokoliv stavu z $\lbrace r_{1}, \ldots, r_{k} \rbrace$.}
@@ -1348,7 +1348,7 @@ Koncová přijímací konfigurace $\langle q, \varepsilon \rangle \text{ kde } q
 \begin{definice}
 Mějme $A = \langle \Sigma, Q, \delta, I, F \rangle  \text{ a } w \in \Sigma^{*}$. Pak posloupnost konfigurací $\langle r_{i}, w_{i} \rangle \text{ pro } i = \lbrace 0, \ldots, n \rbrace $ splňující podmínky:
 \begin{gather}
-R_{0} \in I \\
+r_{0} \in I \\
 w_{0} = w \\
 w_{n} = \varepsilon \\
 w_{i} = a_{i}w_{i+1} \text{ a } r_{i+1} \in \delta (r_{i}, a_{i}) \text{ pro } i = \lbrace 0, \ldots,  n-1 \rbrace
@@ -1443,10 +1443,10 @@ Předchozí větu lze dokázat následujícím způsobem:
 \begin{enumerate}
 \item
 Uvažujme $A^{D} = \langle \Sigma, 2^{Q}, \delta^{D}, I, F^{D} \rangle$, kde $F^{D} = \lbrace R  \subseteq Q | R \cap F \neq \emptyset \rbrace, \delta^{D}(R,a) = \delta^{*}(R,a)$.
-Nyní zbývá ukázat, že $\delta^{*}(I,w) \cap F \neq \emptyset$ právě tehdy, když $(\delta{D})^{*}(I,w) \in F^{D}$, což prokážeme indukcí přes délku řetězce $w$.
+Nyní zbývá ukázat, že $\delta^{*}(I,w) \cap F \neq \emptyset$ právě tehdy, když $(\delta^{D})^{*}(I,w) \in F^{D}$, což prokážeme indukcí přes délku řetězce $w$.
 
 \item
-Pro $w = \varepsilon$ je situace zřejmá. Jinak $(\delta{D})^{*} (R,w) = (\delta{D})^{*} (R, \varepsilon) = R = \delta^{*}(R, \varepsilon) = \delta^{*}(R,w)$.
+Pro $w = \varepsilon$ je situace zřejmá. Jinak $(\delta^{D})^{*} (R,w) = (\delta^{D})^{*} (R, \varepsilon) = R = \delta^{*}(R, \varepsilon) = \delta^{*}(R,w)$.
 
 \item
 Předpokládejme, že tvrzení platí pro řetězce délky $n$ a nechť $w$ má délku $n+1$ a $w=au$ pro $a \in \Sigma, |u| < |v|$. Pak:
@@ -1630,7 +1630,7 @@ V případě, že $\varepsilon \in L(G)$, rozšíříme automat následovně, je
 Přidáme $S$ do množiny koncových stavů.
 
 \item
-Přidáme $\#$ mezi počáteční stavy
+Přidáme $\#$ mezi počáteční stavy.\footnote{Též nazývána jako \uv{Konyho finta}.}
 
 \item
 Zavedeme nový stav, který bude počáteční a zároveň koncový a nevedou z něj žádné přechody jinam.
@@ -1963,7 +1963,7 @@ $w_i=w_{i+1} , r_{i+i} \in \delta(r_i,\varepsilon)$
 
 Je dána množina stavů $R \subseteq Q$
 
-$R$ se nazývá $\varepsilon$-uzavřená, pokud $ \delta (q,\varepsilon) \subseteq R$ pro každý stav $ q \in Q$.
+$R$ se nazývá $\varepsilon$-uzavřená, pokud $ \delta (q,\varepsilon) \subseteq R$ pro každý stav $ q \in R$.
 
 \begin{priklad}
 Lze ukázat na našem příkladě \ref{priklad-5}.
@@ -1981,7 +1981,7 @@ vstup: $R \subseteq Q$
 
 a pro $i \geq 1$
 
-\quad$E_i=E_{i-1} \cup \lbrace \delta (q,\varepsilon) | q \in E_{i-1}$
+\quad$E_i=E_{i-1} \cup \lbrace \delta (q,\varepsilon) | q \in E_{i-1}\rbrace$
 
 \quad$E_A(R)=\bigcup_{i=0}^\infty E_i$
 
@@ -2044,6 +2044,7 @@ $\delta^*(I,w) \cap F \neq \emptyset$
 
 jinak $w$ nazýváme řetězec \textbf{zamítaný} $A$.
 
+Jazyk přijímaný A: $L(A) = \lbrace w \in \Sigma^{*} | \delta^{*}(I, w) \cap F \neq \emptyset \rbrace$ 
 \subsection{Ekvivalence s KDA}
 
 \begin{veta}
@@ -2055,7 +2056,7 @@ Ke každému \ekna \ $A=\langle\Sigma,Q,\delta,I,F\rangle$ existuje KNA $A^S=\la
  
  $\delta^S(q,a)=\delta^*(\lbrace q \rbrace , a)= E_A(\bigcup_{u \in E_A(\lbrace q \rbrace )} \delta(u,a))$ 
  
- Indukcí přes délku řetězce $w \in \Sigma^*$ prokážeme, že $ \delta^{S^*} (E_A(R),w)=\delta^*(R,w)$
+ Indukcí přes délku řetězce $w \in \Sigma^*$ prokážeme, že $ (\delta^{S})^{*} (E_A(R),w)=\delta^*(R,w)$
  
  \begin{enumerate}
  \item
@@ -2067,12 +2068,12 @@ w = av, \quad a \in \Sigma, \quad v \in \Sigma^*, \quad |v|=n, \quad R \subseteq
 $$ 
  
  \begin{eqnarray*}
-	\delta^{S^*} (E_A(R),w) &=& \delta^{S^*} (E_A(R),av) \\
-	&=& \delta^{S^*} (\bigcup_{q \in E_A(R)} \delta^S(q,a), u) \\
-	&=& \delta^{S^*} (\bigcup_{q \in E_A(R)} E_A(\bigcup_{u \in E_A(\lbrace q \rbrace)} \delta (u,a)),u) \\
-	&=& \delta^{S^*} (E_{A} \bigcup_{q \in E_A(R)} \bigcup_{u \in E_A(\lbrace q \rbrace)} \delta (u,a)),u) \\
-	&=& \delta^{S^*} (E_{A} \bigcup_{q \in E_A(R)} \delta (q,a)),u) \\
-	&=& \delta^{S^*} (E_{A} (E_{A} \bigcup_{q \in E_A(R)} \delta (q,a))),u) \\
+	(\delta^{S})^{*} (E_A(R),w) &=& (\delta^{S})^{*} (E_A(R),av) \\
+	&=& (\delta^{S})^{*} (\bigcup_{q \in E_A(R)} \delta^S(q,a), u) \\
+	&=& (\delta^{S})^{*} (\bigcup_{q \in E_A(R)} E_A(\bigcup_{u \in E_A(\lbrace q \rbrace)} \delta (u,a)),u) \\
+	&=& (\delta^{S})^{*} (E_{A} \bigcup_{q \in E_A(R)} \bigcup_{u \in E_A(\lbrace q \rbrace)} \delta (u,a)),u) \\
+	&=& (\delta^{S})^{*} (E_{A} \bigcup_{q \in E_A(R)} \delta (q,a)),u) \\
+	&=& (\delta^{S})^{*} (E_{A} (E_{A} \bigcup_{q \in E_A(R)} \delta (q,a))),u) \\
 	&=& \delta^{*} (E_{A} \bigcup_{q \in E_A(R)} \delta (q,a)),u) \\
 	&=& \delta^{*} (R, w)
  \end{eqnarray*}
@@ -2098,11 +2099,10 @@ while \( W \neq Q \) do
              if \( N \notin W \cup Q^{s} \) then
                  \( W \leftarrow W \cup {N} \)
              endif
-             %%% je to R, W, N ???
-             \( \delta^{s} \leftarrow \delta{s} \cup {<R, W, N>} \)
+             \( \delta^{s} \leftarrow \delta{s} \cup {<R, a, N>} \)
          endif
-     end
-end
+     endfor
+endwhile
 return \( <\Sigma, Q^{s}, \delta^{s}, I, F^{s}> \)
 \end{alltt}
 \caption{Pseudokód pro převod $\varepsilon$ KNA na KDA.}
@@ -2154,7 +2154,7 @@ pokud $R_{1}, R_{2}$ jsou RV, pak $(R_{1}|R_{2})$ je RV
 pokud $R_{1}, R_{2}$ jsou RV, pak $(R_{1}R_{2})$ je RV
 
 \item
-pokud $R$ je RV, pak $(R^{*}$ je RV
+pokud $R$ je RV, pak $R^{*}$ je RV
 \end{enumerate}
 \end{definice}
 
@@ -2169,7 +2169,9 @@ $((ab)c)^{*}$, $((a|b)c)^{*}$ -- jsou RV
 $a^{*}b)$, $a||b$ -- nejsou RV
 \end{itemize}
 \end{priklad}
-
+\begin{poznamka}
+Priorita $| , \circ , *$ je stejná jako (po řadě) $+ , \cdot , ^{-1}$ v aritmetických výrazech.
+\end{poznamka}
 \section{Jazyky generované regulárními výrazy}
 
 \begin{definice}
@@ -2183,16 +2185,16 @@ $L(R) = \emptyset$, pokud $R = \emptyset$.
 $L(R) = \lbrace \varepsilon \rbrace$, pokud $R = \varepsilon$.
 
 \item\label{jazyky-3}
-$L(R) = \lbrace a_{i} | \quad pokud R=a_{i} \rbrace$.
+$L(R) = \lbrace a_{i} | \quad \text{pokud } R=a_{i} \rbrace$.
 
 \item\label{jazyky-4}
-$L(R) - L(R_{1}) \cup L(R_{2})$, pokud $R=\lbrace R_{1} | R_{2} \rbrace$. 
+$L(R) = L(R_{1}) \cup L(R_{2})$, pokud $R=\lbrace R_{1} | R_{2} \rbrace$. 
 
 \item\label{jazyky-5}
-$L(R) - L(R_{1}) \circ L(R_{2})$, pokud $R=\lbrace R_{1}\circ R_{2} \rbrace$.
+$L(R) = L(R_{1}) \circ L(R_{2})$, pokud $R=\lbrace R_{1}\circ R_{2} \rbrace$.
 
 \item\label{jazyky-6}
-$L(R) = L(R_{1})* $, pokud $R = R_{1}*$.
+$L(R) = L(R_{1})^{*} $, pokud $R = R_{1}^{*}$.
 \end{enumerate}
 \end{definice}
 
@@ -2433,7 +2435,7 @@ $$
 \item
 \textbf{Množinový rozdíl}
 
-Jsou-li $L_1$ a $L_2$ regulární, pak $L_1 \backslash L_2 = L_1 \cap (\Sigma^* \backslash L_1)$ je regulární.
+Jsou-li $L_1$ a $L_2$ regulární, pak $L_1 \backslash L_2 = L_1 \cap (\Sigma^* \backslash L_2)$ je regulární.
 
 \item
 \textbf{Kleeneho pozitivní uzávěr}
@@ -2501,7 +2503,7 @@ $|xy| \le n$
 \item
 $y \neq \varepsilon$
 \item
-pro každé $i \ge 0$ platí, že $xy^iz \in L$
+pro každé $i > 0$ platí, že $xy^iz \in L$
 \end{enumerate}
 \end{veta}
 
@@ -2562,7 +2564,7 @@ věty existuje číslo $n$ tak, že vezmeme řetězec $a^{n}b^{n} = xyz$ tak, ž
 \section{Minimalizace KDA}
 
 \begin{poznamka}
-Pro regulární jazyk $L$ více, než jeden automat $A$ tak, že $L = L(A)$ a navíc můžeme mít $A_{1}, A_{2}$ tak, že
+Pro regulární jazyk $L$ existuje více, než jeden automat $A$ tak, že $L = L(A)$ a navíc můžeme mít $A_{1}, A_{2}$ tak, že
 $L(A_{1}) = L(A_{2})$, ale $|Q_{1}| < |Q_{2}|$.
 \end{poznamka}
 
@@ -2587,7 +2589,7 @@ $\Theta = Q \times Q$
 \subsection{Faktorizace automatu}
 
 \begin{definice}
-Mějmse KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a zprava invariantní ekvivalenci $\Theta$ vzhledem k
+Mějm KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a zprava invariantní ekvivalenci $\Theta$ vzhledem k
 $\delta$, pak zavedeme $A/\theta = \langle \Sigma, Q/\Theta, \delta^{A/\Theta}, [q_{0}]_{\Theta}, F^{A/\Theta} \rangle$, kde
 $$\delta^{A/\Theta} = ([q]_{\Theta}, a) = [\delta(q, a)]_{\Theta}$$
 a
