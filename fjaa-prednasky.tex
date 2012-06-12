@@ -1203,6 +1203,12 @@ $A' = \langle \Sigma, Q \cup \lbrace \# \rbrace, \delta', q_0, F \rangle$
 Následně tedy $L(A) = L(A')$.
 \end{dukaz}
 
+\subsection{Implementace KDA}
+\begin{enumerate}
+\item $\delta$ jako dvourozměrné pole - \uv{ďábelsky rychlé}, paměťově náročné
+\item $\delta$ jako seznam/hashovací tabulka - vhodné když $|\delta | <<< |Q\times \Sigma |$
+\item $\delta$ jako orientovaný graf
+\end{enumerate}
 %%% případně dodělat...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
