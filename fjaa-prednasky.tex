@@ -514,7 +514,7 @@ Gramatiky $G_{1}$ a $G_{2}$ jsou \textbf{ekvivalentní}, pokud generují stejný
 Ty splňují následující omezení na tvar pravidel. Pro každé pravidlo gramatik tohoto typu platí, že:
 \begin{enumerate}
 \item
-Buď je (pravidlo) ve tvaru $pAq \rightarrow p x q, \text{ kde } p, q \in (\Sigma \cup N)^{*}, A \in N, x \in (\Sigma \cup N)^{*}$, kde \emph{p} a \emph{q}
+Buď je (pravidlo) ve tvaru $pAq \rightarrow pxq, \text{ kde } p, q \in (\Sigma \cup N)^{*}, A \in N, x \in (\Sigma \cup N)^{+}$, kde \emph{p} a \emph{q}
 se nazývají levým resp. pravým \textbf{kontextem}.
 
 \item
@@ -765,7 +765,7 @@ E_{i+1} &=& E_{i} \cup \lbrace A \in N | A \rightarrow x, \text{ kde } x \in E_{
 A &\rightarrow& \varepsilon \\
 B &\rightarrow& \varepsilon \\
 F &\rightarrow& ABBA \\
-B &\rightarrow& BAF \\
+G &\rightarrow& BAF \\
 E_{0} &=& \lbrace A, B \rbrace \\
 E_{1} &=& \lbrace A, B, F \rbrace \\
 E_{2} &=& \lbrace A, B, F, G \rbrace
@@ -822,13 +822,11 @@ libovolného množství neterminálů z $E_{N}$.
 \begin{priklad}
 Mějme množinu $E_{n} = \lbrace A, B \rbrace$.
 
-Následně pravidla:
+Následně pravidla (odstraňujeme jakoby permutace neterminálů):
 \begin{eqnarray*}
 X &\rightarrow& aAbAB \\
 &\ldots& \\
-X &\rightarrow& aAbAB \\
 X &\rightarrow& abAB \\
-X &\rightarrow& aAbB \\
 X &\rightarrow& aAbB \\
 X &\rightarrow& aAbA \\
 X &\rightarrow& abB \\
@@ -993,7 +991,7 @@ F &=& \lbrace q_4 \rbrace \\
 \begin{tabular}{r || c | c | c}
  & a & b & c \\
 \hline
- $q_0$ & $q_0$ & $q_0$ & $q_1$ \\
+ $\rightarrow q_0$ & $q_0$ & $q_0$ & $q_1$ \\
  $q_1$ & $q_2$ & $q_0$ & $q_1$ \\
  $q_2$ & $q_0$ & $q_3$ & $q_1$ \\
  $q_3$ & $q_2$ & $q_0$ & $q_4$ \\
@@ -1134,7 +1132,7 @@ Pokud $|u| > 0$, pak předpokládáme, že tvrzení platí pro $\forall$ řetěz
 \end{dukaz}
 
 \begin{poznamka}
-Automat $A$ přijím řetězec $a$, pokud $\delta^*(q_0,w) \in F$.
+Automat $A$ přijímá řetězec $w$, pokud $\delta^*(q_0,w) \in F$.
 \end{poznamka}
 
 \begin{veta}
@@ -1158,11 +1156,11 @@ Tj.  $\delta^*(r_i,w_i) = \delta^*(r_i,a_i,w_{i+1}) = \delta^*(\delta(r_i, a_i),
 Jazyk rozpoznaný konečným deterministickým automate lze formulovat jako
 $L(A) = \lbrace w \in \Sigma^* |\quad \delta^*(q_0,w) \in F \rbrace$.
 
-\subsection{KDA s úplnou přechodovou funkcí}
+\subsection{KDA s neúplnou přechodovou funkcí}
 
 Mějme KDA $A = \langle \Sigma, Q, \delta, q_0, F \rangle$ a upřesněme $\delta$, které se liší.
 
-$\delta$ je úplná přechodová funkce tvaru $\delta \subseteq Q \times \Sigma \times Q$, přičemž také platí, že
+$\delta$ je neúplná přechodová funkce tvaru $\delta \subseteq Q \times \Sigma \times Q$, přičemž také platí, že
 pokud $\langle q, a, r_1 \rangle \in \delta$ a $\langle q,a,r_2 \rangle \in \delta$, pak $r_1 = r_2$ a $\delta:\quad Q \times \Sigma \rightarrow Q$.
 
 Z toho plynou dvě situace:
@@ -1188,7 +1186,7 @@ Ke každému KDA s neúplnou přechodovu funkcí $\delta$ existuje KDA s úplnou
 \end{veta}
 
 \begin{dukaz}
-Každý KDA s úplnou přechodovou funkcí je zároveň KDA s úplnou přechodovou funkcí. Tedy
+Každý KDA s neúplnou přechodovou funkcí je zároveň KDA s úplnou přechodovou funkcí. Tedy
 $A' = \langle \Sigma, Q \cup \lbrace \# \rbrace, \delta', q_0, F \rangle$
 
 \begin{gather*}
@@ -2255,7 +2253,7 @@ Pro $L_1$ existuje \aut{1}, tak že $L_1=L(A_1)$
 Pro $L_2$ existuje \aut{2}, tak že $L_2=L(A_2)$
 
 Předpokládáme-li, že $A_1$ a $A_2$ mají disjunktní množiny stavů, tj. $Q_1 \cap Q_2 = \emptyset$, sestavíme následující KNA:\\
-$A=\langle,Q_1 \cup Q_2,\delta,\lbrace q_{01},q_{02} \rbrace,F_1 \cup F_2 \rangle$ s přechodovou funkcí $\delta$ definovanou jako
+$A=\langle \Sigma,Q_1 \cup Q_2,\delta,\lbrace q_{01},q_{02} \rbrace,F_1 \cup F_2 \rangle$ s přechodovou funkcí $\delta$ definovanou jako
 
 $$
 \delta(q,a)=\left\{
@@ -2573,7 +2571,7 @@ Pravá invariance reprezentuje přirozenou vlastnost, kterou musí mít relace n
 Mezními případy invariantních relací zprava jsou:
 \begin{enumerate}
 \item 
-identita $\Theta = \lbrace <q,q> | \quad q \in Q \rbrace$
+identita $\Theta = \lbrace \langle q,q \rangle | \quad q \in Q \rbrace$
 \item
 $\Theta = Q \times Q$
 \end{enumerate}
@@ -2581,11 +2579,11 @@ $\Theta = Q \times Q$
 \subsection{Faktorizace automatu}
 
 \begin{definice}
-Mějmse KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a zprava invariantní ekvivalenci $\Theta$ vzhledem k
-$\delta$, pak zavedeme $A/\theta = \langle \Sigma, Q/\Theta, \delta^{A/\Theta}, [q_{0}]_{\Theta}, F^{A/\Theta} \rangle$, kde
+Mějme KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a zprava invariantní ekvivalenci $\Theta$ vzhledem k
+$\delta$, pak zavedeme $A/\Theta = \langle \Sigma, Q/\Theta, \delta^{A/\Theta}, [q_{0}]_{\Theta}, F^{A/\Theta} \rangle$, kde
 $$\delta^{A/\Theta} = ([q]_{\Theta}, a) = [\delta(q, a)]_{\Theta}$$
 a
-$$F^{A/\Theta} = \lbrace [q]_{\Theta} | \quad q \in F \rbrace$$.
+$$F^{A/\Theta} = \lbrace [q]_{\Theta} | \quad q \in F \rbrace$$
 \end{definice}
 
 \begin{veta}\label{veta-aut}
