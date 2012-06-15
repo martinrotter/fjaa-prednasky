@@ -91,17 +91,17 @@ Dodejme, že automatem se rozumí de-facto jednoduchý algoritmus.
 \section{Základní pojmy}
 \begin{itemize}
 \item
-\textbf{Symbol} (případně znak). Jedná se o syntaktický pojem (význam tedy nehraje roli), který představuje \emph{jméno} (analogicky k \emph{písmenu} z přirozeného jazyka).
+\textit{Symbol} (případně znak). Jedná se o syntaktický pojem (význam tedy nehraje roli), který představuje \emph{jméno} (analogicky k \emph{písmenu} z přirozeného jazyka).
 Mezi symboly počítejme například \textbf{0, +, Š, while}.
 
 \item
-\textbf{Abeceda}. Abecedou rozumíme množinu (například množinu $X$) všech přípustných \emph{symbolů} (znaků), přičemž taková množina je neprázdná (tedy $|x|>0$) a konečná.
+\textit{Abeceda}. Abecedou rozumíme množinu (například množinu $X$) všech přípustných \emph{symbolů} (znaků), přičemž taková množina je neprázdná (tedy $|x|>0$) a konečná.
 Konečnost množiny je omezení dané reprezentovatelností množiny v rámci počítačové techniky.
 Abecedy značíme řeckými písmeny. Například $\Sigma, \Sigma^{'}, \Gamma, \ldots, \Omega$.
 Například $\Sigma = \lbrace a, b, c \rbrace$.
 
 \item
-\textbf{Řetězec} (případně slovo). Jedná se o konečnou posloupnost symbolů (znaků) vybraných z nějaké dané abecedy.
+\textit{Řetězec} (případně slovo). Jedná se o konečnou posloupnost symbolů (znaků) vybraných z nějaké dané abecedy.
 Například $\langle a_{1}, a_{2}, \ldots, a_{n} \rangle \in \Sigma, n$ nazvěme \emph{délkou řetězce}.
 Formálně definujme řetězec jakožto \emph{zobrazení}
 $$
@@ -114,11 +114,11 @@ $$ a tak podobně.
 Délku řetězce označme $|x|$.
 
 \item
-\textbf{Prázdný řetězec}. Jedná se o řetězec, pro který platí, že $|x| = 0$ a značíme jej $\varepsilon$, přičemž platí následující zápis:
+\textit{Prázdný řetězec}. Jedná se o řetězec, pro který platí, že $|x| = 0$ a značíme jej $\varepsilon$, přičemž platí následující zápis:
 $$
 \varepsilon \subseteq \emptyset \rightarrow \Sigma
 $$
-Prázdný řetězec \textbf{není} symbolem, tedy $\varepsilon \notin \Sigma$.
+Prázdný řetězec není symbolem, tedy $\varepsilon \notin \Sigma$.
 \end{itemize}
 
 \begin{veta}
@@ -131,10 +131,10 @@ Uveďme si rovněž značení pro dva důležité pojmy:
 
 \begin{itemize}
 \item
-$\Sigma^{*}$ označuje množinu všech řetězců nad abecedou$\Sigma$.
+$\Sigma^{*}$ označuje množinu všech řetězců nad abecedou $\Sigma$.
 
 \item
-$\Sigma^{+}$ označuje množinu všech řetězců nad abecedou$\Sigma$ vyjma $\varepsilon$.
+$\Sigma^{+}$ označuje množinu všech řetězců nad abecedou $\Sigma$ vyjma $\varepsilon$.
 \end{itemize}
 \end{poznamka}
 
@@ -1064,7 +1064,7 @@ $w_0 = w$
 $w_n = \varepsilon$
 
 \item \label{vypocet-bod-4}
-$w_i = a_i w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$ pro každé $i \in \lbrace 0,1,\ldots,n \rbrace$
+$w_i = a_i w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$ pro každé $i \in \lbrace 0,1,\ldots,n-1 \rbrace$
 \end{enumerate}
 nazveme \textbf{výpočet automatu A délky $n$ pro řetězec $w$}.
 
@@ -1158,11 +1158,11 @@ Tj.  $\delta^*(r_i,w_i) = \delta^*(r_i,a_i,w_{i+1}) = \delta^*(\delta(r_i, a_i),
 Jazyk rozpoznaný konečným deterministickým automate lze formulovat jako
 $L(A) = \lbrace w \in \Sigma^* |\quad \delta^*(q_0,w) \in F \rbrace$.
 
-\subsection{KDA s úplnou přechodovou funkcí}
+\subsection{KDA s neúplnou přechodovou funkcí}
 
 Mějme KDA $A = \langle \Sigma, Q, \delta, q_0, F \rangle$ a upřesněme $\delta$, které se liší.
 
-$\delta$ je úplná přechodová funkce tvaru $\delta \subseteq Q \times \Sigma \times Q$, přičemž také platí, že
+$\delta$ je neúplná přechodová funkce tvaru $\delta \subseteq Q \times \Sigma \times Q$, přičemž také platí, že
 pokud $\langle q, a, r_1 \rangle \in \delta$ a $\langle q,a,r_2 \rangle \in \delta$, pak $r_1 = r_2$ a $\delta:\quad Q \times \Sigma \rightarrow Q$.
 
 Z toho plynou dvě situace:
@@ -1179,7 +1179,7 @@ Výpočet se liší v bodu \ref{vypocet-bod-4} $w_i = a_i w_{i+1}$ a $\delta(r_i
 pro každé $i \in \lbrace 0,1,\ldots,n \rbrace$.
 \end{enumerate}
 
-Řetězec $w$ je přijat automatem $A$, právě když existuje výpočet $A$ pro $w$, kteý je přijímající.
+Řetězec $w$ je přijat automatem $A$, právě tehdy, když existuje výpočet $A$ pro $w$, kteý je přijímající.
 
 Následně jazyk rozpoznaný automatem $A$ je $L(A) = \lbrace w \in \Sigma^*| \quad \delta^*(q_0,w) \in F \rbrace$.
 
@@ -1188,7 +1188,7 @@ Ke každému KDA s neúplnou přechodovu funkcí $\delta$ existuje KDA s úplnou
 \end{veta}
 
 \begin{dukaz}
-Každý KDA s úplnou přechodovou funkcí je zároveň KDA s úplnou přechodovou funkcí. Tedy
+Každý KDA s úplnou přechodovou funkcí je zároveň KDA s neúplnou přechodovou funkcí. Tedy
 $A' = \langle \Sigma, Q \cup \lbrace \# \rbrace, \delta', q_0, F \rangle$
 
 \begin{gather*}
