@@ -572,7 +572,7 @@ Mějme tedy nějaké dané $\Sigma \text{ a } S$ a zvolme \emph{N}. Následně p
 $x_{i} = \varepsilon \text{ a následně } S \rightarrow \varepsilon$
 
 \item
-$x_{i} = a_{1}\ldots a_{k} \text{ a následně } S \rightarrow a_{i1}A^{'}, A^{'} \rightarrow a_{i2}A^{''},\ldots\ldots, A^{k-1} \rightarrow a_{ik}A^{k}$
+$x_{i} = a_{1}\ldots a_{k} \text{ a následně } S \rightarrow a_{i1}A^{'}, A^{'} \rightarrow a_{i2}A^{''},\ldots\ldots, A^{k} \rightarrow a_{ik}$
 \end{enumerate}
 \end{dukaz}
 
@@ -765,7 +765,7 @@ E_{i+1} &=& E_{i} \cup \lbrace A \in N | A \rightarrow x, \text{ kde } x \in E_{
 A &\rightarrow& \varepsilon \\
 B &\rightarrow& \varepsilon \\
 F &\rightarrow& ABBA \\
-B &\rightarrow& BAF \\
+G &\rightarrow& BAF \\
 E_{0} &=& \lbrace A, B \rbrace \\
 E_{1} &=& \lbrace A, B, F \rbrace \\
 E_{2} &=& \lbrace A, B, F, G \rbrace
@@ -869,7 +869,7 @@ Víme, že Kleeneho uzávěr $\Sigma^{*}$ je spočetná množina, lze tedy psát
 Sporem nechť je množina $2^{\Sigma^{*}}$ spočetná, lze tedy napsat, že $2^{\Sigma^{*}} = \lbrace L_1, L_2, \ldots \rbrace$
 a $L = \lbrace x_i | \quad x_i \notin L_i \rbrace$.
 
-Kdyby pro nějaké $j$ platilo, že $L = L_j$, pak $x_j \in L \Longleftrightarrow x_j \in L_1$, což je spor.
+Kdyby pro nějaké $j$ platilo, že $L = L_j$, pak $x_j \in L \Longleftrightarrow x_j \in L_j$, což je spor.
 \end{dukaz}
 
 %%%%%%%% 4 PREDNASKA mr
@@ -1142,8 +1142,8 @@ Automat $A$ přijím řetězec $a$, pokud $\delta^*(q_0,w) \in F$.
 \end{veta}
 
 \begin{dukaz}
-Stačí dokázat, že $\delta^*(q_0,w) \in F$ každý výpočet $\langle r_0, w_0 \rangle \cdots \langle r_i, w_i \rangle$ je přijímající,
-tj. když $r_i \in F$ pro každé $\langle r_0, w_0 \rangle$, tak prokážeme, že $\delta^*(r_i, w_i) = r_n$, což dokazujeme indukcí.
+Stačí dokázat, že $\delta^*(q_0,w) \in F$ každý výpočet $\langle r_0, w_0 \rangle \cdots \langle r_n, w_n \rangle$ je přijímající,
+tj. když $r_n \in F$. Pro každé $\langle r_i, w_i \rangle$ prokážeme, že $\delta^*(r_i, w_i) = r_n$, což dokazujeme indukcí přes $i$.
 \begin{enumerate}
 \item
 Pro $i = n$ mějme $\delta^*(r_n,w_n) = \delta^*(r_n, \varepsilon) = r_n$. Pak lze předpokládat, že máme nějaké $i$ a pro každé $j$ takové,
@@ -1431,7 +1431,7 @@ q \in \delta^{*}(I,w) \text{ právě tehdy, když existuje výpočet pro w, kon�
 Pro každý KDA $A=\langle \Sigma, Q, \delta, q_{0}, F \rangle \exists \text{ KNA } A' \text{ tak, že } L(A)=L(A') $.
 \end{veta}
 \begin{dukaz}
-Pro výchozí $A$ uvažujme $A'=\langle \langle \Sigma, Q, \delta', q_{0}, F \rangle$, pak $\delta'(q,a) = \lbrace \delta(q,a) \rbrace$. Zbytek důkazu je zřejmý.
+Pro výchozí $A$ uvažujme $A'= \langle \Sigma, Q, \delta', \lbrace q_{0} \rbrace , F \rangle$, pak $\delta'(q,a) = \lbrace \delta(q,a) \rbrace$. Zbytek důkazu je zřejmý.
 \end{dukaz}
 
 \begin{veta}
@@ -1449,7 +1449,7 @@ Nyní zbývá ukázat, že $\delta^{*}(I,w) \cap F \neq \emptyset$ právě tehdy
 Pro $w = \varepsilon$ je situace zřejmá. Jinak $(\delta^{D})^{*} (R,w) = (\delta^{D})^{*} (R, \varepsilon) = R = \delta^{*}(R, \varepsilon) = \delta^{*}(R,w)$.
 
 \item
-Předpokládejme, že tvrzení platí pro řetězce délky $n$ a nechť $w$ má délku $n+1$ a $w=au$ pro $a \in \Sigma, |u| < |v|$. Pak:
+Předpokládejme, že tvrzení platí pro řetězce délky $n$ a nechť $w$ má délku $n+1$ a $w=au$ pro $a \in \Sigma, |u| < |w|$. Pak:
 \begin{gather*}
 (\delta^{D})^{*} (R,w) = (\delta^{D})^{*} (R, au) = (\delta^{D})^{*}(\delta^{D}(R,a),u) = \\
 = \delta^{*}(\delta^{D}(R,a)u) = \delta^{*}(\delta^{*}(R,a),u) = \delta^{*}(R, au) = \delta^{*}(R,w)
@@ -1681,7 +1681,7 @@ Když tento automat zdeterminizujeme, dostaneme následující automat:
 \StateVar[\{S\}]{(-4,0)}{S}
 \StateVar[\{T\}]{(-2,2)}{T}
 \StateVar[\{F\}]{(-2,-2)}{F}
-\FinalStateVar[\{E,T,\#\}]{(0,0)}{eth}
+\FinalStateVar[\{E,F,\#\}]{(0,0)}{eth}
 \StateVar[\{D\}]{(4,0)}{D}
 \FinalStateVar[\{\#\}]{(7,0)}{hash}
 \Initial{S}
@@ -2038,6 +2038,8 @@ Stačí tedy ukázat, že $\bigcup_{i=1}^k E_A(R_i)$ je $\varepsilon$-uzavřená
 Protože $E_A(R_i)$ je $\varepsilon$-uzavřená, $\delta(q,\varepsilon) \in E_A(R_i) \Rightarrow \delta(q,\varepsilon) \in \bigcup_{i=1}^k E_A(R_i) \Rightarrow \bigcup_{i=1}^k(E_A(R_i))$ je $\varepsilon$-uzavřená množina.
 \end{dukaz}
 
+\subsection{Přijímaný řetězec $\varepsilon$KDA}
+
 Nechť $A=\langle\Sigma,Q,\delta,I,F\rangle$ je \ekna. Řetězec $w \in \Sigma^*$ nazýváme řetězec \textbf{přijímaný} $A$, pokud
 
 $\delta^*(I,w) \cap F \neq \emptyset$
@@ -2263,7 +2265,7 @@ Pro $L_1$ existuje \aut{1}, tak že $L_1=L(A_1)$
 Pro $L_2$ existuje \aut{2}, tak že $L_2=L(A_2)$
 
 Předpokládáme-li, že $A_1$ a $A_2$ mají disjunktní množiny stavů, tj. $Q_1 \cap Q_2 = \emptyset$, sestavíme následující KNA:\\
-$A=\langle,Q_1 \cup Q_2,\delta,\lbrace q_{01},q_{02} \rbrace,F_1 \cup F_2 \rangle$ s přechodovou funkcí $\delta$ definovanou jako
+$A=\langle \Sigma ,Q_1 \cup Q_2,\delta,\lbrace q_{01},q_{02} \rbrace,F_1 \cup F_2 \rangle$ s přechodovou funkcí $\delta$ definovanou jako
 
 $$
 \delta(q,a)=\left\{
@@ -2361,8 +2363,8 @@ Předpokládáme existenci automatů \aut{1} a \aut{2} takových, že $L_1 = L(A
 \Initial{A0}
 \Initial{B0}
 \ChgEdgeLineStyle{dashed}
-\EdgeR{A1}{B0}{}
-\EdgeR{A2}{B0}{}
+\EdgeR{A1}{B0}{\varepsilon}
+\EdgeR{A2}{B0}{\varepsilon}
 \end{VCPicture}
 \end{center}
 
@@ -2503,7 +2505,7 @@ $|xy| \le n$
 \item
 $y \neq \varepsilon$
 \item
-pro každé $i > 0$ platí, že $xy^iz \in L$
+pro každé $i \ge 0$ platí, že $xy^iz \in L$
 \end{enumerate}
 \end{veta}
 
@@ -2557,6 +2559,8 @@ z &=& a_{j+1}a_{j+2}\ldots a_{m}
 \begin{dukaz}
  Předchozí příklad \ref{priklad-reg} není regulární, což dokážeme sporem. Nechť je tedy $L$ regulární a dle předchozí
 věty existuje číslo $n$ tak, že vezmeme řetězec $a^{n}b^{n} = xyz$ tak, že $x = a^{k}, y = a^{l}, z = a^{n-k-l}b^{n}$.
+
+Tím jsme došli ke sporu, protože $xy^iz$ pro každé $i \ge 0$ obecně nemusí patřit do jazyku $L$ (ovlivníme tím počet $a$ v řetězci a tím se počet znaků $a$ a $b$ nerovná).
 \end{dukaz}
 
 %% 9. přednáška
