@@ -2752,11 +2752,13 @@ Pokud je každ\'y stav automatu $A$ dosažiteln\'y, pak m\'a $A/ \equiv_{A}$ tak
 
 \begin{enumerate}
 \item
-Označ\'ime $A/ \equiv_{A} jako A^{R}$, konstruujeme posloupnost rozkladů na $Q$ tak, že $\varphi_{1}, \varphi_{2}, \ldots, \varphi_{i} = \varphi_{i+1}$,
+Označ\'ime $A/ \equiv_{A} \text{jako } A^{R}$, konstruujeme posloupnost rozkladů na $Q$ tak, že $\varphi_{1}, \varphi_{2}, \ldots, \varphi_{i} = \varphi_{i+1}$,
 kde $\varphi_{1} = \lbrace F, Q \setminus F \rbrace$
 
 \item
-Při odvozen\'i rozkladů $\varphi_{1}$ z $\varphi_{i-1}$ postupujeme n\'asledovně:
+Při odvozen\'i rozkladů $\varphi_{i}$ z $\varphi_{i-1}$ postupujeme n\'asledovně:
+
+Pro $\forall R \in \varphi_{i-1}$ provedeme:
 \begin{enumerate}
 \item
 Vezmeme libovoln\'y stav $r \in R$.
