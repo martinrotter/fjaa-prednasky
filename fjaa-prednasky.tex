@@ -1150,8 +1150,8 @@ Pro $i = n$ mějme $\delta^*(r_n,w_n) = \delta^*(r_n, \varepsilon) = r_n$. Pak l
 že $i < j \leq n$ tvrzení platí.
 
 \item
-Dle bodu \ref{vypocet-bod-4} z definice výpočtu platí, že $w_i = a_i + w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$.
-Tj.  $\delta^*(r_i,w_i) = \delta^*(r_i,a_i,w_{i+1}) = \delta^*(\delta(r_i, a_i), w_{i+1}) = \delta^*(r_{i+1}, r_{i+1}) = r_n$
+Dle bodu \ref{vypocet-bod-4} z definice výpočtu platí, že $w_i = a_i w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$.
+Tj.  $\delta^*(r_i,w_i) = \delta^*(r_i,a_i w_{i+1}) = \delta^*(\delta(r_i, a_i), w_{i+1}) = \delta^*(r_{i+1}, w_{i+1}) = r_n$
 \end{enumerate}
 \end{dukaz}
 
@@ -1250,7 +1250,7 @@ Předchozí zápisy můžeme pojmenovat také jako \uv{nedeterministický výpo�
 Jiným zápisem téhož může být také ten následující.
 $$
 \langle \lbrace q_{0} \rbrace, baab \rangle, \langle \lbrace q_{0} \rbrace, aab \rangle, \langle \lbrace q_{0}, q_{1} \rbrace, ab \rangle,
-\langle \lbrace q_{0}, q_{1}, q_{2} \rbrace, b \rangle, \langle \lbrace q_{0}, q_{2} \rbrace, \varepsilon+ \rangle
+\langle \lbrace q_{0}, q_{1}, q_{2} \rbrace, b \rangle, \langle \lbrace q_{0}, q_{2} \rbrace, \varepsilon \rangle
 $$ 
 \end{priklad}
 
@@ -1768,10 +1768,10 @@ Co jsou to regulární gramatiky a jaké podmínky jejich odvozovací pravidla s
 \begin{enumerate}
 
 \item
-\textbf{Zprava regulární gramatiky:}
-Obsahují pravidla ve tvaru $ A \rightarrow bB $ tj. neterminál na pravé straně je napravo od terminálního symbolu.
+\textit{Zprava regulární gramatiky:}
+Obsahují pravidla ve tvaru $ A \rightarrow bB $, tedy neterminál je napravo od terminálního symbolu.
 \item
-\textbf{Zleva regulární gramatiky:}
+\textit{Zleva regulární gramatiky:}
 Obsahují pravidla ve tvaru $ A \rightarrow Bb $. Analogicky se neterminál nachází vlevo od terminálního symbolu.
 \end{enumerate}
 
@@ -1900,12 +1900,13 @@ Zde je jeden motivační příklad na úvod.
 \end{priklad}
 
 \begin{definice}
-Nedeterministický konečný automat s $\varepsilon$-přechody je struktura $ \langle \Sigma,Q,\delta,I,F \rangle $, kde $\Sigma,Q,\delta,I,F$ mají stejná význam jako u KNA. $\delta$ je přechodová funcke $\delta : Q \times (\Sigma \cup \lbrace \varepsilon \rbrace ) \rightarrow 2^Q$.
+Nedeterministický konečný automat s $\varepsilon$-přechody je struktura $ \langle \Sigma,Q,\delta,I,F \rangle $,
+kde $\Sigma,Q,\delta,I,F$ mají stejný význam jako u KNA. $\delta$ je přechodová funkce $\delta : Q \times (\Sigma \cup \lbrace \varepsilon \rbrace ) \rightarrow 2^Q$.
 \end{definice}
 
-Fakt $\delta (q,a) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{automat \textit{A} při čtení symbolu \textit{a} přejde ze stavu \textit{q} do některého ze stavů $r_1,\ldots,r_k$}
+Fakt $\delta (q,a) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{automat \textit{A} při čtení symbolu \textit{a} přejde ze stavu \textit{q} do některého ze stavů $r_1,\ldots,r_k$.}
 
-Fakt $\delta (q,\varepsilon) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{automat \textit{A} přejde samovolně ze stavu \textit{q} do některého ze stavů $r_1,\ldots,r_k$}
+Fakt $\delta (q,\varepsilon) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{automat \textit{A} přejde samovolně ze stavu \textit{q} do některého ze stavů $r_1,\ldots,r_k$.}
 
 \subsection{Reprezentace \ekna}
 
@@ -1914,7 +1915,7 @@ Fakt $\delta (q,\varepsilon) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{auto
 \item
 \textbf{Přechodová tabulka}, vypadá stejně jako u KNA s tím, že přidáme jeden sloupec, ve kterém budeme zaznamenávat $\varepsilon$-přechody.
 
-Takto bude vypadat předchozí \ref{priklad-5} př\'iklad, reprezentovaný pomocí tabulky.
+Takto bude vypadat předchozí př\'iklad číslo \ref{priklad-5}, reprezentovaný pomocí tabulky.
 
 \begin{table}[h]
 \begin{center}
@@ -1961,9 +1962,8 @@ $w_i=w_{i+1} , r_{i+i} \in \delta(r_i,\varepsilon)$
 
 \subsection{$\varepsilon$-uzávěry množin stavů}
 
-Je dána množina stavů $R \subseteq Q$
-
-$R$ se nazývá $\varepsilon$-uzavřená, pokud $ \delta (q,\varepsilon) \subseteq R$ pro každý stav $ q \in R$.
+Je dána množina stavů $R \subseteq Q$, jež se nazývá $\varepsilon$-uzavřená,
+pokud $ \delta (q,\varepsilon) \subseteq R$ pro každý stav $ q \in R$.
 
 \begin{priklad}
 Lze ukázat na našem příkladě \ref{priklad-5}.
@@ -1973,19 +1973,26 @@ $\lbrace q_0 \rbrace $ není $\varepsilon$-uzavřená protože $\delta(q_0,\vare
 $\lbrace q_0,q_1 \rbrace$ je $\varepsilon$-uzavřená
 \end{priklad}
 
-\textbf{$\varepsilon$-uzávěr $R$}
+\subsubsection{Tvorba $\varepsilon$-uzávěru}
 
-vstup: $R \subseteq Q$
+\begin{enumerate}
+\item
+Mějme $\varepsilon$-uzávěr $R$.
 
-\quad$E_0=R$
+\item
+Prohlašme, že $E_0=R$ a následně pro $i \geq 1$ tvrďme, že:
 
-a pro $i \geq 1$
+\begin{itemize}
+\item
+$E_i=E_{i-1} \cup \lbrace \delta (q,\varepsilon) | q \in E_{i-1}\rbrace$
 
-\quad$E_i=E_{i-1} \cup \lbrace \delta (q,\varepsilon) | q \in E_{i-1}\rbrace$
+\item
+$E_A(R)=\bigcup_{i=0}^\infty E_i$
 
-\quad$E_A(R)=\bigcup_{i=0}^\infty E_i$
-
-\quad$E_0 \subseteq E_1 \subseteq E_2 \subseteq \ldots \subseteq E_A(R)$
+\item
+$E_0 \subseteq E_1 \subseteq E_2 \subseteq \ldots \subseteq E_A(R)$
+\end{itemize}
+\end{enumerate}
 
 \begin{poznamka}
 Vzhledem ke konečnosti množiny $E_A(R)$ musí existovat index $k$, pro který platí $E_k = E_{k+1} = \ldots = E_A(R)$
@@ -2038,7 +2045,7 @@ Stačí tedy ukázat, že $\bigcup_{i=1}^k E_A(R_i)$ je $\varepsilon$-uzavřená
 Protože $E_A(R_i)$ je $\varepsilon$-uzavřená, $\delta(q,\varepsilon) \in E_A(R_i) \Rightarrow \delta(q,\varepsilon) \in \bigcup_{i=1}^k E_A(R_i) \Rightarrow \bigcup_{i=1}^k(E_A(R_i))$ je $\varepsilon$-uzavřená množina.
 \end{dukaz}
 
-\subsection{Přijímaný řetězec $\varepsilon$KDA}
+\subsection{Přijímaný řetězec \ekna}
 
 Nechť $A=\langle\Sigma,Q,\delta,I,F\rangle$ je \ekna. Řetězec $w \in \Sigma^*$ nazýváme řetězec \textbf{přijímaný} $A$, pokud
 
@@ -2527,13 +2534,13 @@ délky $m$:
 $$
 \langle q_0,w \rangle = \langle r_0, a_1\cdots a_m \rangle,\langle r_1, a_2\cdots a_m \rangle \ldots \langle r_{m-1}, a_m \rangle, \langle r_m, \varepsilon \rangle
 $$
-Jelikož je $m+1 > n$ musí existovat alespoň 1 stav, který je v tomto přijímacím výpočtu zopakován.
+Jelikož je $m \geq n$, tak nevyhnutelně musí existovat alespoň 1 stav, který je v tomto přijímacím výpočtu zopakován.
 
 \begin{center}
 \begin{VCPicture}{(-6,-4)(6,4)}
-\StateVar[{q_0, q_1}]{(-6,0)}{r0}
-\StateVar[{q_1}]{(0,0)}{rirj}
-\FinalStateVar[{q_1, q_4}]{(6,0)}{rm}
+\StateVar[{r_0}]{(-6,0)}{r0}
+\StateVar[{r_i = r_j}]{(0,0)}{rirj}
+\FinalStateVar[{r_m}]{(6,0)}{rm}
 
 \Initial{r0}
 
@@ -2543,13 +2550,14 @@ Jelikož je $m+1 > n$ musí existovat alespoň 1 stav, který je v tomto přijí
 \EdgeL{rirj}{rm}{a_{j+1}\ldots a_{m}}
 \end{VCPicture}
 \end{center}
-Položme
+Následně dle obrázku mějme:
 \begin{eqnarray*}
 x &=& a_{1}a_{2}\ldots a_{i} \\
 y &=& a_{i+1}a_{i+2}\ldots a_{j} \\
 z &=& a_{j+1}a_{j+2}\ldots a_{m}
 \end{eqnarray*}
 \end{itemize}
+Vidíme tedy, že všechny podmínky Pumping lemmy jsou splněny.
 \end{dukaz}
 
 \begin{priklad}\label{priklad-reg}
@@ -2585,7 +2593,7 @@ Pravá invariance reprezentuje přirozenou vlastnost, kterou musí mít relace n
 Mezními případy invariantních relací zprava jsou:
 \begin{enumerate}
 \item 
-identita $\Theta = \lbrace <q,q> | \quad q \in Q \rbrace$
+identita $\Theta = \lbrace \langle q,q \rangle | \quad q \in Q \rbrace$
 \item
 $\Theta = Q \times Q$
 \end{enumerate}
@@ -2595,9 +2603,7 @@ $\Theta = Q \times Q$
 \begin{definice}
 Mějme KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a zprava invariantní ekvivalenci $\Theta$ vzhledem k
 $\delta$, pak zavedeme $A/\theta = \langle \Sigma, Q/\Theta, \delta^{A/\Theta}, [q_{0}]_{\Theta}, F^{A/\Theta} \rangle$, kde
-$$\delta^{A/\Theta} = ([q]_{\Theta}, a) = [\delta(q, a)]_{\Theta}$$
-a
-$$F^{A/\Theta} = \lbrace [q]_{\Theta} | \quad q \in F \rbrace$$.
+$$\delta^{A/\Theta} = ([q]_{\Theta}, a) = [\delta(q, a)]_{\Theta} \text{ a } F^{A/\Theta} = \lbrace [q]_{\Theta} | \quad q \in F \rbrace$$
 \end{definice}
 
 \begin{veta}\label{veta-aut}
