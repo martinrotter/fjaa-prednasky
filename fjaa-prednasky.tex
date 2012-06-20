@@ -14,6 +14,7 @@
 \usepackage{a4wide}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{color}
 \usepackage{amsthm}
 \usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
 \usepackage{alltt}
@@ -41,7 +42,7 @@
 {.5em}
 {}
 \theoremstyle{note}
-\newtheorem{dukaz}{Důkaz}
+\newtheorem{dukaz}{Důkaz}[section]
 \newtheorem{veta}{Věta}
 \newtheorem{definice}{Definice}
 \newtheorem{priklad}{Příklad}
@@ -53,7 +54,8 @@
 
 \abstract{
 Tento dokument je pouze přepisem zápisků a poznámek
-z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.}
+z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}{http://vychodil.inf.upol.cz/}.
+Do tohoto dokumentu přispěli opravami i další lidé. Jmenovitě A.~Baron}
 
 \pagestyle{empty}
 \makeindex
@@ -62,48 +64,59 @@ z přednášek předmětu KMI/FJAA. Přednášel \link{doc. Vilém Vychodil PhD}
 \maketitle
 
 \section{Historie}
-Počátek úvah, jež byly později základem seriozního zkoumání formálních jazyků potažmo automatů se datuje do 30. let.
+Počátek úvah, jež byly později základem seriozního zkoumání formálních jazyků potažmo automatů se datuje do 30. let 20. století.
 Průkopníkem této oblasti byl \link{Noam Chomsky}{http://cs.wikipedia.org/wiki/Noam_Chomsky}
-\footnote{Jméno této osoby čti [\emph{čomski}] a zapamatuj si ke státnicím, že Chomsky byl \emph{nebezpečný levicový intelektuál}.}.
+\footnote{Jméno této osoby čti [\textit{čomski}] a zapamatuj si ke státnicím, že Chomsky byl \textit{nebezpečný levicový intelektuál}.}.
 
-Jako příklad selhání autora programovacího jazyka si uveďme jazyk \textbf{Fortran}, jehož konstrukce byla po syntaktické stránce špatná,
-což vedlo ke \textbf{gramatické ne jednoznačnosti} tohoto jazyka.
+Důsledná (až antropologická) úvaha nad tvarem jazyků (opravdu nemáme na mysli vepřovy jazyk) je základním kamenem k efektivní a
+přívětivé implementaci překladačů, rozhodovacích systémů nebo programovacích jazyků obecně. Je proto nanejvýš vhodné proniknout do tajů
+vytváření jazyků (generativní formalismus) a jejich rozpoznávání a analýzy (analytický formalismus).
+
+Jako příklad selhání autora programovacího jazyka si uveďme jazyk \textit{Fortran}, jehož konstrukce byla po syntaktické stránce špatná,
+což vedlo ke \textit{gramatické ne jednoznačnosti} tohoto jazyka.
 
 \section{Kódová analýza}
+Analýza kódu je elementárním stavebním kamenem analýzy jazyka, jenž je tímto kódem reprezentován, protože
+existuje (ne nutně silná) spojitost mezi syntaktickou \uv{krásou} kódu a následnou kvalitou (případně sémantikou) daného jazyka atp.
+
+
 \subsection{Lexikální analýza}
-Dělení kódu na tokeny\footnote{Překládej jako \emph{část, díl nebo také fráze}.}, jež se zapisují například ve stylu
-$\langle\text{ znak, identifikátor }\rangle$.
-Příkladem je tedy i token $\langle =, assignment \rangle$ a jiné.
+V této analýze hraje prim dělení vstupního kódu na tokeny\footnote{Překládej jako \textit{část, díl nebo také fráze}.},
+jež se zapisují ve stylu:
+$$\langle\text{ \textcolor{red}{znak}, \textcolor{blue}{identifikátor} }\rangle$$
+Příkladem je tedy i token $\langle\text{ \textcolor{red}{=}, \textcolor{blue}{assignment} }\rangle$, případně další tokeny.
 
 \subsection{Syntaktická analýza}
-Syntaktická analýza vytváří stromovou závislost jednotlivých tokenů, jejíž reprezentace se nazývá \emph{syntaktický-derivační strom}.
+Syntaktická analýza vytváří stromovou závislost jednotlivých tokenů, jejíž reprezentace se nazývá \textit{derivační strom}.
 V rámci této analýzy rozlišme:
 \begin{enumerate}
 \item
-Teorii jazyků, jenž se zabývá stavbou jazyka (respektive jeho syntaxí) a poskytuje tzv. \textbf{generativní aparát}.
-Dodejme, že gramatika říká, v jakém tvaru může být zapsán validní program.
+Teorii jazyků, jež se zabývá stavbou jazyka (respektive jeho syntaxí) a poskytuje tzv. \textit{generativní aparát}.
+Gramatika říká, v jakém tvaru může být zapsán validní program, tedy definuje všechna slova\footnote{Pojem \emph{slovo}
+je v tomto kontextu poněkud zavádějící. V některé z následujících kapitol bude zaveden přesnější termín na vystihnutí prvku jazyka},
+která jsou obsažena v daném jazyce.
 
 \item
-Teorii automatů, jež poskytuje tzv. \textbf{analytický aparát}.
-Dodejme, že automatem se rozumí de-facto jednoduchý algoritmus.
+Teorii automatů, jež poskytuje tzv. \textit{analytický aparát}.
+Automatem se rozumí v podstatě jednoduchý algoritmus, který rozhoduje zdané dané vstupní slovo patří či nepatří do nějakého určitého jazyka.
 \end{enumerate}
 
 \section{Základní pojmy}
 \begin{itemize}
 \item
-\textit{Symbol} (případně znak). Jedná se o syntaktický pojem (význam tedy nehraje roli), který představuje \emph{jméno} (analogicky k \emph{písmenu} z přirozeného jazyka).
-Mezi symboly počítejme například \textbf{0, +, Š, while}.
+\textit{Symbol} (případně znak) - jedná se o syntaktický pojem (význam tedy nehraje roli), který představuje \textit{jméno} (analogicky k \textit{písmenu} z přirozeného jazyka).
+Mezi symboly počítejme například \textit{0, +, Š, while}. Symbol může mít jakoukoliv zástupnou grafickou reprezentaci.
 
 \item
-\textit{Abeceda}. Abecedou rozumíme množinu (například množinu $X$) všech přípustných \emph{symbolů} (znaků), přičemž taková množina je neprázdná (tedy $|x|>0$) a konečná.
+\textit{Abeceda} - abecedou rozumíme množinu (například množinu $X$) všech přípustných \textit{symbolů} (znaků), přičemž taková množina je neprázdná (tedy $|x|>0$) a konečná.
 Konečnost množiny je omezení dané reprezentovatelností množiny v rámci počítačové techniky.
 Abecedy značíme řeckými písmeny. Například $\Sigma, \Sigma^{'}, \Gamma, \ldots, \Omega$.
-Například $\Sigma = \lbrace a, b, c \rbrace$.
+Například $\Sigma = \lbrace a, b, c \rbrace$, tedy \uv{abeceda $\Sigma$ obsahuje symboly \textcolor{red}{a, b, c}.}
 
 \item
-\textit{Řetězec} (případně slovo). Jedná se o konečnou posloupnost symbolů (znaků) vybraných z nějaké dané abecedy.
-Například $\langle a_{1}, a_{2}, \ldots, a_{n} \rangle \in \Sigma, n$ nazvěme \emph{délkou řetězce}.
-Formálně definujme řetězec jakožto \emph{zobrazení}
+\textit{Řetězec} - jedná se o konečnou posloupnost symbolů (znaků) vybraných z nějaké dané abecedy.
+Například $\langle a_{1}, a_{2}, \ldots, a_{n} \rangle \in \Sigma, n$ nazvěme \textit{délkou řetězce}.
+Formálně definujme řetězec jakožto \textit{zobrazení}
 $$
 x : \lbrace 1, 2, 3, 4, \ldots, n \rbrace \rightarrow \Sigma
 $$
@@ -114,7 +127,7 @@ $$ a tak podobně.
 Délku řetězce označme $|x|$.
 
 \item
-\textit{Prázdný řetězec}. Jedná se o řetězec, pro který platí, že $|x| = 0$ a značíme jej $\varepsilon$, přičemž platí následující zápis:
+\textit{Prázdný řetězec} - edná se o řetězec, pro který platí, že $|x| = 0$ a značíme jej $\varepsilon$, přičemž platí následující zápis:
 $$
 \varepsilon \subseteq \emptyset \rightarrow \Sigma
 $$
@@ -141,7 +154,7 @@ $\Sigma^{+}$ označuje množinu všech řetězců nad abecedou $\Sigma$ vyjma $\
 \section{Operace s řetězci}
 \begin{itemize}
 \item
-\textbf{Zřetězení} (konkatenace). Jde v podstatě o spojení\footnote{Pro milovníky jazyka Scheme můžeme tuto operaci přirovnat k proceduře \emph{append}}
+\textit{Zřetězení} (konkatenace). Jde v podstatě o spojení\footnote{Pro milovníky jazyka Scheme můžeme tuto operaci přirovnat k proceduře \textit{append}}
 dvou řetězců v daném pořadí do jednoho řetězce.
 
 \begin{priklad}
@@ -168,7 +181,7 @@ Algebraicky je tatáž operace zapsána jako $\langle \Sigma^{*}, \circ, \vareps
 \end{poznamka}
 
 \item
-\textbf{Rovnost řetězců}
+\textit{Rovnost řetězců}
 Pro prohlášení dvou řetězců za sobě rovné v žádaném smyslu je třeba splnit obecně dvě následující podmínky:
 \begin{enumerate}
 \item
@@ -181,13 +194,13 @@ Tedy každé dva k sobě náležící symboly z daných řetězců jsou si rovny
 Uvažujeme-li rovnost řetězců, pak je záhodno uvažovat následující pojmy:
 \begin{itemize}
 \item
-\textbf{Prefix} řetězce. Označme jej $Pfx(x) = \lbrace y | \exists z \text{ tak, že } yz = x \rbrace$.
+\textit{Prefix} řetězce. Označme jej $Pfx(x) = \lbrace y | \exists z \text{ tak, že } yz = x \rbrace$.
 
 \item
-\textbf{Infix} řetězce. Označme jej $Ifx(x) = \lbrace y | \exists z_{1}, z_{2} \text{ tak, že } z_{1}yz_{2} = x \rbrace$.
+\textit{Infix} řetězce. Označme jej $Ifx(x) = \lbrace y | \exists z_{1}, z_{2} \text{ tak, že } z_{1}yz_{2} = x \rbrace$.
 
 \item
-\textbf{Sufix} řetězce. Označme jej $Sfx(x) = \lbrace y | \exists z \text{ tak, že } zy = x \rbrace$.
+\textit{Sufix} řetězce. Označme jej $Sfx(x) = \lbrace y | \exists z \text{ tak, že } zy = x \rbrace$.
 \end{itemize}
 
 \begin{veta}
@@ -208,7 +221,7 @@ x = u, y = v \\
 \end{veta}
 
 \item
-\textbf{N-tá mocnina} řetězce.
+\textit{N-tá mocnina} řetězce.
 $$
 x^{n} = \left\lbrace
 \begin{array}{l l}
@@ -259,7 +272,7 @@ uw = wu \\
 \end{itemize}
 
 \section{Formální jazyk}
-Zaveďme si pojem \emph{formální jazyk nad množinou všech řetězců} $\Sigma^{*}$. Označme tento jazyk jako $L$. Pak platí tato tvrzení:
+Zaveďme si pojem \textit{formální jazyk nad množinou všech řetězců} $\Sigma^{*}$. Označme tento jazyk jako $L$. Pak platí tato tvrzení:
 \begin{eqnarray*}
 L &\subseteq& \Sigma^{*} \text{ (každá podmnožina abecedy je jazykem)} \\
 L &=& \emptyset \text{ (prázdný jazyk)} \\
@@ -267,11 +280,11 @@ L &=& \lbrace \varepsilon \rbrace \text{ (jazyk s prázdným řetězcem)} \\
 L &=& jazyk C++ \text{ (jazyk C++)} \\
 &\vdots&
 \end{eqnarray*}
-\textbf{Pozor, obecně platí že prázdný jazyk $\neq$ jazyk s prázdným řetězcem.}
+\textit{Pozor, obecně platí že prázdný jazyk $\neq$ jazyk s prázdným řetězcem.}
 	
 \section{Lexikografické uspořádání}
 Předpokládejme uspořádání na množině $\Sigma^{*}$.
-Nazvěme toto uspořádání \emph{striktním totálním}. Pak toto uspořádání například pro $\Sigma = \lbrace a_{1}, \ldots, a_{n} \rbrace$
+Nazvěme toto uspořádání \textit{striktním totálním}. Pak toto uspořádání například pro $\Sigma = \lbrace a_{1}, \ldots, a_{n} \rbrace$
 je $a_{1} < a_{2} < a_{3} < \ldots < a_{n}$.
 
 Totální striktní uspořádání označme $<_{l}$.
@@ -307,7 +320,7 @@ Množinové operace nad jazyky jsou prakticky totožné operacím na kterýchkol
 \subsection{Ostatní}
 \begin{itemize}
 \item
-\textbf{Zřetězení} (produkt) množin. Vyjádřeme produkt takto:
+\textit{Zřetězení} (produkt) množin. Vyjádřeme produkt takto:
 $$
 L_{1}L_{2} = \lbrace xy | x \in L_{1}, y \in L_{2} \rbrace
 $$
@@ -315,7 +328,7 @@ Produkt množin není obecně komutativní, ale je asociativní, přičemž prá
 Uveďme si rovněž monoid $\langle 2^{\Sigma^{*}}, \circ, \lbrace \varepsilon \rbrace \rangle$.
 
 \item
-\textbf{Mocnina} jazyka. Mocninu vyjádříme takto:
+\textit{Mocnina} jazyka. Mocninu vyjádříme takto:
 $$
 L^{n} = \left \lbrace
 \begin{array}{l l}
@@ -326,13 +339,13 @@ LL^{n-1} & \text{ pro } n \geq 1 \\
 $$
 
 \item
-\textbf{Kleeneho\footnote{\link{Stephen Cole Kleene}{http://en.wikipedia.org/wiki/Stephen_Cole_Kleene} je známý matematik, jenž se významně podílel na položení základů teoretických počítačových věd.}} uzávěr neboli \textbf{iterace}. Tento uzávěr vyjádříme takto:
+\textit{Kleeneho\footnote{\link{Stephen Cole Kleene}{http://en.wikipedia.org/wiki/Stephen_Cole_Kleene} je známý matematik, jenž se významně podílel na položení základů teoretických počítačových věd.}} uzávěr neboli \textit{iterace}. Tento uzávěr vyjádříme takto:
 $$
 L^{*} = \bigcup_{i = 0}^{\infty} L^{i}
 $$
 
 \item
-\textbf{Pozitivní} uzávěr neboli pozitivní iterace. Tento uzávěr vyjádříme takto:
+\textit{Pozitivní} uzávěr neboli pozitivní iterace. Tento uzávěr vyjádříme takto:
 $$
 L^{+} = \bigcup_{i = 1}^{\infty} L^{i}
 $$
@@ -341,8 +354,8 @@ Všimněte si podobností mezi těmito dvěma uzávěry. Pozitivní uzávěr vyn
 \end{itemize}
 
 \section{Gramatiky}
-Jak víme, tak jazyky mohou být \emph{nekonečné} ve smyslu, že obsahují nekonečný počet slov.
-Nabízí se tedy otázka, jak tyto jazyky rozumně popsat, jak je reprezentovat resp. jak vytvořit \emph{konečnou}
+Jak víme, tak jazyky mohou být \textit{nekonečné} ve smyslu, že obsahují nekonečný počet slov.
+Nabízí se tedy otázka, jak tyto jazyky rozumně popsat, jak je reprezentovat resp. jak vytvořit \textit{konečnou}
 sadu pravidel, jejichž aplikace by vedla k opětovné generaci původního jazyka.
 
 \nextoutline{Prepisovací generovací pravidla}
@@ -351,14 +364,14 @@ Pravidlem rozumíme zpravidla každou takto definovanou dvojici.
 $$
 \langle x,y \rangle \in \Sigma^{*} \times \Sigma^{*}
 $$
-Pak neformálně tvrdíme, že $x$ \emph{se přepisuje} na $y$.
+Pak neformálně tvrdíme, že $x$ \textit{se přepisuje} na $y$.
 Nutno dodat, že předchozí zápis lze zapsat i například takto.
 $$
 x \rightarrow y\text{, kde symbol } \rightarrow \notin \Sigma \text{ můžeme prohlásit za tzv. metasymbol.}
 $$
 \subsubsection{Vlastnosti pravidel}
 \begin{itemize}
-\item \emph{Nezkracující} pravidlo je pravidlo, o kterém platí, že $|x| \leq |y|$. Tedy aplikaci tohoto pravidla na vstupní řetězec určitě nevznikne řetězec kratší, než-li jeho předloha.
+\item \textit{Nezkracující} pravidlo je pravidlo, o kterém platí, že $|x| \leq |y|$. Tedy aplikaci tohoto pravidla na vstupní řetězec určitě nevznikne řetězec kratší, než-li jeho předloha.
 
 \item $\varepsilon$ - pravidlo je pravidlo tvaru $x \rightarrow \varepsilon$.
 \end{itemize}
@@ -384,8 +397,8 @@ Mějme další zadání abecedy $\Sigma = \lbrace expr, +, \times \rbrace$. Prav
 
 \nextoutline{Prime odvozovani rezezcu pomoci pravidel}
 \subsubsection{Přímé odvozování řetězců pomocí pravidel}
-Uvažujme odvozovací pravidlo $ x \rightarrow y \text{ nad abecedou } \Sigma$, pak řekneme, že řetězec \emph{v} \textbf{je přímo odvozen}
-z řetězce \emph{u} pomocí pravidla $ x \rightarrow y $, pokud $\exists p, q \in \Sigma^{*}$ tak, že
+Uvažujme odvozovací pravidlo $ x \rightarrow y \text{ nad abecedou } \Sigma$, pak řekneme, že řetězec \textit{v} \textit{je přímo odvozen}
+z řetězce \textit{u} pomocí pravidla $ x \rightarrow y $, pokud $\exists p, q \in \Sigma^{*}$ tak, že
 \begin{gather*}
 u = p x q \\
 v = p y q
@@ -413,12 +426,12 @@ bac \rightarrow bcabc
 \end{priklad}
 
 \begin{definice}
-Definujme pojem \textbf{derivace}. Jedná se o posloupnost řetězců ve tvaru:
+Definujme pojem \textit{derivace}. Jedná se o posloupnost řetězců ve tvaru:
 $$
 x_{0}, \ldots, x_{k},\text{ kde } k \geq 0\text{ a kde } \lbrace x_{0}, \ldots, x_{k} \rbrace \in \Sigma^{*}
 $$
-se nazývá \textbf{P-derivace délky k}, pokud $x_{i-1} \Rightarrow_{p} x_{i}, \forall 1 \leq i \leq k $.
-Symbolicky totéž $x_{0} \Rightarrow_{p} x_{1} \Rightarrow_{p} \ldots \Rightarrow_{p} x_{k}$. Počet odvození tedy značí \emph{délku} derivace.
+se nazývá \textit{P-derivace délky k}, pokud $x_{i-1} \Rightarrow_{p} x_{i}, \forall 1 \leq i \leq k $.
+Symbolicky totéž $x_{0} \Rightarrow_{p} x_{1} \Rightarrow_{p} \ldots \Rightarrow_{p} x_{k}$. Počet odvození tedy značí \textit{délku} derivace.
 \end{definice}
 
 Pokud pro $u, v \in \Sigma^{*} \quad \exists \text{ P-derivace } u = x_{0} \ldots x_{k} = v$, pak říkáme, že $v$ je odvozeno z $u$ pomocí pravidel z $P$, což značíme
@@ -442,12 +455,12 @@ Mějme následující entity:
 Dodejme, že obě množiny by měly být neprázdné a konečné.
 
 \begin{definice}
-Odvozovací pravidlo $x \rightarrow y$ se nazývá \emph{generativní}, pokud \emph{x} obsahuje alespoň jeden neterminální symbol.
+Odvozovací pravidlo $x \rightarrow y$ se nazývá \textit{generativní}, pokud \textit{x} obsahuje alespoň jeden neterminální symbol.
 \end{definice}
 
 \begin{definice}
 Mějme strukturu $G = \langle N, \Sigma, P, S \rangle$, kde $N$ je abecedou neterminálních symbolů, $\Sigma$ je abecedou terminálních symbolů,
-$P$ je množinou odvozovacích pravidel a $S \in N$\hyplabel{terminal} je tzv. \emph{počátečním} resp. \emph{startovním} neterminálem. Pak tuto čtveřici nazveme \textbf{gramatikou}.
+$P$ je množinou odvozovacích pravidel a $S \in N$\hyplabel{terminal} je tzv. \textit{počátečním} resp. \textit{startovním} neterminálem. Pak tuto čtveřici nazveme \textit{gramatikou}.
 \end{definice}
 
 \begin{poznamka}
@@ -477,8 +490,8 @@ G &=& \langle N, \Sigma, P, S \rangle
 \end{priklad}
 
 \begin{definice}
-Každý řetězec $x \in (N \cup\Sigma)^{*}$, pro který platí $S \rightarrow^{*} x$, je \textbf{větná forma} gramatiky $G = \langle N, \Sigma, P, S \rangle$.
-Větná forma se nazývá \textbf{větou}, pokud $x \in \Sigma^{*}$.
+Každý řetězec $x \in (N \cup\Sigma)^{*}$, pro který platí $S \rightarrow^{*} x$, je \textit{větná forma} gramatiky $G = \langle N, \Sigma, P, S \rangle$.
+Větná forma se nazývá \textit{větou}, pokud $x \in \Sigma^{*}$.
 \end{definice}
 
 \begin{definice}
@@ -486,7 +499,7 @@ Jazyk generovaný gramatikou definujme jako:
 $$
 L(G) = \lbrace x \in \Sigma^{*} | S \Rightarrow_{G}^{*} x \rbrace
 $$
-Vidíme tedy, že takový jazyk obsahuje \emph{věty}, které lze odvodit ze startovacího neterminálu pomocí pravidel této gramatiky.
+Vidíme tedy, že takový jazyk obsahuje \textit{věty}, které lze odvodit ze startovacího neterminálu pomocí pravidel této gramatiky.
 \end{definice}
 
 \begin{priklad}
@@ -501,31 +514,31 @@ S &\Rightarrow_{G}^{*}& cabababc
 \end{priklad}
 
 \begin{definice}
-Gramatiky $G_{1}$ a $G_{2}$ jsou \textbf{ekvivalentní}, pokud generují stejný jazyk.
+Gramatiky $G_{1}$ a $G_{2}$ jsou \textit{ekvivalentní}, pokud generují stejný jazyk.
 \end{definice}
 
 \subsection{Hierarchie gramatik}
 \begin{itemize}
 \item
-\textbf{Gramatiky typu 0} -- jedná se o gramatiky bez omezení.
+\textit{Gramatiky typu 0} -- jedná se o gramatiky bez omezení.
 
 \item
-\textbf{Gramatiky typu 1\label{gram-1}} -- jedná se o tzv. \emph{kontextové} nebo \emph{kontextově závislé} gramatiky.
+\textit{Gramatiky typu 1\label{gram-1}} -- jedná se o tzv. \textit{kontextové} nebo \textit{kontextově závislé} gramatiky.
 Ty splňují následující omezení na tvar pravidel. Pro každé pravidlo gramatik tohoto typu platí, že:
 \begin{enumerate}
 \item
-Buď je (pravidlo) ve tvaru $pAq \rightarrow p x q, \text{ kde } p, q \in (\Sigma \cup N)^{*}, A \in N, x \in (\Sigma \cup N)^{*}$, kde \emph{p} a \emph{q}
-se nazývají levým resp. pravým \textbf{kontextem}.
+Buď je (pravidlo) ve tvaru $pAq \rightarrow p x q, \text{ kde } p, q \in (\Sigma \cup N)^{*}, A \in N, x \in (\Sigma \cup N)^{*}$, kde \textit{p} a \textit{q}
+se nazývají levým resp. pravým \textit{kontextem}.
 
 \item
 Nebo je (pravidlo) ve tvaru $S \rightarrow \varepsilon$, kde $S$ je \emphref{startovní terminál}{terminal} gramatiky, ale pouze
 za předpokladu, že $S$ se nevyskytuje na pravé straně žádného pravidla.
 \end{enumerate}
 
-Zároveň platí pro každé pravidlo (s výjimkou pravidla $S \rightarrow \varepsilon$), že délka odvozeného řetězce je minimálně stejně velká jako délka vstupního řetězce. Gramatika tedy zároveň obsahuje pouze tzv. \emph{nezkracující} pravidla.
+Zároveň platí pro každé pravidlo (s výjimkou pravidla $S \rightarrow \varepsilon$), že délka odvozeného řetězce je minimálně stejně velká jako délka vstupního řetězce. Gramatika tedy zároveň obsahuje pouze tzv. \textit{nezkracující} pravidla.
 
 \item
-\textbf{Gramatiky typu 2} -- jedná se o tzv. \emph{bezkontextové} gramatiky, jenž obsahují pravidla ve tvaru:
+\textit{Gramatiky typu 2} -- jedná se o tzv. \textit{bezkontextové} gramatiky, jenž obsahují pravidla ve tvaru:
 $$
 A \rightarrow x, \text{ kde } A \in N, x \in (\Sigma \cup N)^{*}
 $$
@@ -542,7 +555,7 @@ P &=& \lbrace S \rightarrow 0A, A \rightarrow \varepsilon \rbrace
 \end{priklad}
 
 \item
-\textbf{Gramatiky typu 3\label{gram-3}} -- jedná se o tzv. \emph{regulární} resp. \emph{pravolineární} gramatiky, které obsahují pravidla ve třech následujících tvarech:
+\textit{Gramatiky typu 3\label{gram-3}} -- jedná se o tzv. \textit{regulární} resp. \textit{pravolineární} gramatiky, které obsahují pravidla ve třech následujících tvarech:
 
 \begin{enumerate}
 \item
@@ -565,7 +578,7 @@ Každý konečný jazyk je regulární.
 Mějme jazyk $L = \lbrace x_{1},\ldots, x_{n} \rbrace$. Abychom tento jazyk prohlásili za regulární, tak je třeba najít regulární gramatiku,
 která tento jazyk generuje.
 
-Mějme tedy nějaké dané $\Sigma \text{ a } S$ a zvolme \emph{N}. Následně platí $\forall x_{i} \in L$ je dvojího typu:
+Mějme tedy nějaké dané $\Sigma \text{ a } S$ a zvolme \textit{N}. Následně platí $\forall x_{i} \in L$ je dvojího typu:
 
 \begin{enumerate}
 \item
@@ -590,7 +603,7 @@ N &=& \lbrace S \rbrace \\
 P &=& \lbrace S \rightarrow aSb | \varepsilon \rbrace \\
 L(G) &=& \lbrace a^{n}b^{n} | \quad n \geq 0 \rbrace
 \end{eqnarray*}
-Máme tedy \emph{bezkontextový} jazyk.
+Máme tedy \textit{bezkontextový} jazyk.
 \end{priklad}
 
 \begin{priklad}
@@ -599,7 +612,7 @@ N &=& \lbrace S \rbrace \\
 \Sigma &=& \lbrace a, b \rbrace \\
 P &=& \lbrace S \rightarrow SS|aSb|bSa| \varepsilon \rbrace
 \end{eqnarray*}
-$L(G)$ je \emph{bezkontextový} jazyk.
+$L(G)$ je \textit{bezkontextový} jazyk.
 \end{priklad}
 
 \begin{priklad}
@@ -875,8 +888,8 @@ Kdyby pro nějaké $j$ platilo, že $L = L_j$, pak $x_j \in L \Longleftrightarro
 %%%%%%%% 4 PREDNASKA mr
 
 \section{Determinismus versus nedeterminismus}
-Za \emph{determinismus} považujme takovou konfiguraci, pro kterou platí, že je v \textbf{každém jejím kroku jasné}, co bude následovat.
-Naopak u \emph{nedeterministických} konfigurací \textbf{není v určitých případech možné další krok přesně vyjádřit} na základě znalostí aktuálního kroku.
+Za \textit{determinismus} považujme takovou konfiguraci, pro kterou platí, že je v \textit{každém jejím kroku jasné}, co bude následovat.
+Naopak u \textit{nedeterministických} konfigurací \textit{není v určitých případech možné další krok přesně vyjádřit} na základě znalostí aktuálního kroku.
 
 Automaty realizují tzv. analytický formalismus a naproti tomu gramatiky realizují tzv. generativní formalismus.
 
@@ -1066,7 +1079,7 @@ $w_n = \varepsilon$
 \item \label{vypocet-bod-4}
 $w_i = a_i w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$ pro každé $i \in \lbrace 0,1,\ldots,n-1 \rbrace$
 \end{enumerate}
-nazveme \textbf{výpočet automatu A délky $n$ pro řetězec $w$}.
+nazveme \textit{výpočet automatu A délky $n$ pro řetězec $w$}.
 
 Popíšme si nyní jeden krok výpočtu, tj. obecně:
 $$
@@ -1255,7 +1268,7 @@ $$
 \end{priklad}
 
 \begin{definice}
-Strukturu $A = \langle \Sigma, Q, \delta, I, F \rangle$ nazvěme \textbf{konečným nedeterministickým automatem} nad abecedou $\Sigma$. Pro tuto strukturu následně platí tato tvrzení:
+Strukturu $A = \langle \Sigma, Q, \delta, I, F \rangle$ nazvěme \textit{konečným nedeterministickým automatem} nad abecedou $\Sigma$. Pro tuto strukturu následně platí tato tvrzení:
 \begin{itemize}
 \item
 $\Sigma, Q \text{ a } F$ jsou stejné jako u konečného deterministického automatu.
@@ -1294,7 +1307,7 @@ Následně přechodová funkce:
 Předchozí příklad číslo \ref{priklad-3} lze reprezentovat několika způsoby:
 \begin{enumerate}
 \item
-\textbf{Přechodová tabulka}, která ve svém těle obsahuje množiny stavů.
+\textit{Přechodová tabulka}, která ve svém těle obsahuje množiny stavů.
 \begin{table}[h]
 \begin{center}
 \begin{tabular}{ r || c | c }                   
@@ -1310,7 +1323,7 @@ Předchozí příklad číslo \ref{priklad-3} lze reprezentovat několika způso
 \end{table}
 
 \item
-\textbf{Diagram}, který automat demonstruje v grafičtější podobě.
+\textit{Diagram}, který automat demonstruje v grafičtější podobě.
 
 \begin{center}
 \begin{VCPicture}{(-5,-3)(5,3)}
@@ -1333,7 +1346,7 @@ Předchozí příklad číslo \ref{priklad-3} lze reprezentovat několika způso
 
 \nextoutline{Nedeterministicky vypocet}
 \subsection{Nedeterministický výpočet}
-Nyní si popišme \textbf{nedeterministický výpočet}, který je definován následujícími věcmi:
+Nyní si popišme \textit{nedeterministický výpočet}, který je definován následujícími věcmi:
 \begin{itemize}
 \item
 Konfigurace, což je dvojice ve tvaru $\langle \textit{stav}, \textit{řetězec} \rangle $.
@@ -1353,7 +1366,7 @@ w_{0} = w \\
 w_{n} = \varepsilon \\
 w_{i} = a_{i}w_{i+1} \text{ a } r_{i+1} \in \delta (r_{i}, a_{i}) \text{ pro } i = \lbrace 0, \ldots,  n-1 \rbrace
 \end{gather}
-nazveme \textbf{nedeterministický výpočet}.
+nazveme \textit{nedeterministický výpočet}.
 \end{definice}
 
 \nextoutline{Rozsirena prechodova funkce}
@@ -1521,11 +1534,11 @@ return \( <\Sigma, Q^{D}, \delta^{D}, I, F^{D}> \)
 
 
 \begin{definice}
-\emph{Trie} je prefixový strom, který umožňuje \uv{rychlé hledání ve slovníku.}
+\textit{Trie} je prefixový strom, který umožňuje \uv{rychlé hledání ve slovníku.}
 \end{definice}
 
 \begin{definice}
-Jako \emph{slovník} označujeme konečný neprázdný jazyk který neobsahuje $\varepsilon$.
+Jako \textit{slovník} označujeme konečný neprázdný jazyk který neobsahuje $\varepsilon$.
 \end{definice}
 
 \begin{definice}
@@ -1913,7 +1926,7 @@ Fakt $\delta (q,\varepsilon) = \lbrace r_1,\ldots,r_k \rbrace $ čteme: \uv{auto
 \begin{enumerate}
 
 \item
-\textbf{Přechodová tabulka}, vypadá stejně jako u KNA s tím, že přidáme jeden sloupec, ve kterém budeme zaznamenávat $\varepsilon$-přechody.
+\textit{Přechodová tabulka}, vypadá stejně jako u KNA s tím, že přidáme jeden sloupec, ve kterém budeme zaznamenávat $\varepsilon$-přechody.
 
 Takto bude vypadat předchozí př\'iklad číslo \ref{priklad-5}, reprezentovaný pomocí tabulky.
 
@@ -1934,12 +1947,12 @@ Takto bude vypadat předchozí př\'iklad číslo \ref{priklad-5}, reprezentovan
 \end{table}
 
 \item
-\textbf{Přechodový diagram}, u kterého mohou být některé hrany ohodnoceny $\varepsilon$. Viz příklad \ref{priklad-5}.
+\textit{Přechodový diagram}, u kterého mohou být některé hrany ohodnoceny $\varepsilon$. Viz příklad \ref{priklad-5}.
 
 \end{enumerate}
 
 \subsection{Nedeterministický výpočet}
-Pojem \textbf{konfigurace} pro nás zůstává stejný, jedná se stále o dvojici $\langle \textit{stav,řetězec} \rangle$.
+Pojem \textit{konfigurace} pro nás zůstává stejný, jedná se stále o dvojici $\langle \textit{stav,řetězec} \rangle$.
 
 \begin{definice}
 Mějme automat $A = \langle \Sigma,Q,\delta,I,F \rangle$ a řetězec $w \in \Sigma^*$. Posloupnost konfigurací $\langle r_i,w_i \rangle$ pro $i=0,\ldots,n$ splňující podmínky:
@@ -1998,11 +2011,11 @@ $E_0 \subseteq E_1 \subseteq E_2 \subseteq \ldots \subseteq E_A(R)$
 Vzhledem ke konečnosti množiny $E_A(R)$ musí existovat index $k$, pro který platí $E_k = E_{k+1} = \ldots = E_A(R)$
 \end{poznamka}
 
-Můžeme pozorovat, že $E_A(R)$ není jen $\varepsilon$-uzavřená, ale je také \textbf{nejmenší} $\varepsilon$-uzavřená. Z toho můžeme vyvodit, že 
+Můžeme pozorovat, že $E_A(R)$ není jen $\varepsilon$-uzavřená, ale je také \textit{nejmenší} $\varepsilon$-uzavřená. Z toho můžeme vyvodit, že 
 
 $$E_A:2^Q \rightarrow 2^Q$$
 
-je \textbf{uzávěrový} operátor.
+je \textit{uzávěrový} operátor.
 
 \subsection{Rozšířená přechodová funkce}
 
@@ -2047,11 +2060,11 @@ Protože $E_A(R_i)$ je $\varepsilon$-uzavřená, $\delta(q,\varepsilon) \in E_A(
 
 \subsection{Přijímaný řetězec \ekna}
 
-Nechť $A=\langle\Sigma,Q,\delta,I,F\rangle$ je \ekna. Řetězec $w \in \Sigma^*$ nazýváme řetězec \textbf{přijímaný} $A$, pokud
+Nechť $A=\langle\Sigma,Q,\delta,I,F\rangle$ je \ekna. Řetězec $w \in \Sigma^*$ nazýváme řetězec \textit{přijímaný} $A$, pokud
 
 $\delta^*(I,w) \cap F \neq \emptyset$
 
-jinak $w$ nazýváme řetězec \textbf{zamítaný} $A$.
+jinak $w$ nazýváme řetězec \textit{zamítaný} $A$.
 
 Jazyk přijímaný A: $L(A) = \lbrace w \in \Sigma^{*} | \delta^{*}(I, w) \cap F \neq \emptyset \rbrace$ 
 \subsection{Ekvivalence s KDA}
@@ -2091,7 +2104,7 @@ $$
 
 \section{Algoritmus na převod $\varepsilon$ KNA na KDA}
 
-Máme $A = \langle \Sigma, Q, \delta, I, F \rangle$ a víme, že \emph{W} je neprázdná množina dosud nezpracovaných stavů.
+Máme $A = \langle \Sigma, Q, \delta, I, F \rangle$ a víme, že \textit{W} je neprázdná množina dosud nezpracovaných stavů.
 
 \begin{figure}[h]
 \begin{alltt}
@@ -2184,7 +2197,7 @@ Priorita $| , \circ , *$ je stejná jako (po řadě) $+ , \cdot , ^{-1}$ v aritm
 \section{Jazyky generované regulárními výrazy}
 
 \begin{definice}
-Nechť \emph{R} je RV nad $\Sigma$. Pak $L(R) \subseteq \Sigma^{*}$. Pak také platí:
+Nechť \textit{R} je RV nad $\Sigma$. Pak $L(R) \subseteq \Sigma^{*}$. Pak také platí:
 
 \begin{enumerate}
 \item\label{jazyky-1}
@@ -2252,7 +2265,7 @@ Každý regulární jazyk lze generovat regulárním výrazem.
 
 \begin{itemize}
 \item
-\textbf{Komplement}
+\textit{Komplement}
 
 Pokud je $L$ regulární, pak je $\Sigma^* \backslash L$ regulární.
 \begin{dukaz}
@@ -2262,7 +2275,7 @@ Tj. $\Sigma^* \backslash L = L(A')$
 \end{dukaz}
 
 \item
-\textbf{Sjednocení} 
+\textit{Sjednocení} 
 
 Jsou-li $L_1$ a $L_2$ regulární, pak je $L_1 \cup L_2$ regulární.
 
@@ -2311,7 +2324,7 @@ První automat přijímá řetězec $ab$, druhý automat přijímá řetězec $b
 \end{priklad}
 
 \item
-\textbf{Průnik} 
+\textit{Průnik} 
 
 S použitím De Morganových zákonů, dostáváme:
 $$L_1 \cap L_2 = \Sigma^* \backslash (\Sigma^* \backslash L_1 \cup \Sigma^* \backslash L_2 )$$
@@ -2330,7 +2343,7 @@ $$L_1 \cap L_2 = L(A_1 \times A_2)$$
 \end{dukaz}
 
 \item
-\textbf{Produkt (zřetězení)} 
+\textit{Produkt (zřetězení)} 
 
 $L_1 \cdot L_2$
 
@@ -2396,7 +2409,7 @@ $$
 $$
 
 \item
-\textbf{Kleeneho uzávěr}
+\textit{Kleeneho uzávěr}
 
 Pokud je $L$ regulární, pak je $L^*$ regulární.
 
@@ -2442,29 +2455,29 @@ $$
 \begin{itemize}
 
 \item
-\textbf{Množinový rozdíl}
+\textit{Množinový rozdíl}
 
 Jsou-li $L_1$ a $L_2$ regulární, pak $L_1 \backslash L_2 = L_1 \cap (\Sigma^* \backslash L_2)$ je regulární.
 
 \item
-\textbf{Kleeneho pozitivní uzávěr}
+\textit{Kleeneho pozitivní uzávěr}
 
 Je-li $L$ regulární, pak $L^+ = (L^* \backslash \lbrace \varepsilon \rbrace) \cup L$ je regulární.
 
 \item
-\textbf{N-tá mocnina jazyka}
+\textit{N-tá mocnina jazyka}
 
 $L^n$ \ldots plyne z uzavření na produkt
 
 \item
-\textbf{Jazyk reverzních řetězců}
+\textit{Jazyk reverzních řetězců}
 
 $L^R = \lbrace w^R \ |\ w \in L \rbrace$
 
 Zdůvodníme pomocí konstrukce automatu rozpoznávající $L^R$ (viz cvičení 6) 
 
 \item
-\textbf{Jazyk sufixů}
+\textit{Jazyk sufixů}
 
 $Sfx(L) = \bigcup_{w \in L} Sfx(w)$
 
@@ -2481,7 +2494,7 @@ Všechny stavy jsou označeny za počáteční, aby měl automat možnost skoči
 \end{poznamka}
 
 \item
-\textbf{Jazyk prefixů}
+\textit{Jazyk prefixů}
 \begin{eqnarray*}
 Pfx(L) &=& \bigcup_{w \in L} Pfx(w) \\
 Pfx(L) &=& (Sfx(L^R))^R
@@ -2489,7 +2502,7 @@ Pfx(L) &=& (Sfx(L^R))^R
 Důkaz plyne z uzavření na Sfx a reverzní řetězec.
 
 \item
-\textbf{Jazyk infixů}
+\textit{Jazyk infixů}
 $$
 Ifx(L) = Pfx(Sfx(L))
 $$
@@ -2520,12 +2533,12 @@ pro každé $i \ge 0$ platí, že $xy^iz \in L$
 Rozlišíme dva případy.
 \begin{itemize}
 \item
-\textbf{$L$ je konečný}
+\textit{$L$ je konečný}
  
 pak je tvrzení triviální. Hledané $n$ je ve tvaru $l+1$, kde $l$ je délka nejdelšího řetězce z $L$. Pak není v $L$ žádný řetězec delší než $n$ a tvrzení $1. - 4.$ platí triviálně.
  
 \item
-\textbf{$L$ je nekonečný} 
+\textit{$L$ je nekonečný} 
 
 pak pro něj existuje KDA s množinou stavů $Q$ tak, že $L(A) = L$. Položíme $n=|Q|$.
 
@@ -2584,7 +2597,7 @@ $L(A_{1}) = L(A_{2})$, ale $|Q_{1}| < |Q_{2}|$.
 
 \begin{definice}
 Předpokládejme, že máme $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a relaci ekvivalence $\Theta \subseteq Q \times Q$ nazveme
-\textbf{zprava invariantní ekvivalencí} vzhledem k $\delta$, pokud platí, že $\langle q,r  \rangle \in \Theta \text{ a } a \in \Sigma$,
+\textit{zprava invariantní ekvivalencí} vzhledem k $\delta$, pokud platí, že $\langle q,r  \rangle \in \Theta \text{ a } a \in \Sigma$,
 pak $\langle  \delta(q, a), \delta(r, a) \rangle \in \Theta$.
 \end{definice}
 
@@ -2893,7 +2906,7 @@ $q_6$ & - & - & - & - & - & - & * \\
 \caption{Tabulkový popis rozkladů stavů}\label{tabulka-x}
 \end{table}
 \end{center}
-V tabulce \ref{tabulka-x} se objevují znaky \textbf{X} na pozicích, pro které platí, že:
+V tabulce \ref{tabulka-x} se objevují znaky \textit{X} na pozicích, pro které platí, že:
 \begin{eqnarray*}
 T[q,x] &\text{ kde platí }& q \in F, x \notin F \\
 &\text{ nebo }& q \notin F, x \in F
@@ -2913,7 +2926,7 @@ Pro KDA $A_1$ a $A_2$ mějme zobrazen\'i
 $$
 h: \quad Q_1 \rightarrow Q_2
 $$
-a toto zobrazení označme jako \textbf{izomorfismus}, pokud platí:
+a toto zobrazení označme jako \textit{izomorfismus}, pokud platí:
 \begin{enumerate}
 \item
 Zobrazení $h$ je bijektivní.
@@ -2931,12 +2944,12 @@ Jsou-li dva automaty izomorfní, pak $L(A_1) = L(A_2)$.
 \end{veta}
 
 \begin{definice}
-Mějme regulární jazyk L, pak KDA s úplnou přechodovou funkcí je \textbf{minimálním automatem} pro $L$,
+Mějme regulární jazyk L, pak KDA s úplnou přechodovou funkcí je \textit{minimálním automatem} pro $L$,
 pokud $L(A) = L$ a pro každý KDA $B$ takový, že $L(B) = L$ platí, že $B$ má tolik stavů jako $A$.
 \end{definice}
 
 \begin{veta}
-Je-li automat $A$ minimální pro jazyk $L$, pak je \textbf{redukovaný}a nemá nedosažitelné stavy.
+Je-li automat $A$ minimální pro jazyk $L$, pak je \textit{redukovaný}a nemá nedosažitelné stavy.
 \end{veta}
 
 \begin{veta}
@@ -2970,7 +2983,7 @@ Věty a větné formy
 
 \end{itemize}
 
-Navíc si zavedeme duální pojem k derivaci - \textbf{redukci}.
+Navíc si zavedeme duální pojem k derivaci - \textit{redukci}.
 \begin{definice}
 Řetězec $v$ lze redukovat na řetězec $u$, pokud $u \Rightarrow_G^* v$. Značíme
 $v \Leftarrow_G^* u$. 
@@ -2995,13 +3008,13 @@ $
 Uvažujme větu $w=ac*1-c$. K ní se lze dostat buď:
 
 $
-S \Rightarrow_G E \Rightarrow_G E*E \Rightarrow_G V*E \Rightarrow_G V*E-E \Rightarrow_G V*E-V \Rightarrow_G aV*E-V \Rightarrow_G ac*E-V \Rightarrow_G ac*C-V \Rightarrow_G ac*C-c \Rightarrow_G \textbf{ac*1-c}
+S \Rightarrow_G E \Rightarrow_G E*E \Rightarrow_G V*E \Rightarrow_G V*E-E \Rightarrow_G V*E-V \Rightarrow_G aV*E-V \Rightarrow_G ac*E-V \Rightarrow_G ac*C-V \Rightarrow_G ac*C-c \Rightarrow_G \textit{ac*1-c}
 $
 
 nebo
 
 $
-S \Rightarrow_G E \Rightarrow_G E*E \Rightarrow_G V*E \Rightarrow_G aV*E \Rightarrow_G ac*E \Rightarrow_G ac*E-E \Rightarrow_G ac*C-E \Rightarrow_G ac*1-E \Rightarrow_G ac*1-V \Rightarrow_G \textbf{ac*1-c}
+S \Rightarrow_G E \Rightarrow_G E*E \Rightarrow_G V*E \Rightarrow_G aV*E \Rightarrow_G ac*E \Rightarrow_G ac*E-E \Rightarrow_G ac*C-E \Rightarrow_G ac*1-E \Rightarrow_G ac*1-V \Rightarrow_G \textit{ac*1-c}
 $
 
 Ačkoliv odvozujeme stejnou větu, můžeme zde pozorovat jakousi nejednoznačnost, způsobenou tím, že neterminály derivujeme v libovolném pořadí.
@@ -3047,7 +3060,7 @@ $S \Rightarrow_G aB \Rightarrow_G abB \Rightarrow_G abbB \Rightarrow_G abba$
 Mějme bezkontextovou gramatiku $G = \langle N,\Sigma,P,S \rangle$.
 
 \begin{definice}
-P-derivace $x_0,\ldots,x_k$ se nazývá \textbf{nejlevější} P-derivace, pokud pro každé $i \in \lbrace 1,\ldots,k \rbrace$ platí, že $x_{i-1}$ je ve tvaru $uAv$, kde $u \in \Sigma^*,A\in N,v \in (\Sigma \cup N)^*$ a $x_i$ je ve tvaru $uyv$, kde $A \rightarrow y \in P$.
+P-derivace $x_0,\ldots,x_k$ se nazývá \textit{nejlevější} P-derivace, pokud pro každé $i \in \lbrace 1,\ldots,k \rbrace$ platí, že $x_{i-1}$ je ve tvaru $uAv$, kde $u \in \Sigma^*,A\in N,v \in (\Sigma \cup N)^*$ a $x_i$ je ve tvaru $uyv$, kde $A \rightarrow y \in P$.
 \end{definice}
 
 \begin{poznamka}
@@ -3239,7 +3252,7 @@ Bezkontextový jazyk $L$ se nazývá jednoznačný pokud existuje jednoznačná 
 \end{definice}
 
 \begin{definice}
-Bezkontextový jazyk $L$ se nazývá \textbf{inherentně} nejednoznačný, pokud neexistuje žádná jednoznačná gramatika $G$ taková, že $L=L(G)$.
+Bezkontextový jazyk $L$ se nazývá \textit{inherentně} nejednoznačný, pokud neexistuje žádná jednoznačná gramatika $G$ taková, že $L=L(G)$.
 \end{definice}
 
 \begin{veta}
@@ -3264,7 +3277,7 @@ $L=\lbrace a^nb^nc^pd^p\ |\ n,p\ge 0\rbrace$ je inherentně nejednoznačný.
 
 \begin{itemize}
 \item
-\textbf{Sjednocení}
+\textit{Sjednocení}
 
 Mějme dány bezkontextové jazyky $L_1$, $L_2$ a korespondující bezkontexotvé gramatiky $G_1$ a $G_2$. Lze předpokládat, že množiny stavů obou gramatik jsou disjunktní (tj. $N_1 \cap N_2 = \emptyset$).
 
@@ -3276,7 +3289,7 @@ P = P_1 \cup P_2 \cup \lbrace S \rightarrow S_1\ |\ S_2 \rbrace$
 Platí, že $L(G)=L(G_1) \cup L(G_2)$.
 
 \item
-\textbf{Produkt}
+\textit{Produkt}
 
 $L_1$ a $L_2$ jsou bezkontextové jazyky, $G_1$ a $G_2$ jsou odpovídající bezkontextové gramatiky.
 
@@ -3288,21 +3301,21 @@ P = P_1 \cup P_2 \cup \lbrace S \rightarrow S_1S_2 \rbrace$
 Platí, že $L(G) = L(G_1) \cdot L(G_2)$.
 
 \item
-\textbf{Kleeneho uzávěr}
+\textit{Kleeneho uzávěr}
 
 Mějme bezkontextový jazyk $L$ a k němu odpovídající gramatiku $G$.
 
 Vytvoříme novou gramatiku $G' = \langle N \cup \lbrace S' \rbrace,\Sigma,P \cup \lbrace S' \rightarrow \varepsilon\ |\ SS'\rbrace,S' \rangle$.
 
 \item
-\textbf{Pozitivní uzávěr}
+\textit{Pozitivní uzávěr}
 
 Podobné jako u Kleeneho uzávěru, akorát výsledná gramatika se bude lišit v množině pravidel.
 
 $G' = \langle N \cup \lbrace S' \rbrace,\Sigma,P \cup \lbrace S' \rightarrow S\ |\ SS'\rbrace,S' \rangle$
 
 \item
-\textbf{Průnik}
+\textit{Průnik}
 
 $\mathcal{L}_2$ není uzavřená na průnik.
 
@@ -3319,7 +3332,7 @@ Z toho také plyne, že není uzavřená ani na Komplement či Množinový rozd�
 
 \subsection{Bezkontextové gramatiky v programátorské praxi}
 
-\textbf{BNF}(Backus-Naurova forma):
+\textit{BNF}(Backus-Naurova forma):
 Vytvořili ji John Backus a Peter Naur. Zápis se řidí několika pravidly:
 \begin{itemize}
 \item
@@ -3341,7 +3354,7 @@ $\langle expr \rangle ::= "(" \langle expr \rangle ")"\ |\ \langle expr \rangle\
 \langle digit \rangle ::= "0"\ |\ \ldots\ |\ "9"$
 \end{priklad}
 
-\textbf{Extended BNF}: Zavedl Niklaus Wirth v roce 1977. Odpovídá BNF, pouze zjednodušuje její notaci a to tak že:
+\textit{Extended BNF}: Zavedl Niklaus Wirth v roce 1977. Odpovídá BNF, pouze zjednodušuje její notaci a to tak že:
 \begin{itemize}
 \item
 každé pravidlo je ukončeno znakem $";"$
@@ -3388,7 +3401,7 @@ Do tohoto jazyka patří například řetězce $()[], ([]), \ldots$, ale nepatř
 \end{figure}
 
 \begin{definice}
-Jako \textbf{nedeterministický zásobníkový automat} označme následující strukturu:
+Jako \textit{nedeterministický zásobníkový automat} označme následující strukturu:
 $$
 A = \langle \Sigma, \Gamma, Q, \delta, q_0, z_0, F \rangle
 $$
@@ -3664,9 +3677,9 @@ $$
 
 \begin{itemize}
 \item
-Prvnímu případu říkáme \textbf{operace srovnání}: pokud je na vstupu i na vrcholu zásobníku stejný znak (terminál) pak jsou oba odebrány.
+Prvnímu případu říkáme \textit{operace srovnání}: pokud je na vstupu i na vrcholu zásobníku stejný znak (terminál) pak jsou oba odebrány.
 \item
-Druhý případ se jmenuje \textbf{operace expanze}: bez čtení vstupu při neterminálu na vrcholu zásobníku se tento neterminál nahradí pravou stranou některého pravidla s tímto neterminálem na levé straně.
+Druhý případ se jmenuje \textit{operace expanze}: bez čtení vstupu při neterminálu na vrcholu zásobníku se tento neterminál nahradí pravou stranou některého pravidla s tímto neterminálem na levé straně.
 \item
 U třetího případu dochází k zastavení činnosti.
 \end{itemize}
@@ -3737,7 +3750,7 @@ $$
 
 \begin{itemize}
 \item
-\textbf{Implikace zleva:}
+\textit{Implikace zleva:}
 
 Nechť $S \Rightarrow_{G,l}^* w$, to znamená, že existuje nejlevější derivace $S=X_0,\ldots,X_n=w$. Indukcí pro $i=0,\ldots,n$ prokážeme, že $\langle q,w,S \rangle \vdash^* \langle q,u_i,z_i \rangle$ pro $w = y_i\cdot u_i$. \\
 $X_i=y_iz_i$, kde buď 
@@ -3768,7 +3781,7 @@ Ve speciálním případě: $i=n$ dostáváme $\langle q,w,S \rangle \vdash^* \l
 Takže $\langle q,w,S \rangle \vdash^* \langle q,\varepsilon,\varepsilon \rangle$.
 
 \item
-\textbf{Implikace zprava:}
+\textit{Implikace zprava:}
 
 Prokážeme obecnější tvrzení:
 
@@ -3825,7 +3838,7 @@ Budeme se snažit dokázat tvrzení $\langle q,z,p \rangle \Rightarrow_{G,l}^* w
 
 \begin{itemize}
 \item
-\textbf{Implikace zleva}
+\textit{Implikace zleva}
 
 Důkaz provedeme indukcí přes délku nejlevější derivace. předpokládejme, že $\langle q,z,p \rangle \Rightarrow_{G,l}^* w$
 
@@ -3850,7 +3863,7 @@ Nyní můžeme zřetězit posloupnosti odpovídajících konfigurací:
 což jsme měli dokázat.
 
 \item
-\textbf{Implikace zprava}
+\textit{Implikace zprava}
 
 Dokážeme indukcí přes délku výpočtu automatu $A$.
 
@@ -3883,7 +3896,7 @@ Ke každému NZA existuje ekvivalentní automat rozpoznávající stejný jazyk,
 \section{Deterministické zásobníkové automaty}
 
 \begin{definice}
-Řekneme, že zásobníkový automat $A = \langle \Sigma,\Gamma,Q,\delta,q_0,z_0,F \rangle$ je \textbf{deterministický} (DZA), pokud jsou pro každé $q \in Q$ a $z \in \Gamma$ splněny následující podmínky:
+Řekneme, že zásobníkový automat $A = \langle \Sigma,\Gamma,Q,\delta,q_0,z_0,F \rangle$ je \textit{deterministický} (DZA), pokud jsou pro každé $q \in Q$ a $z \in \Gamma$ splněny následující podmínky:
 \begin{enumerate}
 \item
 pro všechny $a \in \Sigma \cup \lbrace \varepsilon \rbrace$ platí $|\delta (q,a,z)| \le 1$
@@ -3895,11 +3908,11 @@ pokud $\delta (q,\varepsilon,z) \neq \emptyset$ pak $\delta (q,a,z) = \emptyset$
 Nabízí se otázka, jaké třídy jazyků, jsou vlastně rozpoznatelné deterministickým zásobníkový automatem pomocí buď koncových stavů, nebo vyprázdněním zásobníku.
 
 \begin{definice}
-Bezkontextový jazyk $L$ se nazývá \textbf{deterministický}, pokud existuje deterministický zásobníkový automat $A$ tak, že $L = L(A)$.
+Bezkontextový jazyk $L$ se nazývá \textit{deterministický}, pokud existuje deterministický zásobníkový automat $A$ tak, že $L = L(A)$.
 \end{definice}
 
 \begin{definice}
-Bezkontextový jazyk $L$ má \textbf{prefixovou vlastnost}, pokud $L$ neobsahuje dva různé řetězce $x,y$ tak, že $x$ je prefixem $y$.
+Bezkontextový jazyk $L$ má \textit{prefixovou vlastnost}, pokud $L$ neobsahuje dva různé řetězce $x,y$ tak, že $x$ je prefixem $y$.
 \end{definice}
 
 \begin{veta}
@@ -3913,13 +3926,13 @@ $L = L(A')$ pro nějaký DZA $A'$ a $L$ má prefixovou vlastnost
 \end{veta}
 
 \begin{dukaz}
-Nechť platí 1. tvrzení: $L=N(A)$ \emph{pro DZA A}
+Nechť platí 1. tvrzení: $L=N(A)$ \textit{pro DZA A}
 
 \begin{enumerate}
 \item
 pozorování: $L$ má prefixovou vlastnost
 
-$x \in L=N(A)$ tj. $x$ je přijat vyprázdněním zásobníku. Zjišťujeme, že $\langle q_0,x,z_0 \rangle \vdash^* \langle p,\varepsilon,\varepsilon \rangle$ je \textbf{jednoznačně} daný výpočet.
+$x \in L=N(A)$ tj. $x$ je přijat vyprázdněním zásobníku. Zjišťujeme, že $\langle q_0,x,z_0 \rangle \vdash^* \langle p,\varepsilon,\varepsilon \rangle$ je \textit{jednoznačně} daný výpočet.
 
 \item
 pozorování:
@@ -3953,7 +3966,7 @@ $$
 \end{priklad}
 
 \begin{poznamka}
-Mnoho regulárních jazyků \textbf{nemá} prefixovou vlastnost.
+Mnoho regulárních jazyků \textit{nemá} prefixovou vlastnost.
 \end{poznamka}
 
 \begin{veta}
