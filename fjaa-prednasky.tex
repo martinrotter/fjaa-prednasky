@@ -42,7 +42,7 @@
 {.5em}
 {}
 \theoremstyle{note}
-\newtheorem{dukaz}{Důkaz}[section]
+\newtheorem{dukaz}{Důkaz}
 \newtheorem{veta}{Věta}
 \newtheorem{definice}{Definice}
 \newtheorem{priklad}{Příklad}
@@ -92,7 +92,7 @@ V rámci této analýzy rozlišme:
 \begin{enumerate}
 \item
 Teorii jazyků, jež se zabývá stavbou jazyka (respektive jeho syntaxí) a poskytuje tzv. \textit{generativní aparát}.
-Gramatika říká, v jakém tvaru může být zapsán validní program, tedy definuje všechna slova\footnote{Pojem \emph{slovo}
+Gramatika říká, v jakém tvaru může být zapsán validní program, tedy definuje všechna slova\footnote{Pojem \textit{slovo}
 je v tomto kontextu poněkud zavádějící. V některé z následujících kapitol bude zaveden přesnější termín na vystihnutí prvku jazyka},
 která jsou obsažena v daném jazyce.
 
@@ -115,33 +115,39 @@ Například $\Sigma = \lbrace a, b, c \rbrace$, tedy \uv{abeceda $\Sigma$ obsahu
 
 \item
 \textit{Řetězec} - jedná se o konečnou posloupnost symbolů (znaků) vybraných z nějaké dané abecedy.
-Například $\langle a_{1}, a_{2}, \ldots, a_{n} \rangle \in \Sigma, n$ nazvěme \textit{délkou řetězce}.
-Formálně definujme řetězec jakožto \textit{zobrazení}
+Například \textit{n}-tice $\langle a_{1}, a_{2}, \ldots, a_{n} \rangle \in \Sigma$ je řetězecem.
+
+Formálně definujme řetězec jakožto \textit{zobrazení} ve tvaru:
 $$
 x : \lbrace 1, 2, 3, 4, \ldots, n \rbrace \rightarrow \Sigma
 $$
 kde
 $$
 1 \rightarrow a, 2 \rightarrow b, 3 \rightarrow c
-$$ a tak podobně.
+$$ Vidíme, že se jedná o zobrazení z přirozených čísel do symbolů z nějaké abecedy, v tomto případě do abecedy $\Sigma$.
 Délku řetězce označme $|x|$.
 
 \item
-\textit{Prázdný řetězec} - edná se o řetězec, pro který platí, že $|x| = 0$ a značíme jej $\varepsilon$, přičemž platí následující zápis:
+\textit{Prázdný řetězec} - jedná se o řetězec, pro který platí, že $|x| = 0$ a značíme jej $\varepsilon$, přičemž platí, že:
 $$
 \varepsilon \subseteq \emptyset \rightarrow \Sigma
 $$
-Prázdný řetězec není symbolem, tedy $\varepsilon \notin \Sigma$.
+Prázdný řetězec neobsahuje byť jeden symbol, tedy $\varepsilon \notin \Sigma$. Jedná se o jakýsi imaginární prvek,
+jehož role je však klíčové, jak se dozvíme později.
 \end{itemize}
 
 \begin{veta}
 Nad $k$-prvkovou abecedou je právě $k^{n}$ řetězců délky $n$.
 \end{veta}
 
-
 \begin{poznamka}
-Uveďme si rovněž značení pro dva důležité pojmy:
+Předchozí věta je relativně intuitivní, protože pokud máme $k$-prvkovou abecedu a tvoříme z ní řetězec,
+pak na každé místo v tomto řetězci můžeme vybrat právě jeden z $k$ symbolů abecedy. Avšak takto volit bude hned $n$-krát,
+protože konstruujeme řetězec délky $n$. Tato úvaha vede na kombinatorický problém počtu variací s opakováním, který
+se dá spočíst dle notoricky známeho vzorce $V(n,k) = k^n$.
+\end{poznamka}
 
+Uveďme si značení pro dva důležité pojmy:
 \begin{itemize}
 \item
 $\Sigma^{*}$ označuje množinu všech řetězců nad abecedou $\Sigma$.
@@ -149,25 +155,20 @@ $\Sigma^{*}$ označuje množinu všech řetězců nad abecedou $\Sigma$.
 \item
 $\Sigma^{+}$ označuje množinu všech řetězců nad abecedou $\Sigma$ vyjma $\varepsilon$.
 \end{itemize}
-\end{poznamka}
 
 \section{Operace s řetězci}
 \begin{itemize}
 \item
-\textit{Zřetězení} (konkatenace). Jde v podstatě o spojení\footnote{Pro milovníky jazyka Scheme můžeme tuto operaci přirovnat k proceduře \textit{append}}
+\textit{Zřetězení} (konkatenace) - jde v podstatě o spojení\footnote{Pro milovníky jazyka Scheme můžeme tuto operaci přirovnat k proceduře \textit{append}}
 dvou řetězců v daném pořadí do jednoho řetězce.
 
 \begin{priklad}
-Mějme dva řetězce $a$, $b$:
-$$
-a_{1}\ldots a_{n} \text{ a } b_{1}\ldots b_{m}
-$$
-Pak jejich zřetězení má tvar:
+Mějme dva řetězce $a = a_{1}\ldots a_{n}$, $b = b_{1}\ldots b_{m}$, pak jejich zřetězení má tvar:
 $$
 a_{1}\ldots a_{n}b_{1}\ldots b_{m}
 $$
-Identifikátorem\footnote{Identifikátor zřetězení se velmi čast v zápisech zřetězení vynechává.} operace
-zřetězení je $\circ$, například $x\circ y$ je zřetězením řetězců $x$ a $y$.
+Identifikátorem\footnote{Identifikátor zřetězení se velmi často v zápisech zřetězení vynechává. Je to analogická situace k násobení výrazů.} operace
+zřetězení je \textcolor{red}{$\circ$}, například $x\circ y$ je zřetězením řetězců $x$ a $y$.
 Formálně takto:
 \begin{gather*}
 x : \lbrace 1,\ldots, n \rbrace \rightarrow \Sigma \\
@@ -176,38 +177,38 @@ x \circ y : \lbrace 1,\ldots, n+m \rbrace \rightarrow \Sigma
 \end{gather*}
 \end{priklad}
 
-\begin{poznamka}
 Algebraicky je tatáž operace zapsána jako $\langle \Sigma^{*}, \circ, \varepsilon \rangle$.
-\end{poznamka}
 
 \item
-\textit{Rovnost řetězců}
-Pro prohlášení dvou řetězců za sobě rovné v žádaném smyslu je třeba splnit obecně dvě následující podmínky:
+\textit{Rovnost řetězců} - pro prohlášení dvou řetězců za sobě rovné v žádaném smyslu je třeba splnit obecně dvě následující podmínky:
 \begin{enumerate}
 \item
 Oba řetězce mají stejnou délku, tedy $|x| = |y|$.
 
 \item
-Bude-li délka označena jako $n$, pak musí platit, že $\forall i | i \in \lbrace 1, \ldots, n \rbrace, x(i) = y(i)$.
+Bude-li délka označena jako $n$, pak musí platit, že $\forall i |\quad i \in \lbrace 1, \ldots, n \rbrace, x(i) = y(i)$.
 Tedy každé dva k sobě náležící symboly z daných řetězců jsou si rovny.
 \end{enumerate}
-Uvažujeme-li rovnost řetězců, pak je záhodno uvažovat následující pojmy:
+
+Uvažujeme-li rovnost řetězců, pak je záhodno uvažovat:
 \begin{itemize}
 \item
-\textit{Prefix} řetězce. Označme jej $Pfx(x) = \lbrace y | \exists z \text{ tak, že } yz = x \rbrace$.
+\textit{Prefix} řetězce - značme jej $Pfx(x) = \lbrace y | \exists z \text{ tak, že } yz = x \rbrace$.
 
 \item
-\textit{Infix} řetězce. Označme jej $Ifx(x) = \lbrace y | \exists z_{1}, z_{2} \text{ tak, že } z_{1}yz_{2} = x \rbrace$.
+\textit{Infix} řetězce - značme jej $Ifx(x) = \lbrace y | \exists z_{1}, z_{2} \text{ tak, že } z_{1}yz_{2} = x \rbrace$.
 
 \item
-\textit{Sufix} řetězce. Označme jej $Sfx(x) = \lbrace y | \exists z \text{ tak, že } zy = x \rbrace$.
+\textit{Sufix} řetězce - značme jej $Sfx(x) = \lbrace y | \exists z \text{ tak, že } zy = x \rbrace$.
 \end{itemize}
 
-\begin{veta}
+\begin{veta} Nechť platí:
 \begin{gather*}
 xy = xz \: \Longrightarrow \: y = z \\
 yx = zx \: \Longrightarrow \: y = z
 \end{gather*}
+Nebo-li pokud máme k dispozici dva řetězece a ty jsou si rovny a navíc mají identický prefix, pak je jasné, že \uv{zadnice} těchto
+řetězců mají stejnou délku a jsou si také rovny.
 Algebraicky je operace zapsána jako $\langle \Sigma^{*}, \cdot, \varepsilon \rangle$.
 \end{veta}
 
@@ -221,27 +222,26 @@ x = u, y = v \\
 \end{veta}
 
 \item
-\textit{N-tá mocnina} řetězce.
+\textit{N-tá mocnina} řetězce - je popsána následující definicí:
 $$
-x^{n} = \left\lbrace
+x^{n} = \left\{
 \begin{array}{l l}
 \varepsilon & \text{pro } n=0 \\
 x & \text{pro } n=1 \\
 xx^{n-1} & \text{pro } x>1 \\
 \end{array}
-\right\rbrace
+\right.
 $$
 
-\begin{poznamka}
 Mějme na paměti, že operace mocnění má vyšší prioritu než-li operace konkatenace (zřetězení).
-\end{poznamka}
+\end{itemize}
 
 \begin{veta}
-Mějme $u \text{ a } v \in \Sigma^{*}$, pak platí $uv = vu$ (komutativita), právě
-tehdy, když $\exists z| z \in \Sigma^{*} \text{ a nezáporná celá čísla } p, q \text{ tak, že } u = z^{p} \text{ a } v=z^{q}$.
+Mějme $u \text{ a } v \in \Sigma^{*}$, pak platí $uv = vu$ (komutativita) právě
+tehdy, když $\exists z|\quad z \in \Sigma^{*} \text{ a nezáporná celá čísla } p, q \text{ tak, že } u = z^{p} \text{ a } v=z^{q}$.
 \end{veta}
 
-Předpokládejme, že po $p, z, q$ máme $u = z^{p}, v = z^{q}$. Pak obecně platí následující zápis:
+Předpokládejme, že pro $p, z, q$ máme $u = z^{p}, v = z^{q}$. Pak obecně platí, že:
 $$
 uv = z^{p}z^{q} = z^{p+q} = z^{q} z^{p} = vu
 $$
@@ -255,6 +255,7 @@ $|u| = |v|, \text{ pak } u = v, \text{ pak } z = u, p = q = 1$
 \item
 $|u| < |v|$
 \end{enumerate}
+% RESUME
 
 Berme v potaz také následující zápis doplněný obrázkem: \ref{obr-1}
 
@@ -269,7 +270,6 @@ uw = wu \\
 \centering\includegraphics[width=5cm]{dukaz-1.eps}
 \caption{Grafické znázornění komutativity zřetězení řetězců.}\label{obr-1}
 \end{figure}
-\end{itemize}
 
 \section{Formální jazyk}
 Zaveďme si pojem \textit{formální jazyk nad množinou všech řetězců} $\Sigma^{*}$. Označme tento jazyk jako $L$. Pak platí tato tvrzení:
