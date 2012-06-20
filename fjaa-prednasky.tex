@@ -885,6 +885,16 @@ a $L = \lbrace x_i | \quad x_i \notin L_i \rbrace$.
 Kdyby pro nějaké $j$ platilo, že $L = L_j$, pak $x_j \in L \Longleftrightarrow x_j \in L_j$, což je spor.
 \end{dukaz}
 
+\begin{veta}
+Nad abecedou obsahující jediný symbol $\lbrace a \rbrace \text{ }\exists$ jazyk jež není typu 0. (Nelze jej generovat žádnou formální gramatikou.)
+\end{veta}
+\begin{dukaz}
+Mějme abecedu $\Gamma = \lbrace , , \rightarrow , \lbrace , \rbrace , a , n, \# \rbrace$.\footnote{Všechny prvky množiny jsou symboly, včetně symbolu \uv{čárka}} Pomocí $\Gamma$ jsme schopni kódovat jazyk pravidel gramatiky. (Neterminály můžeme kódovat jako $n, nn, \dots$).
+
+$\Gamma^{*}$ je spočetná tedy existuje spočetně mnoho gramatik.
+
+$2^{\Sigma^{*}}$ je nespočetná, tedy musí existovat jazyk, které nelze generovat gramatikou z $\Gamma^{*}$.
+\end{dukaz}
 %%%%%%%% 4 PREDNASKA mr
 
 \section{Determinismus versus nedeterminismus}
