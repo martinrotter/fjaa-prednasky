@@ -10,7 +10,7 @@
 \usepackage{czech}						% napsáno česky
 \usepackage[utf8]{inputenc}				% napsáno v UTF-8
 \usepackage[tables,figures]{upreport}	% UPOL styl
-\usepackage{upstyles}
+%\usepackage{upstyles}
 \usepackage{a4wide}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -255,10 +255,8 @@ $|u| = |v|, \text{ pak } u = v, \text{ pak } z = u, p = q = 1$
 \item
 $|u| < |v|$
 \end{enumerate}
-% RESUME
 
-Berme v potaz také následující zápis doplněný obrázkem: \ref{obr-1}
-
+Navíc berme v potaz také následující zápis doplněný obrázkem \ref{obr-1}:
 \begin{gather*}
 uw = v \\
 wu = v \\
@@ -277,16 +275,17 @@ Zaveďme si pojem \textit{formální jazyk nad množinou všech řetězců} $\Si
 L &\subseteq& \Sigma^{*} \text{ (každá podmnožina abecedy je jazykem)} \\
 L &=& \emptyset \text{ (prázdný jazyk)} \\
 L &=& \lbrace \varepsilon \rbrace \text{ (jazyk s prázdným řetězcem)} \\
-L &=& jazyk C++ \text{ (jazyk C++)} \\
 &\vdots&
 \end{eqnarray*}
 \textit{Pozor, obecně platí že prázdný jazyk $\neq$ jazyk s prázdným řetězcem.}
+
+Formálním jazykem obecně myslíme nějakou množinu \textit{řetězců}, které navíc většinou mají určitou společnou vlastnost,
+jak uvidíme později.
 	
 \section{Lexikografické uspořádání}
-Předpokládejme uspořádání na množině $\Sigma^{*}$.
+Předpokládejme uspořádání na množině všech řetězců $\Sigma^{*}$.
 Nazvěme toto uspořádání \textit{striktním totálním}. Pak toto uspořádání například pro $\Sigma = \lbrace a_{1}, \ldots, a_{n} \rbrace$
 je $a_{1} < a_{2} < a_{3} < \ldots < a_{n}$.
-
 Totální striktní uspořádání označme $<_{l}$.
 
 Položme $x <_{l} y$ pro $x,y \in \Sigma^{*}$. To ale platí pokud platí alespoň jedno z následujících dvou tvrzení:
@@ -295,11 +294,11 @@ Položme $x <_{l} y$ pro $x,y \in \Sigma^{*}$. To ale platí pokud platí alespo
 $|x| < |y|$
 
 \item
-$|x| = |y| \text{ a } \exists i \text{ tak, že } x(i) < y(i) \text{ a zároveň } x(j) = y(j) \text{ pro } \forall j |j < i$
+$|x| = |y| \text{ a } \exists i \text{ tak, že } x(i) < y(i) \text{ a zároveň } x(j) = y(j) \text{ pro } \forall j |\quad j < i$
 \end{enumerate}
 
 \begin{priklad}
-$\Sigma = \lbrace 0, 1 \rbrace$. Triviálně tedy $0 < 1$.
+$\Sigma = \lbrace 0, 1 \rbrace$. Triviálně tedy máme $0 < 1$.
 Následně striktně $\varepsilon <_{l} 0 <_{l} 1 <_{l} 00 <_{l} 01 <_{l} 10 <_{l} 11$.
 \end{priklad}
 
@@ -315,7 +314,8 @@ Důsledkem věty \ref{veta-1} je tvrzení, že množina $\Sigma^{*}$ je spočetn
 \nextoutline{Mnozinové}
 
 \subsection{Množinové}
-Množinové operace nad jazyky jsou prakticky totožné operacím na kterýchkoliv jiných množinách. Můžeme tedy použít množinový průnik, sjednocení, komplement (doplněk) nebo rozdíl.
+Množinové operace nad jazyky jsou prakticky totožné operacím na kterýchkoliv jiných množinách.
+Můžeme tedy použít množinový průnik, sjednocení, komplement (doplněk) nebo rozdíl.
 
 \subsection{Ostatní}
 \begin{itemize}
@@ -360,7 +360,7 @@ sadu pravidel, jejichž aplikace by vedla k opětovné generaci původního jazy
 
 \nextoutline{Prepisovací generovací pravidla}
 \subsection{Přepisovací generovací pravidla}
-Pravidlem rozumíme zpravidla každou takto definovanou dvojici.
+Pravidlem rozumíme zpravidla každou dvojici:
 $$
 \langle x,y \rangle \in \Sigma^{*} \times \Sigma^{*}
 $$
@@ -388,7 +388,7 @@ c &\rightarrow& \varepsilon
 \end{priklad}
 
 \begin{priklad}
-Mějme další zadání abecedy $\Sigma = \lbrace expr, +, \times \rbrace$. Pravidla s využitím této abecedy by mohla být například tato.
+Mějme další zadání abecedy $\Sigma = \lbrace expr, +, \times \rbrace$. Pravidla s využitím této abecedy by mohla být například takto.
 \begin{eqnarray*}
 \textit{expr} &\rightarrow& \textit{expr} + \textit{expr} \\
 \textit{expr} &\rightarrow& \textit{expr} \times \textit{expr}
@@ -415,6 +415,8 @@ $\exists \pi \in P \text{ tak, že } u \Rightarrow_{\pi} v$.
 
 Značme $u \Rightarrow_{P} v$. $P$ je množinou užitých pravidel. $P$ i $\Rightarrow_{p}$ jsou binární relace na $\Sigma^{*}$ a
 $P \subseteq  \Rightarrow_{p}$, tedy \uv{P je podmnožinou šipky p.} Platí, že $x \rightarrow y \in P$ a $x \Rightarrow_{x \rightarrow y} y$.
+Můžeme tedy poněkud nadneseně říci, že množina pravidel $P$ obsahuje jen podmnožinu všech možných pravidel, který je možno sestrojit
+nad danými terminálními a neterminálními symboly (o těch se dozvíme více informaci později).
 
 \begin{priklad}
 Mějme abecedu $\Sigma = \lbrace a, b, c \rbrace$ a soubor pravidel $P = \lbrace aa \rightarrow bc, a \rightarrow cab, bb \rightarrow \varepsilon \rbrace$\label{priklad-1}.
