@@ -527,7 +527,7 @@ Gramatiky $G_{1}$ a $G_{2}$ jsou \textit{ekvivalentní}, pokud generují stejný
 Ty splňují následující omezení na tvar pravidel. Pro každé pravidlo gramatik tohoto typu platí, že:
 \begin{enumerate}
 \item
-Buď je (pravidlo) ve tvaru $pAq \rightarrow p x q, \text{ kde } p, q \in (\Sigma \cup N)^{*}, A \in N, x \in (\Sigma \cup N)^{*}$, kde \textit{p} a \textit{q}
+Buď je (pravidlo) ve tvaru $pAq \rightarrow p x q, \text{ kde } p, q \in (\Sigma \cup N)^{*}, A \in N, x \in (\Sigma \cup N)^{+}$, kde \textit{p} a \textit{q}
 se nazývají levým resp. pravým \textit{kontextem}.
 
 \item
@@ -540,9 +540,11 @@ Zároveň platí pro každé pravidlo (s výjimkou pravidla $S \rightarrow \vare
 \item
 \textit{Gramatiky typu 2} -- jedná se o tzv. \textit{bezkontextové} gramatiky, jenž obsahují pravidla ve tvaru:
 $$
-A \rightarrow x, \text{ kde } A \in N, x \in (\Sigma \cup N)^{*}
+A \rightarrow x, \text{ kde } A \in N, x \in (\Sigma \cup N)^{+}
 $$
 Na levých stranách pravidel tedy očekáváme pouze neterminální symbol a na pravé straně očekáváme minimálně jeden symbol (s výjimkou $\varepsilon$-pravidla).
+
+Očividně platí, že je-li gramatika bezkontextová, pak je i kontextová, nebo $p=\varepsilon, q=\varepsilon$ jsou také kontexty, byť jsou \uv{prázdné}.
 
 \begin{priklad}
 Mějme tuto gramatiku:
