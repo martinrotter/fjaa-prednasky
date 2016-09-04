@@ -1096,7 +1096,7 @@ $w_i = a_i w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$ pro každé $i \in \lbrace 0,
 \end{enumerate}
 nazveme \textit{výpočet automatu A délky $n$ pro řetězec $w$}.
 
-Popíšme si nyní jeden krok výpočtu, tj. obecně:
+Popišme si nyní jeden krok výpočtu, tj. obecně:
 $$
 \langle r_i, w_i \rangle = \langle r_{i+1}, w_{i+1} \rangle
 $$
@@ -1162,7 +1162,7 @@ Pokud $|u| > 0$, pak předpokládáme, že tvrzení platí pro $\forall$ řetěz
 \end{dukaz}
 
 \begin{poznamka}
-Automat $A$ přijím řetězec $a$, pokud $\delta^*(q_0,w) \in F$.
+Automat $A$ přijímá řetězec $a$, pokud $\delta^*(q_0,w) \in F$.
 \end{poznamka}
 
 \begin{veta}
@@ -2628,7 +2628,7 @@ $\Theta = Q \times Q$
 \begin{definice}
 Mějme KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a zprava invariantní ekvivalenci $\Theta$ vzhledem k
 $\delta$, pak zavedeme $A/\theta = \langle \Sigma, Q/\Theta, \delta^{A/\Theta}, [q_{0}]_{\Theta}, F^{A/\Theta} \rangle$, kde
-$$\delta^{A/\Theta} = ([q]_{\Theta}, a) = [\delta(q, a)]_{\Theta} \text{ a } F^{A/\Theta} = \lbrace [q]_{\Theta} | \quad q \in F \rbrace$$
+$$\delta^{A/\Theta}([q]_{\Theta}, a) = [\delta(q, a)]_{\Theta} \text{ a } F^{A/\Theta} = \lbrace [q]_{\Theta} | \quad q \in F \rbrace$$
 \end{definice}
 
 \begin{veta}\label{veta-aut}
@@ -2789,7 +2789,7 @@ Pro $\forall R \in \varphi_{i-1}$ provedeme:
 Vezmeme libovoln\'y stav $r \in R$.
 
 \item
-Polož\'ime $S = \lbrace s \in R | \text{ pro každ\'e } a \in \Sigma \text{ plat\'i tak\'e, že }\delta(S, a) \in [\delta(R, a)] \rbrace$.
+Polož\'ime $S = \lbrace s \in R | \text{ pro každ\'e } a \in \Sigma \text{ plat\'i tak\'e, že }\delta(s, a) \in [\delta(r, a)] \rbrace$.
 
 \item
 Pokud $S = R$, pak vlož\'ime $R$ do $\varphi_{i}$, pokud $S \subseteq R$, pak vlož\'ime $S$ a $R \setminus S$ do $\varphi_{i}$.
@@ -3419,7 +3419,7 @@ A = \langle \Sigma, \Gamma, Q, \delta, q_0, z_0, F \rangle
 $$
 Nyní si popišme význam nám dosud neznámých prvků tohoto automatu:
 \begin{eqnarray*}
-\Gamma &-& \text{ abeceda zásobnákových symbolů.} \\
+\Gamma &-& \text{ abeceda zásobníkových symbolů.} \\
 z_0 &-& \text{ počáteční zásobníkový symbol.} \\
 Q &-& \text{ konečná množina stavů.} \\
 \delta &-& \text{ přechodová funkce ve tvaru } \delta : Q \times (\Sigma \cup \lbrace \varepsilon \rbrace) \times \Gamma \rightarrow 2^{Q \times \Gamma^{*}}
