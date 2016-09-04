@@ -18,9 +18,9 @@
 \usepackage{amsthm}
 \usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
 \usepackage{alltt}
-\usepackage{listing}
+\usepackage{listings}
 
-\renewcommand{\listingname}{Algoritmus}			% Listing -> Algoritmus
+\renewcommand{\lstlistingname}{Algoritmus}			% Listing -> Algoritmus
 %\renewcommand{\familydefault}{\sfdefault}
 
 
@@ -1522,32 +1522,28 @@ Ještě jeden automat, nepřečtu to dobře ze sešitu. :)
 Nyní si ukažme pseudokód algoritmu pro převod konečných nedeterministických automatů na konečné deterministické automaty, pro které platí, že
 akceptují řetězce stejného jazyka.
 
-\vspace{20px}
-\begin{listing}
-\begin{alltt}
-\(\delta\sp{D}\leftarrow\emptyset; Q\sp{D}\leftarrow\emptyset; F\sp{D}\leftarrow\emptyset; w\leftarrow{I} \)
+\vspace{10px}
+\begin{lstlisting}[caption=Pseudokód pro převod KNA na KDA.,mathescape]
+$\delta^{D}\leftarrow\emptyset$; $Q^{D}\leftarrow\emptyset$; $F^{D}\leftarrow\emptyset$; $W\leftarrow{I}$
 
-while \(w\neq{Q}\) do
-     select \(R\in{w}\)
-     \(w\leftarrow{w}\smallsetminus{R}; Q\sp{D}\leftarrow{Q}\sp{D}\cup{R}\)
-     if \(R\cap{F}\neq\emptyset\) then
-         \(F\sp{D}\leftarrow{F}\sp{D}\cup{R}\)
+while $W\neq{Q}$ do
+     select $R\in{W}$
+     $W\leftarrow{W}\smallsetminus{R}$; $Q^{D}\leftarrow{Q}^{D}\cup{R}$
+     if $R\cap{F}\neq\emptyset$ then
+         $F^{D}\leftarrow{F}^{D}\cup{R}$
      endif
-     foreach \(a\in\Sigma\) do
-         \(N\leftarrow\delta\sp{*}(R, a)\)
-         if \(N\neq\emptyset\) then
-             if \(N\notin{w}\cup{Q}\sp{D}\) then
-                 \(w\leftarrow{w}\cup{N}\)
+     foreach $a\in\Sigma$ do
+         $N\leftarrow\delta^{*}(R, a)$
+         if $N\neq\emptyset$ then
+             if $N\notin{W}\cup{Q}^{D}$ then
+                 $W\leftarrow{W}\cup{N}$
              endif
-             \(\delta\sp{D}\leftarrow\delta\sp{D}\cup{<R, a, N>}\)
+             $\delta^{D}\leftarrow\delta^{D}\cup{<R, a, N>}$
          endif
      end
 end
-return \(<\Sigma, Q\sp{D}, \delta\sp{D}, I, F\sp{D}>\)
-\end{alltt}
-\caption{Pseudokód pro převod KNA na KDA.}
-\end{listing}
-
+return $<\Sigma, Q^{D}, \delta^{D}, I, F^{D}>$
+\end{lstlisting}
 
 \begin{definice}
 \textit{Trie} je prefixový strom, který umožňuje \uv{rychlé hledání ve slovníku.}
@@ -2122,29 +2118,29 @@ $$
 
 Máme $A = \langle \Sigma, Q, \delta, I, F \rangle$ a víme, že \textit{W} je neprázdná množina dosud nezpracovaných stavů.
 
-\begin{figure}[h]
-\begin{alltt}
-\( \delta^{s} \leftarrow \emptyset; Q^{s} \leftarrow \emptyset; F^{s} \leftarrow \emptyset; W \leftarrow E_{A}(I) \)
-while \( W \neq Q \) do
-     select \( R \in W \)
-     \( W \leftarrow W \smallsetminus {R}; Q^{s} \leftarrow Q^{s} \cup {R} \)
-     if \( R \cap F \neq \emptyset \) then
-         \( F^{s} \leftarrow F^{s} \cup {R} \)
+\begin{lstlisting}[caption=Pseudokód pro převod $\varepsilon$ KNA na KDA.,mathescape,float]
+$\delta^{s}\leftarrow\emptyset$; $Q^{s}\leftarrow\emptyset$; $F^{s}\leftarrow\emptyset$; $w\leftarrow{E}_{A}(I)$
+
+while $w\neq{Q}$ do
+     select $R\in{w}$
+     $w\leftarrow{w}\smallsetminus{R}$; $Q^{s}\leftarrow{Q}^{s}\cup{R}$
+     if $R\cap{F}\neq\emptyset$ then
+         $F^{s}\leftarrow{F}^{s}\cup{R}$
      endif
-     foreach \( a \in \Sigma \) do
-         \( N \leftarrow \delta^{*}(R, a) \)
-         if \( N \neq \emptyset \) then
-             if \( N \notin W \cup Q^{s} \) then
-                 \( W \leftarrow W \cup {N} \)
+     foreach $a\in\Sigma$ do
+         $N\leftarrow\delta^{*}(R, a)$
+         if $N\neq\emptyset$ then
+             if $N\notin{w}\cup{Q}^{s}$ then
+                 $w\leftarrow{w}\cup{N}$
              endif
-             \( \delta^{s} \leftarrow \delta{s} \cup {<R, a, N>} \)
+             $\delta^{s}\leftarrow\delta^{s}\cup{<R, a, N>}$
          endif
-     endfor
-endwhile
-return \( <\Sigma, Q^{s}, \delta^{s}, I, F^{s}> \)
-\end{alltt}
-\caption{Pseudokód pro převod $\varepsilon$ KNA na KDA.}
-\end{figure}
+     end
+end
+return $<\Sigma, Q^{s}, \delta^{s}, I, F^{s}>$
+
+\end{lstlisting}
+
 
 \begin{center}
 \begin{VCPicture}{(-6,-4)(6,4)}
