@@ -18,8 +18,11 @@
 \usepackage{amsthm}
 \usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
 \usepackage{alltt}
+\usepackage{listing}
 
+\renewcommand{\listingname}{Algoritmus}			% Listing -> Algoritmus
 %\renewcommand{\familydefault}{\sfdefault}
+
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
@@ -1519,30 +1522,31 @@ Ještě jeden automat, nepřečtu to dobře ze sešitu. :)
 Nyní si ukažme pseudokód algoritmu pro převod konečných nedeterministických automatů na konečné deterministické automaty, pro které platí, že
 akceptují řetězce stejného jazyka.
 
-\vspace{30px}
-\begin{figure}[h]
+\vspace{20px}
+\begin{listing}
 \begin{alltt}
-\( \delta^{D} \leftarrow \emptyset; Q^{D} \leftarrow \emptyset; F^{D} \leftarrow \emptyset; w \leftarrow {1} \)
-while \( w \neq Q \) do
-     select \( R \in w \)
-     \( w \leftarrow w \smallsetminus {R}; Q^{D} \leftarrow Q^{D} \cup {R} \)
-     if \( R \cap F \neq \emptyset \) then
-         \( F^{D} \leftarrow F^{D} \cup {R} \)
+\(\delta\sp{D}\leftarrow\emptyset; Q\sp{D}\leftarrow\emptyset; F\sp{D}\leftarrow\emptyset; w\leftarrow{I} \)
+
+while \(w\neq{Q}\) do
+     select \(R\in{w}\)
+     \(w\leftarrow{w}\smallsetminus{R}; Q\sp{D}\leftarrow{Q}\sp{D}\cup{R}\)
+     if \(R\cap{F}\neq\emptyset\) then
+         \(F\sp{D}\leftarrow{F}\sp{D}\cup{R}\)
      endif
-     foreach \( a \in \Sigma \) do
-         \( v \leftarrow \delta^{*}(R, a) \)
-         if \( N \neq \emptyset \) then
-             if \( N \notin w \cup Q^{D} \) then
-                 \( w \leftarrow w \cup {N} \)
+     foreach \(a\in\Sigma\) do
+         \(N\leftarrow\delta\sp{*}(R, a)\)
+         if \(N\neq\emptyset\) then
+             if \(N\notin{w}\cup{Q}\sp{D}\) then
+                 \(w\leftarrow{w}\cup{N}\)
              endif
-             \( \delta^{D} \leftarrow \delta{D} \cup {<R, u, N>} \)
+             \(\delta\sp{D}\leftarrow\delta\sp{D}\cup{<R, a, N>}\)
          endif
      end
 end
-return \( <\Sigma, Q^{D}, \delta^{D}, I, F^{D}> \)
+return \(<\Sigma, Q\sp{D}, \delta\sp{D}, I, F\sp{D}>\)
 \end{alltt}
 \caption{Pseudokód pro převod KNA na KDA.}
-\end{figure}
+\end{listing}
 
 
 \begin{definice}
