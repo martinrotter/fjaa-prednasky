@@ -18,8 +18,11 @@
 \usepackage{amsthm}
 \usepackage{vaucanson-g}				% makro pro kreslení grafů a automatů
 \usepackage{alltt}
+\usepackage{listings}
 
+\renewcommand{\lstlistingname}{Algoritmus}			% Listing -> Algoritmus
 %\renewcommand{\familydefault}{\sfdefault}
+
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
@@ -1093,7 +1096,7 @@ $w_i = a_i w_{i+1}$ a $\delta(r_i, a_i) = r_{i+1}$ pro každé $i \in \lbrace 0,
 \end{enumerate}
 nazveme \textit{výpočet automatu A délky $n$ pro řetězec $w$}.
 
-Popíšme si nyní jeden krok výpočtu, tj. obecně:
+Popišme si nyní jeden krok výpočtu, tj. obecně:
 $$
 \langle r_i, w_i \rangle = \langle r_{i+1}, w_{i+1} \rangle
 $$
@@ -1159,7 +1162,7 @@ Pokud $|u| > 0$, pak předpokládáme, že tvrzení platí pro $\forall$ řetěz
 \end{dukaz}
 
 \begin{poznamka}
-Automat $A$ přijím řetězec $a$, pokud $\delta^*(q_0,w) \in F$.
+Automat $A$ přijímá řetězec $a$, pokud $\delta^*(q_0,w) \in F$.
 \end{poznamka}
 
 \begin{veta}
@@ -1519,31 +1522,28 @@ Ještě jeden automat, nepřečtu to dobře ze sešitu. :)
 Nyní si ukažme pseudokód algoritmu pro převod konečných nedeterministických automatů na konečné deterministické automaty, pro které platí, že
 akceptují řetězce stejného jazyka.
 
-\vspace{30px}
-\begin{figure}[h]
-\begin{alltt}
-\( \delta^{D} \leftarrow \emptyset; Q^{D} \leftarrow \emptyset; F^{D} \leftarrow \emptyset; w \leftarrow {1} \)
-while \( w \neq Q \) do
-     select \( R \in w \)
-     \( w \leftarrow w \smallsetminus {R}; Q^{D} \leftarrow Q^{D} \cup {R} \)
-     if \( R \cap F \neq \emptyset \) then
-         \( F^{D} \leftarrow F^{D} \cup {R} \)
+\vspace{10px}
+\begin{lstlisting}[caption=Pseudokód pro převod KNA na KDA.,mathescape]
+$\delta^{D}\leftarrow\emptyset$; $Q^{D}\leftarrow\emptyset$; $F^{D}\leftarrow\emptyset$; $W\leftarrow{I}$
+
+while $W\neq{Q}$ do
+     select $R\in{W}$
+     $W\leftarrow{W}\smallsetminus{R}$; $Q^{D}\leftarrow{Q}^{D}\cup{R}$
+     if $R\cap{F}\neq\emptyset$ then
+         $F^{D}\leftarrow{F}^{D}\cup{R}$
      endif
-     foreach \( a \in \Sigma \) do
-         \( v \leftarrow \delta^{*}(R, a) \)
-         if \( N \neq \emptyset \) then
-             if \( N \notin w \cup Q^{D} \) then
-                 \( w \leftarrow w \cup {N} \)
+     foreach $a\in\Sigma$ do
+         $N\leftarrow\delta^{*}(R, a)$
+         if $N\neq\emptyset$ then
+             if $N\notin{W}\cup{Q}^{D}$ then
+                 $W\leftarrow{W}\cup{N}$
              endif
-             \( \delta^{D} \leftarrow \delta{D} \cup {<R, u, N>} \)
+             $\delta^{D}\leftarrow\delta^{D}\cup{<R, a, N>}$
          endif
      end
 end
-return \( <\Sigma, Q^{D}, \delta^{D}, I, F^{D}> \)
-\end{alltt}
-\caption{Pseudokód pro převod KNA na KDA.}
-\end{figure}
-
+return $<\Sigma, Q^{D}, \delta^{D}, I, F^{D}>$
+\end{lstlisting}
 
 \begin{definice}
 \textit{Trie} je prefixový strom, který umožňuje \uv{rychlé hledání ve slovníku.}
@@ -2118,29 +2118,29 @@ $$
 
 Máme $A = \langle \Sigma, Q, \delta, I, F \rangle$ a víme, že \textit{W} je neprázdná množina dosud nezpracovaných stavů.
 
-\begin{figure}[h]
-\begin{alltt}
-\( \delta^{s} \leftarrow \emptyset; Q^{s} \leftarrow \emptyset; F^{s} \leftarrow \emptyset; W \leftarrow E_{A}(I) \)
-while \( W \neq Q \) do
-     select \( R \in W \)
-     \( W \leftarrow W \smallsetminus {R}; Q^{s} \leftarrow Q^{s} \cup {R} \)
-     if \( R \cap F \neq \emptyset \) then
-         \( F^{s} \leftarrow F^{s} \cup {R} \)
+\begin{lstlisting}[caption=Pseudokód pro převod $\varepsilon$ KNA na KDA.,mathescape,float]
+$\delta^{s}\leftarrow\emptyset$; $Q^{s}\leftarrow\emptyset$; $F^{s}\leftarrow\emptyset$; $w\leftarrow{E}_{A}(I)$
+
+while $w\neq{Q}$ do
+     select $R\in{w}$
+     $w\leftarrow{w}\smallsetminus{R}$; $Q^{s}\leftarrow{Q}^{s}\cup{R}$
+     if $R\cap{F}\neq\emptyset$ then
+         $F^{s}\leftarrow{F}^{s}\cup{R}$
      endif
-     foreach \( a \in \Sigma \) do
-         \( N \leftarrow \delta^{*}(R, a) \)
-         if \( N \neq \emptyset \) then
-             if \( N \notin W \cup Q^{s} \) then
-                 \( W \leftarrow W \cup {N} \)
+     foreach $a\in\Sigma$ do
+         $N\leftarrow\delta^{*}(R, a)$
+         if $N\neq\emptyset$ then
+             if $N\notin{w}\cup{Q}^{s}$ then
+                 $w\leftarrow{w}\cup{N}$
              endif
-             \( \delta^{s} \leftarrow \delta{s} \cup {<R, a, N>} \)
+             $\delta^{s}\leftarrow\delta^{s}\cup{<R, a, N>}$
          endif
-     endfor
-endwhile
-return \( <\Sigma, Q^{s}, \delta^{s}, I, F^{s}> \)
-\end{alltt}
-\caption{Pseudokód pro převod $\varepsilon$ KNA na KDA.}
-\end{figure}
+     end
+end
+return $<\Sigma, Q^{s}, \delta^{s}, I, F^{s}>$
+
+\end{lstlisting}
+
 
 \begin{center}
 \begin{VCPicture}{(-6,-4)(6,4)}
@@ -2628,7 +2628,7 @@ $\Theta = Q \times Q$
 \begin{definice}
 Mějme KDA $A = \langle \Sigma, Q, \delta, q_{0}, F \rangle$ a zprava invariantní ekvivalenci $\Theta$ vzhledem k
 $\delta$, pak zavedeme $A/\theta = \langle \Sigma, Q/\Theta, \delta^{A/\Theta}, [q_{0}]_{\Theta}, F^{A/\Theta} \rangle$, kde
-$$\delta^{A/\Theta} = ([q]_{\Theta}, a) = [\delta(q, a)]_{\Theta} \text{ a } F^{A/\Theta} = \lbrace [q]_{\Theta} | \quad q \in F \rbrace$$
+$$\delta^{A/\Theta}([q]_{\Theta}, a) = [\delta(q, a)]_{\Theta} \text{ a } F^{A/\Theta} = \lbrace [q]_{\Theta} | \quad q \in F \rbrace$$
 \end{definice}
 
 \begin{veta}\label{veta-aut}
@@ -2789,7 +2789,7 @@ Pro $\forall R \in \varphi_{i-1}$ provedeme:
 Vezmeme libovoln\'y stav $r \in R$.
 
 \item
-Polož\'ime $S = \lbrace s \in R | \text{ pro každ\'e } a \in \Sigma \text{ plat\'i tak\'e, že }\delta(S, a) \in [\delta(R, a)] \rbrace$.
+Polož\'ime $S = \lbrace s \in R | \text{ pro každ\'e } a \in \Sigma \text{ plat\'i tak\'e, že }\delta(s, a) \in [\delta(r, a)] \rbrace$.
 
 \item
 Pokud $S = R$, pak vlož\'ime $R$ do $\varphi_{i}$, pokud $S \subseteq R$, pak vlož\'ime $S$ a $R \setminus S$ do $\varphi_{i}$.
@@ -3419,7 +3419,7 @@ A = \langle \Sigma, \Gamma, Q, \delta, q_0, z_0, F \rangle
 $$
 Nyní si popišme význam nám dosud neznámých prvků tohoto automatu:
 \begin{eqnarray*}
-\Gamma &-& \text{ abeceda zásobnákových symbolů.} \\
+\Gamma &-& \text{ abeceda zásobníkových symbolů.} \\
 z_0 &-& \text{ počáteční zásobníkový symbol.} \\
 Q &-& \text{ konečná množina stavů.} \\
 \delta &-& \text{ přechodová funkce ve tvaru } \delta : Q \times (\Sigma \cup \lbrace \varepsilon \rbrace) \times \Gamma \rightarrow 2^{Q \times \Gamma^{*}}
